@@ -15,7 +15,7 @@ public class ScenesManager : MonoBehaviour
         GameManager gm = FindObjectOfType<GameManager>();
         if (gm)
         {
-            gm.SetNumJugadoresComnbate(players);
+            gm.SetNumJugadoresCombate(players);
             ChangeScene("SelectPlayers");
         }
         else

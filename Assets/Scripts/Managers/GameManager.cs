@@ -47,20 +47,26 @@ public class GameManager : MonoBehaviour
     public int GetNumJugadoresCombate() { return numJugadoresCombate; }
     public int GetNumJugadoresSeleccionados() { return numJugadoresSeleccionados; }
 
-    public void SetNumJugadoresComnbate(int n) { numJugadoresCombate = n; }
+    public void SetNumJugadoresCombate(int n) {
+        numJugadoresCombate = n;
+        numJugadoresSeleccionados = 0;
+        jugadoresPartida = new List<Personaje>();
+    }
 
-    // para meno de seleccion
+    // para menu de seleccion
     public void SeleccionarJugador(Personaje personaje)
     {
-        numJugadoresSeleccionados++;
         jugadoresPartida.Add(personaje);
+        numJugadoresSeleccionados++;
         if (numJugadoresSeleccionados == numJugadoresCombate)
             SceneManager.LoadScene("GamePlay");
     }
 
     public void DeseleccionarJugador(Personaje personaje)
     {
-        jugadoresPartida.Remove(personaje);
+        jugadoresPartida.Remove(personaje);        
         numJugadoresSeleccionados--;
     }
+
+    public List<Personaje> GetJugadoresPartida() { return jugadoresPartida; }
 }
