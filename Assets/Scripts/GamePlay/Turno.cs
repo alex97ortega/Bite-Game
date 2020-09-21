@@ -5,26 +5,29 @@ using UnityEngine.UI;
 
 public class Turno : MonoBehaviour
 {
-    Color azul, rojo;
-    public Image colorFondo,foto;
+    public Image colorAzul, colorRojo,foto;
     public Text text;
     int id;
-
-    // Start is called before the first frame update
-    void Awake()
-    {
-        azul = new Color(49, 183, 190, 146);
-        rojo = new Color(135, 40, 40, 146);
-    }
     
-    public void SetProperties(int _id, Image imgFoto)
+    
+    public void SetProperties(int _id, Sprite imgFoto)
     {
         id = _id;
 
-        if (id >= FindObjectOfType<GameManager>().GetNumJugadoresCombate())
-            colorFondo.color = rojo;
+        if (id < FindObjectOfType<GameManager>().GetNumJugadoresCombate())
+            colorAzul.gameObject.SetActive(true);
+        else
+            colorRojo.gameObject.SetActive(true);
 
-        foto = imgFoto;
+        foto.sprite = imgFoto;
     }
     public int GetId() { return id; }
+    public void ActivarTexto()
+    {
+        text.gameObject.SetActive(true);
+    }
+    public void DesctivarTexto()
+    {
+        text.gameObject.SetActive(false);
+    }
 }

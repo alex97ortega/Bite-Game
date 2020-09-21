@@ -5,6 +5,12 @@ using UnityEngine;
 public class Personaje : MonoBehaviour
 {
     int casillaX, casillaZ;
+    public Sprite foto;
+    public bool chico;
+    public bool deportista;
+    public bool gaymer;
+    public bool fumador;
+
 
     // Start is called before the first frame update
     void Start()
@@ -35,4 +41,5 @@ public class Personaje : MonoBehaviour
                 i.material = color;
         }
     }
+    public Sprite GetFoto() { return foto; }
 }

@@ -175,7 +175,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 81a721021daf64b4f8f350ad3edfb366, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  personaje: {fileID: 1907321835066877454, guid: 287fa985200cfe1478191054d6994048,
+  personaje: {fileID: 2545035739194003280, guid: 287fa985200cfe1478191054d6994048,
     type: 3}
   tick: {fileID: 1264080098}
 --- !u!114 &52668696
@@ -1252,7 +1252,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 81a721021daf64b4f8f350ad3edfb366, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  personaje: {fileID: 7388819430564831346, guid: 5c93fdd3827a4da448521b27040cbd72,
+  personaje: {fileID: -4736289084690816005, guid: 5c93fdd3827a4da448521b27040cbd72,
     type: 3}
   tick: {fileID: 2051151807}
 --- !u!114 &1079474997
@@ -1566,7 +1566,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 81a721021daf64b4f8f350ad3edfb366, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  personaje: {fileID: 1786996053704198822, guid: cde98815c68ebb14798b67eb5491bef1,
+  personaje: {fileID: -8685631659389007555, guid: cde98815c68ebb14798b67eb5491bef1,
     type: 3}
   tick: {fileID: 882010351}
 --- !u!1 &1264080098
@@ -1878,7 +1878,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 81a721021daf64b4f8f350ad3edfb366, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  personaje: {fileID: 2586777383660605017, guid: a59e6d94624d72a42b46bf0efcbc1914,
+  personaje: {fileID: 7455275103835504767, guid: a59e6d94624d72a42b46bf0efcbc1914,
     type: 3}
   tick: {fileID: 784508920}
 --- !u!114 &1666273731
@@ -2523,7 +2523,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 81a721021daf64b4f8f350ad3edfb366, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  personaje: {fileID: 2192860869771565323, guid: 9e3148804ba0a124e8063985c32ec8f0,
+  personaje: {fileID: -8200787888686609584, guid: 9e3148804ba0a124e8063985c32ec8f0,
     type: 3}
   tick: {fileID: 1825987663}
 --- !u!114 &1951556845

@@ -6,6 +6,7 @@ public class GestorPartida : MonoBehaviour
 {
     public GameObject menuAcciones;
     public Turno turnoPrefab;
+    public Canvas canvas;
 
     Personaje[] aliados;
     Personaje[] enemigos;
@@ -30,6 +31,22 @@ public class GestorPartida : MonoBehaviour
             } while (turnos.Contains(x) && veces < 1000);
             turnos.Enqueue(x);
         }
+        int num = 0;
+
+        foreach(int x in turnos)
+        {
+            Turno aux = Instantiate(turnoPrefab);
+            if (x < gm.GetNumJugadoresCombate())
+                aux.SetProperties(x, aliados[x].GetFoto());
+            else
+                aux.SetProperties(x, enemigos[x - gm.GetNumJugadoresCombate()].GetFoto());
+            aux.transform.SetParent(canvas.gameObject.transform);
+            aux.transform.position += new Vector3(num * 120, 0, num);
+            if (num == 0)
+                aux.ActivarTexto();
+            num++;
+            turnosJugadores.Enqueue(aux);
+        }
     }
 
     // Update is called once per frame
@@ -38,14 +55,14 @@ public class GestorPartida : MonoBehaviour
         // gestion de la "IA"
         // un numero mayor que el numero de personajes por bando significa que pertenece
         // al bando enemigos. Si no, al de aliados
-        /*if(turnosJugadores.Peek().GetId() >= gm.GetNumJugadoresCombate())
+        if(turnosJugadores.Peek().GetId() >= gm.GetNumJugadoresCombate())
         {
             menuAcciones.SetActive(false);
         }
         else
         {
             menuAcciones.SetActive(true);
-        }*/
+        }
     }
 
     public void Init()
