@@ -5,6 +5,7 @@ using UnityEngine;
 public class Personaje : MonoBehaviour
 {
     int casillaX, casillaZ;
+    public int id;
     public Sprite foto;
     public bool chico;
     public bool deportista;
@@ -37,7 +38,7 @@ public class Personaje : MonoBehaviour
     {
         foreach (var i in GetComponentsInChildren<MeshRenderer>())
         {
-            if(i.gameObject.tag != "Cabeza")
+            if(i.gameObject.tag != "Cabeza" && i.gameObject.tag != "Unia")
                 i.material = color;
         }
     }

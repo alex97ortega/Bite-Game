@@ -4,30 +4,33 @@ using UnityEngine;
 
 public class GestorPartida : MonoBehaviour
 {
-    public GameObject menuAcciones;
+    public GameObject menuAcciones, menuExit;
     public Turno turnoPrefab;
     public Canvas canvas;
+    public RandomEnemies randomEnemies;
 
     Personaje[] aliados;
     Personaje[] enemigos;
     Queue<Turno> turnosJugadores;
     GameManager gm;
-    bool initialized = false;
+    int nJugadoresPorEquipo;
 
     // Start is called before the first frame update
     void Start()
     {
+        randomEnemies.GenerateRandomEnemies();
+
         Queue<int> turnos = new Queue<int>();
         turnosJugadores = new Queue<Turno>();
 
-        for (int i = 0; i< gm.GetNumJugadoresCombate() * 2; i++)
+        for (int i = 0; i< nJugadoresPorEquipo * 2; i++)
         {
             int x;
             int veces = 0;
             do
             {
                 veces++;
-                x = Random.Range(0, gm.GetNumJugadoresCombate() * 2);
+                x = Random.Range(0, nJugadoresPorEquipo * 2);
             } while (turnos.Contains(x) && veces < 1000);
             turnos.Enqueue(x);
         }
@@ -36,12 +39,12 @@ public class GestorPartida : MonoBehaviour
         foreach(int x in turnos)
         {
             Turno aux = Instantiate(turnoPrefab);
-            if (x < gm.GetNumJugadoresCombate())
+            if (x < nJugadoresPorEquipo)
                 aux.SetProperties(x, aliados[x].GetFoto());
             else
-                aux.SetProperties(x, enemigos[x - gm.GetNumJugadoresCombate()].GetFoto());
+                aux.SetProperties(x, enemigos[x - nJugadoresPorEquipo].GetFoto());
             aux.transform.SetParent(canvas.gameObject.transform);
-            aux.transform.position += new Vector3(num * 120, 0, num);
+            aux.transform.position += new Vector3(num * 120, 0, 0);
             if (num == 0)
                 aux.ActivarTexto();
             num++;
@@ -55,7 +58,7 @@ public class GestorPartida : MonoBehaviour
         // gestion de la "IA"
         // un numero mayor que el numero de personajes por bando significa que pertenece
         // al bando enemigos. Si no, al de aliados
-        if(turnosJugadores.Peek().GetId() >= gm.GetNumJugadoresCombate())
+        if(GetTurno() >= nJugadoresPorEquipo)
         {
             menuAcciones.SetActive(false);
         }
@@ -67,25 +70,46 @@ public class GestorPartida : MonoBehaviour
 
     public void Init()
     {
-        if (initialized)
-            return;
-
         gm = FindObjectOfType<GameManager>();
         if (gm)
         {
-            aliados = new Personaje[gm.GetNumJugadoresCombate()];
-            enemigos = new Personaje[gm.GetNumJugadoresCombate()];
-            initialized = true;
+            nJugadoresPorEquipo = gm.GetNumJugadoresCombate();
+            aliados = new Personaje[nJugadoresPorEquipo];
+            enemigos = new Personaje[nJugadoresPorEquipo];
         }
     }
-    public void SetAliado(Personaje p, int n)
-    {
-        aliados[n] = p;
-    }
-    public Personaje GetAliado(int n) { return aliados[n]; }
-    public void SetEnemigo(Personaje p, int n)
-    {
-        enemigos[n] = p;
-    }
+    public Personaje[] GetAllAliados() { return aliados; }
+    public Personaje GetAliado(int n)  { return aliados[n]; }
     public Personaje GetEnemigo(int n) { return enemigos[n]; }
+    public void SetAliado(Personaje p, int n) { aliados[n] = p;  }
+    public void SetEnemigo(Personaje p, int n){ enemigos[n] = p; }
+
+    public void PasarTurno()
+    {
+        Turno aux = turnosJugadores.Dequeue();
+        aux.transform.position += new Vector3((turnosJugadores.Count+1) * 120, 0, 0);
+        aux.DesctivarTexto();
+        turnosJugadores.Enqueue(aux);
+
+        foreach (var t in turnosJugadores)
+            t.Deslizar();
+        turnosJugadores.Peek().ActivarTexto();
+    }
+    int GetTurno() { return turnosJugadores.Peek().GetId(); }
+    Personaje GetPersonajeTurno()
+    {
+        int turno = GetTurno();
+        if (turno < nJugadoresPorEquipo)
+        {
+            return aliados[turno];
+        }
+        else
+        {
+            return enemigos[turno - nJugadoresPorEquipo];
+        }
+    }
+    public void Menu()
+    {
+        menuExit.SetActive(!menuExit.activeSelf);
+    }
 }

@@ -8,23 +8,31 @@ public class RandomEnemies : MonoBehaviour
     public GestorPartida gestor;
     public Terreno tablero;
     public Material rojoEnemigo;
-
-    // Start is called before the first frame update
-    void Awake()
+    
+    public void GenerateRandomEnemies()
     {
-        gestor.Init();
         GameManager gm = FindObjectOfType<GameManager>();
         if (gm)
         {
             List<int> enemies = new List<int>();
 
-            for(int i = 0; i < gm.GetNumJugadoresCombate();i++)
+            for (int i = 0; i < gm.GetNumJugadoresCombate(); i++)
             {
                 int x;
                 do
                 {
                     x = Random.Range(0, personajes.Length);
-                } while (enemies.Contains(x));
+                    foreach(var aly in gestor.GetAllAliados())
+                    {
+                        if (aly.id == x)
+                        {
+                            //Debug.Log("Enemigo " + x + ", no es valido");
+                            x = -1; // si ya tenemos un aliado de este tipo, no es valido
+                        }
+                    }
+                } while (x == -1 || enemies.Contains(x));
+
+                //Debug.Log("Enemigo " + x + " valido");
                 enemies.Add(x);
             }
 

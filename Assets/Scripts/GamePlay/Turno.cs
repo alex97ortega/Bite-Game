@@ -30,4 +30,5 @@ public class Turno : MonoBehaviour
     {
         text.gameObject.SetActive(false);
     }
+    public void Deslizar() { transform.position -= new Vector3(120, 0, 0); }
 }

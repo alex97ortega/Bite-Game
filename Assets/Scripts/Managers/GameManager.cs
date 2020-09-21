@@ -69,4 +69,9 @@ public class GameManager : MonoBehaviour
     }
 
     public List<Personaje> GetJugadoresPartida() { return jugadoresPartida; }
+
+    public void ExitGame()
+    {
+        Application.Quit(0);
+    }
 }

@@ -4,11 +4,22 @@ using UnityEngine;
 
 public class MenuManager : MonoBehaviour
 {
-    public GameObject firstMenu, secondMenu;
+    public GameObject mainMenu, menuNumeroJugadores, instrucciones;
 
-    public void ChangeMenus()
+    public void MostrarMenuNumeroJugadores()
     {
-        firstMenu.SetActive(!firstMenu.activeSelf);
-        secondMenu.SetActive(!secondMenu.activeSelf);
+        mainMenu.SetActive(false);
+        menuNumeroJugadores.SetActive(true);
+    }
+    public void MostrarInstrucciones()
+    {
+        mainMenu.SetActive(false);
+        instrucciones.SetActive(true);
+    }
+    public void VolverMenuPrincipal()
+    {
+        mainMenu.SetActive(true);
+        instrucciones.SetActive(false);
+        menuNumeroJugadores.SetActive(false);
     }
 }
