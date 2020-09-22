@@ -4,12 +4,8 @@ using UnityEngine;
 
 public class Casilla : MonoBehaviour
 {
-    private bool ocupada;
-    // Start is called before the first frame update
-    void Start()
-    {
-        ocupada = false;
-    }
+    private bool ocupada = false;
+    private Vector3 cas;
     
     public bool EstaOcupada() { return ocupada; }
     public void Ocupar() { ocupada = true; }
@@ -17,6 +13,8 @@ public class Casilla : MonoBehaviour
 
     public void SetPos(int x, int y, int z)
     {
-        transform.position = new Vector3(x, y, z);
+        cas = new Vector3(x, y, z);
+        transform.position = new Vector3(x*3, y, z*3);
     }
+    public Vector3 GetCas() { return cas; }
 }

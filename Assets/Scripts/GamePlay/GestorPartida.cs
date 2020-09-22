@@ -4,10 +4,11 @@ using UnityEngine;
 
 public class GestorPartida : MonoBehaviour
 {
-    public GameObject menuAcciones, menuExit;
+    public GameObject menuExit;
     public Turno turnoPrefab;
     public Canvas canvas;
     public RandomEnemies randomEnemies;
+    public GestorAcciones gestorAcciones;
 
     Personaje[] aliados;
     Personaje[] enemigos;
@@ -50,24 +51,10 @@ public class GestorPartida : MonoBehaviour
             num++;
             turnosJugadores.Enqueue(aux);
         }
+        gestorAcciones.PreparaTurno();
     }
 
-    // Update is called once per frame
-    void Update()
-    {
-        // gestion de la "IA"
-        // un numero mayor que el numero de personajes por bando significa que pertenece
-        // al bando enemigos. Si no, al de aliados
-        if(GetTurno() >= nJugadoresPorEquipo)
-        {
-            menuAcciones.SetActive(false);
-        }
-        else
-        {
-            menuAcciones.SetActive(true);
-        }
-    }
-
+   
     public void Init()
     {
         gm = FindObjectOfType<GameManager>();
@@ -84,7 +71,7 @@ public class GestorPartida : MonoBehaviour
     public void SetAliado(Personaje p, int n) { aliados[n] = p;  }
     public void SetEnemigo(Personaje p, int n){ enemigos[n] = p; }
 
-    public void PasarTurno()
+    public void SiguienteTurno()
     {
         Turno aux = turnosJugadores.Dequeue();
         aux.transform.position += new Vector3((turnosJugadores.Count+1) * 120, 0, 0);
@@ -95,8 +82,9 @@ public class GestorPartida : MonoBehaviour
             t.Deslizar();
         turnosJugadores.Peek().ActivarTexto();
     }
-    int GetTurno() { return turnosJugadores.Peek().GetId(); }
-    Personaje GetPersonajeTurno()
+    public int GetTurno() { return turnosJugadores.Peek().GetId(); }
+    public int GetNumPersonajesPorEquipo() { return nJugadoresPorEquipo; }
+    public Personaje GetPersonajeTurno()
     {
         int turno = GetTurno();
         if (turno < nJugadoresPorEquipo)

@@ -11,7 +11,8 @@ public class Personaje : MonoBehaviour
     public bool deportista;
     public bool gaymer;
     public bool fumador;
-
+    public int movimientos;
+    
 
     // Start is called before the first frame update
     void Start()
@@ -43,4 +44,6 @@ public class Personaje : MonoBehaviour
         }
     }
     public Sprite GetFoto() { return foto; }
+    public int GetCasillaX() { return casillaX; }
+    public int GetCasillaZ() { return casillaZ; }
 }

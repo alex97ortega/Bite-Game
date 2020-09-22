@@ -8,7 +8,7 @@ public class Terreno : MonoBehaviour
     public Casilla casilla;
     public int filas, columnas;
     public GestorPartida gestor;
-    public Material azulAliado;
+    public Material azulAliado, casillaNormal, casillaAmarilla;
     //private
     private Casilla[,] tablero;
     private GameManager gm;
@@ -25,7 +25,7 @@ public class Terreno : MonoBehaviour
             {
                 tablero[i, j] = Instantiate(casilla);
                 tablero[i, j].transform.SetParent(gameObject.transform);
-                tablero[i, j].SetPos(i * 3, 0, j * 3);
+                tablero[i, j].SetPos(i, 0, j);
             }
         }
 
@@ -53,4 +53,31 @@ public class Terreno : MonoBehaviour
     public Casilla GetCasilla(int x, int z) { return tablero[x, z]; }
     public int GetFilas() { return filas; }
     public int GetColumnas() { return columnas; }
+
+    public void RestauraTablero()
+    {
+        foreach (var c in tablero)
+            c.GetComponent<MeshRenderer>().material = casillaNormal;
+    }
+
+    public void PintaCasillasAmarillas(int casX, int casZ, int distancia)
+    {
+        foreach (var c in tablero)
+        {
+            int posibleDesplazamiento = (int)Mathf.Abs(casX - c.GetCas().x) + (int)Mathf.Abs(casZ - c.GetCas().z);
+            if (posibleDesplazamiento <= distancia)
+            {
+                if(!c.EstaOcupada())
+                    c.GetComponent<MeshRenderer>().material = casillaAmarilla;
+            }
+        }
+    }
+    public bool PuedeMoverACasilla(int casX, int casZ)
+    {
+        if (casX < 0 || casZ < 0)
+            return false;
+        if (casX >= filas || casZ >= columnas)
+            return false;
+        return !tablero[casX, casZ].EstaOcupada();
+    }
 }

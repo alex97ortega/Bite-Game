@@ -1522,6 +1522,7 @@ MonoBehaviour:
   deportista: 0
   gaymer: 0
   fumador: 1
+  movimientos: 3
 --- !u!1 &8734246647905178232
 GameObject:
   m_ObjectHideFlags: 0

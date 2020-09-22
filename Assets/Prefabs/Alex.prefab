@@ -174,11 +174,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 14076573d0c6e6242af89b91168c9810, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  id: 0
   foto: {fileID: 21300000, guid: 432d79339f593ed40be18459741d1876, type: 3}
   chico: 1
   deportista: 1
   gaymer: 1
   fumador: 0
+  movimientos: 5
 --- !u!1 &3124121424652977076
 GameObject:
   m_ObjectHideFlags: 0
