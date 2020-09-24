@@ -6,20 +6,24 @@ using UnityEngine.UI;
 public class GestorInfo : MonoBehaviour
 {
     public GestorPartida gestorPartida;
-    public GameObject menuInfo;
+    public GameObject menuInstrucciones, menuAtaques;
     public Text playerInfo, info1, info2, info3;
 
-    public void ShowInfo()
+    public void ShowInfoAtaques()
     {
-        if (menuInfo.activeSelf)
-            menuInfo.SetActive(false);
+        if (menuAtaques.activeSelf)
+            menuAtaques.SetActive(false);
         else
         {
-            menuInfo.SetActive(true);
+            menuAtaques.SetActive(true);
             playerInfo.text = gestorPartida.GetPersonajeTurno().nombre;
             info1.text = gestorPartida.GetPersonajeTurno().infoAC;
             info2.text = gestorPartida.GetPersonajeTurno().infoAD;
             info3.text = gestorPartida.GetPersonajeTurno().infoAE;
         }
+    }
+    public void ShowInstrucciones()
+    {
+        menuInstrucciones.SetActive(!menuInstrucciones.activeSelf);
     }
 }

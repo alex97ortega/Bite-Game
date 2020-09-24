@@ -215,7 +215,7 @@ MonoBehaviour:
   fumador: 0
   movimientos: 5
   hp: 100
-  infoAC: 'Te da en la cabeza con un apio con queso Philadelphia. '
+  infoAC: 'Da en la cabeza al enemigo que tenga delante con un apio con queso Philadelphia. '
   infoAD: "Hace un saque de padel d\xE1ndole un pelotazo al enemigo indicado."
   infoAE: 'Programador licenciado: Alex hackea su propio juego proporcionando salud
     a todos los aliados y restando salud a todos los enemigos.'

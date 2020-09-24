@@ -1060,7 +1060,8 @@ MonoBehaviour:
   fumador: 0
   movimientos: 3
   hp: 120
-  infoAC: Escupe en el suelo creando un charco alrededor del enemigo que tenga enfrente.
+  infoAC: Escupe en el suelo creando un charco alrededor del enemigo que tenga en
+    frente.
   infoAD: "Usa a un compa\xF1ero que tenga al lado para que cante sobre \xE9l como
     si fuera un micr\xF3fono, haciendo da\xF1o a todos los enemigos y aliados, incluy\xE9ndose
     \xE9l mismo y el que canta. El ataque hace el doble de da\xF1o si el que canta

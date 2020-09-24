@@ -751,14 +751,15 @@ MonoBehaviour:
     m_LineSpacing: 1
   m_Text: "Bite Game es un juego de combates por turnos. Primero has de elegir a
     tus personajes para que luchen contra el equipo enemigo.\n\nEn cada uno de los
-    turnos de cada uno de tus personajes, puedes moverlo una cierta cantidad de casillas
-    con las flechas de la izquierda, y a parte tambi\xE9n puedes:\n- Atacar cuerpo
-    a cuerpo a un enemigo que est\xE9 en una casilla justo al lado.\n- Realizar un
-    ataque a distancia si el enemigo al que quieres atacar est\xE1 dentro del alcance.
-    Esta habilidad se puede hacer una vez cada 2 turnos.\n- Realizar el ataque especial
-    del personaje, que s\xF3lo se podr\xE1 hacer una vez por partida con ese personaje.\n\nPuedes
-    informarte de qu\xE9 hace cada ataque con el bot\xF3n de info.\n\nGana el primer
-    jugador que consiga derribar a todos los enemigos."
+    turnos de cada uno de tus personajes, puedes moverlos una cierta cantidad de
+    casillas con las flechas de la izquierda, y a parte tambi\xE9n puedes:\n- Atacar
+    cuerpo a cuerpo a un enemigo que est\xE9 en una casilla justo en frente.\n- Realizar
+    un ataque a distancia si el enemigo al que quieres atacar est\xE1 dentro del
+    alcance. Esta habilidad se puede hacer una vez cada 2 turnos.\n- Realizar el
+    ataque especial del personaje, que s\xF3lo se podr\xE1 hacer una vez por partida
+    con ese personaje.\n\nPuedes informarte de qu\xE9 hace cada ataque con el bot\xF3n
+    de info en el juego.\n\nGana el primer jugador que consiga derribar a todos los
+    enemigos."
 --- !u!222 &461894576
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -2644,6 +2645,6 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: -0.025390625, y: 0}
-  m_SizeDelta: {x: 0.099975586, y: 0}
+  m_AnchoredPosition: {x: 0, y: 0}
+  m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
