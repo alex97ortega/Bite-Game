@@ -6,7 +6,7 @@ public class GestorPartida : MonoBehaviour
 {
     public GameObject menuExit;
     public Turno turnoPrefab;
-    public Canvas canvas;
+    public GameObject parentTurnos;
     public RandomEnemies randomEnemies;
     public GestorAcciones gestorAcciones;
 
@@ -44,7 +44,7 @@ public class GestorPartida : MonoBehaviour
                 aux.SetProperties(x, aliados[x].GetFoto());
             else
                 aux.SetProperties(x, enemigos[x - nJugadoresPorEquipo].GetFoto());
-            aux.transform.SetParent(canvas.gameObject.transform);
+            aux.transform.SetParent(parentTurnos.gameObject.transform);
             aux.transform.position += new Vector3(num * 120, 0, 0);
             if (num == 0)
                 aux.ActivarTexto();

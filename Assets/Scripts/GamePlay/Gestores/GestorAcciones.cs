@@ -6,9 +6,11 @@ public class GestorAcciones : MonoBehaviour
 {
     public GestorPartida gestorPartida;
     public Terreno tablero;
+    public Camara camara;
     public GameObject menuAcciones;
-    int movimientosEsteTurno;
     public Material aliadoAzul, aliadoAmarillo;
+
+    int movimientosEsteTurno;
 
     public void PreparaTurno()
     {
@@ -19,6 +21,7 @@ public class GestorAcciones : MonoBehaviour
         if (gestorPartida.GetTurno() >= gestorPartida.GetNumPersonajesPorEquipo())
         {
             menuAcciones.SetActive(false);
+            PasarTurno(); // sin ia, quitar
         }
         //aliado
         else
@@ -36,6 +39,7 @@ public class GestorAcciones : MonoBehaviour
         if(gestorPartida.GetTurno() < gestorPartida.GetNumPersonajesPorEquipo())
             gestorPartida.GetPersonajeTurno().SetColor(aliadoAzul);
         gestorPartida.SiguienteTurno();
+        camara.RestauraCamara();
         PreparaTurno();
     }
 
@@ -77,5 +81,24 @@ public class GestorAcciones : MonoBehaviour
             tablero.RestauraTablero();
             tablero.PintaCasillasAmarillas(newPosX, newPosZ, movs- movimientosEsteTurno);
         }
+    }
+
+    public void AtaqueCuerpo()
+    {
+        menuAcciones.SetActive(false);
+        bool isAliado = gestorPartida.GetTurno() < gestorPartida.GetNumPersonajesPorEquipo();
+        camara.EnfocaCamaraAC(gestorPartida.GetPersonajeTurno().transform.position, isAliado);
+    }
+    public void AtaqueDistancia()
+    {
+        menuAcciones.SetActive(false);
+        bool isAliado = gestorPartida.GetTurno() < gestorPartida.GetNumPersonajesPorEquipo();
+        camara.EnfocaCamaraAD(gestorPartida.GetPersonajeTurno().transform.position, isAliado);
+    }
+    public void AtaqueEspecial()
+    {
+        menuAcciones.SetActive(false);
+        bool isAliado = gestorPartida.GetTurno() < gestorPartida.GetNumPersonajesPorEquipo();
+        camara.EnfocaCamaraAE(gestorPartida.GetPersonajeTurno().transform.position, isAliado);
     }
 }
