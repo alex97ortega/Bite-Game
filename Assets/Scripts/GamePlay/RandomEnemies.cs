@@ -45,10 +45,12 @@ public class RandomEnemies : MonoBehaviour
                 {
                     z = Random.Range(0, tablero.GetColumnas());
                 } while (tablero.GetCasilla(0, z).EstaOcupada());
-                tablero.GetCasilla(0, z).Ocupar();
+
+                tablero.GetCasilla(0, z).Ocupar(gestor.GetEnemigo(n));
 
                 gestor.GetEnemigo(n).SetPos(0, z);
                 gestor.GetEnemigo(n).Girar();
+                gestor.GetEnemigo(n).SetEnemigo();
                 gestor.GetEnemigo(n).SetColor(rojoEnemigo);
                 n++;
             }

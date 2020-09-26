@@ -215,8 +215,9 @@ MonoBehaviour:
   fumador: 0
   movimientos: 5
   hp: 100
-  infoAC: 'Da en la cabeza al enemigo que tenga delante con un apio con queso Philadelphia. '
-  infoAD: "Hace un saque de padel d\xE1ndole un pelotazo al enemigo indicado."
+  infoAC: Coge al enemigo que tenga delante, lo mete en una bolas de palomitas y
+    lo mete al microondas.
+  infoAD: Lanza al enemigo indicado un apio con queso Philadelphia.
   infoAE: 'Programador licenciado: Alex hackea su propio juego proporcionando salud
     a todos los aliados y restando salud a todos los enemigos.'
   panelHp: {fileID: 4905750494191280070}
@@ -702,7 +703,7 @@ GameObject:
   - component: {fileID: 3124121425188816521}
   m_Layer: 0
   m_Name: Body
-  m_TagString: Untagged
+  m_TagString: Body
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0

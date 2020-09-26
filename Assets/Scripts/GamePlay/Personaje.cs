@@ -21,10 +21,14 @@ public class Personaje : MonoBehaviour
     public GameObject barraVerdeHp;
 
     protected int initialHp;
+    protected bool aliado = true;
+    protected Vector3 initialRot, initialScale;
 
     void Awake()
     {
         initialHp = hp;
+        initialRot = transform.eulerAngles;
+        initialScale = transform.localScale;
     }
 
     public void SetPos(int x, int z)
@@ -37,6 +41,7 @@ public class Personaje : MonoBehaviour
     {
         transform.Rotate(0, 180, 0);
         panelHp.transform.Rotate(180, 0, 0);
+        initialRot = transform.eulerAngles;
     }
     public void SetColor(Material color)
     {
@@ -48,5 +53,18 @@ public class Personaje : MonoBehaviour
     }
     public Sprite GetFoto() { return foto; }
     public int GetCasillaX() { return casillaX; }
-    public int GetCasillaZ() { return casillaZ; }    
+    public int GetCasillaZ() { return casillaZ; }
+    public void SetEnemigo() { aliado = false; }
+    public bool IsAliado() { return aliado; }
+
+    public virtual bool AnimacionAM(Personaje objetivo) { return false; }
+    public virtual bool AnimacionAD(Personaje objetivo) { return false; }
+    public virtual bool AnimacionAE(Personaje objetivo) { return false; }
+
+    public void RestauraPropiedades()
+    {
+        transform.position = new Vector3(casillaX * 3, 0, casillaZ * 3);
+        transform.eulerAngles = initialRot;
+        transform.localScale = initialScale;
+    }
 }

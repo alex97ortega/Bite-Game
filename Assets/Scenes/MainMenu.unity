@@ -758,8 +758,9 @@ MonoBehaviour:
     alcance. Esta habilidad se puede hacer una vez cada 2 turnos.\n- Realizar el
     ataque especial del personaje, que s\xF3lo se podr\xE1 hacer una vez por partida
     con ese personaje.\n\nPuedes informarte de qu\xE9 hace cada ataque con el bot\xF3n
-    de info en el juego.\n\nGana el primer jugador que consiga derribar a todos los
-    enemigos."
+    de info en el juego. Algunos ataques hacen el doble o la mitad de da\xF1o dependiendo
+    del ataque y del enemigo al que se le haga.\n\nGana el primer jugador que consiga
+    derribar a todos los enemigos."
 --- !u!222 &461894576
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -850,7 +851,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 162114819}
+      - m_Target: {fileID: 1317516126}
         m_MethodName: ExitGame
         m_Mode: 1
         m_Arguments:

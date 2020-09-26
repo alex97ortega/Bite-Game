@@ -42,7 +42,8 @@ public class Terreno : MonoBehaviour
                 {
                     z = Random.Range(0, columnas);
                 } while (tablero[filas - 1, z].EstaOcupada());
-                tablero[filas-1, z].Ocupar();
+
+                tablero[filas-1, z].Ocupar(gestor.GetAliado(n));
 
                 gestor.GetAliado(n).SetPos(filas - 1, z);
                 gestor.GetAliado(n).SetColor(azulAliado);

@@ -6,10 +6,21 @@ public class Casilla : MonoBehaviour
 {
     private bool ocupada = false;
     private Vector3 cas;
+    private Personaje personajeCasilla;
     
     public bool EstaOcupada() { return ocupada; }
-    public void Ocupar() { ocupada = true; }
-    public void Desocupar() { ocupada = false; }
+
+    public void Ocupar(Personaje p)
+    {
+        ocupada = true;
+        personajeCasilla = p;
+    }
+
+    public void Desocupar()
+    {
+        ocupada = false;
+        personajeCasilla = null;
+    }
 
     public void SetPos(int x, int y, int z)
     {
@@ -17,4 +28,5 @@ public class Casilla : MonoBehaviour
         transform.position = new Vector3(x*3, y, z*3);
     }
     public Vector3 GetCas() { return cas; }
+    public Personaje GetPersonajeCasilla() { return personajeCasilla; }
 }

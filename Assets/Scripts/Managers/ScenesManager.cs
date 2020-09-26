@@ -21,4 +21,9 @@ public class ScenesManager : MonoBehaviour
         else
             Debug.Log("No hay GM!!");
     }
+
+    public void ExitGame()
+    {
+        Application.Quit(0);
+    }
 }

@@ -297,7 +297,7 @@ GameObject:
   - component: {fileID: 1993801122477999078}
   m_Layer: 0
   m_Name: Body
-  m_TagString: Untagged
+  m_TagString: Body
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -311,7 +311,7 @@ Transform:
   m_GameObject: {fileID: 1993801122477999076}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 2, z: 0}
-  m_LocalScale: {x: 0.8500001, y: 0.7, z: 0.5}
+  m_LocalScale: {x: 0.8500001, y: 1.28, z: 0.5}
   m_Children: []
   m_Father: {fileID: 9047870565433089249}
   m_RootOrder: 1
@@ -323,7 +323,7 @@ MeshFilter:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1993801122477999076}
-  m_Mesh: {fileID: 10208, guid: 0000000000000000e000000000000000, type: 0}
+  m_Mesh: {fileID: 10207, guid: 0000000000000000e000000000000000, type: 0}
 --- !u!23 &1993801122477999097
 MeshRenderer:
   m_ObjectHideFlags: 0
@@ -962,14 +962,15 @@ MonoBehaviour:
   fumador: 0
   movimientos: 4
   hp: 120
-  infoAC: Golpe de escayola.
-  infoAD: "Se convierte en una bola enorme y rueda haciendo da\xF1o a todos los enemigos
-    que haya en l\xEDnea recta."
+  infoAC: Se convierte en una bola enorme y aplasta al jugador que tenga delante.
+  infoAD: Lanza un pelotazo al enemigo indicado. 40% de probabilidad de esquivar
+    el ataque jugadores deportistas.
   infoAE: "La marmota se va a dormir: Gonzalo vuelve a su casilla inicial, recobra
     su vida entera y es inmune durante 2 turnos, pero no puede realizar ninguna acci\xF3n
     por ese tiempo."
   panelHp: {fileID: 8257873720359699819}
   barraVerdeHp: {fileID: 9208992573614745160}
+  body: {fileID: 1993801122477999079}
 --- !u!1 &1993801123803007884
 GameObject:
   m_ObjectHideFlags: 0
