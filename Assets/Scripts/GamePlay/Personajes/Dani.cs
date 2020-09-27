@@ -5,52 +5,42 @@ using UnityEngine;
 public class Dani : Personaje
 {
     public Transform cabesa, torso;
+    public AudioSource golpe;
+    AudioSource musicaFondo;
     Vector3 initialCabesaScale;
     Vector3 initialTorsoRot;
     float avanzado = 0;
 
     private void Start()
     {
+        musicaFondo = FindObjectOfType<Camara>().GetComponentInChildren<AudioSource>();
         initialCabesaScale = cabesa.localScale;
         initialTorsoRot = torso.eulerAngles;
     }
 
     public override bool AnimacionAM(Personaje objetivo)
     {
-        if (cabesa.localScale.x < 4)
+        if (cabesa.localScale.x < 4.5f)
         {
+            musicaFondo.Pause();
+            PlaySonidoAM();
             panelHp.SetActive(false);
-            cabesa.localScale += new Vector3(0.02f, 0.02f, 0.008f);
-            cabesa.position += new Vector3(0, 0.007f, 0);
+            cabesa.localScale += new Vector3(0.4f*Time.deltaTime, 0.4f * Time.deltaTime, 0.16f * Time.deltaTime);
+            cabesa.position += new Vector3(0, 0.15f * Time.deltaTime, 0);
         }
         else
         {
-            if (aliado)
+            if (avanzado < 80)
             {
-                if (avanzado < 80)
-                {
-                    avanzado += 10;
-                    torso.eulerAngles -= new Vector3(10, 0, 0);
-                }
-                else
-                {
-                    Restaura();
-                    return true;
-                }
+                avanzado +=10;
+                torso.eulerAngles -= new Vector3(10, 0, 0);
             }
-            //enemigo
             else
             {
-                if (avanzado < 80)
-                {
-                    avanzado += 10;
-                    torso.eulerAngles -= new Vector3(10, 0, 0);
-                }
-                else
-                {
-                    Restaura();
-                    return true;
-                }
+                Restaura();
+                golpe.Play();
+                musicaFondo.Play();
+                return true;
             }
         }
         return false;

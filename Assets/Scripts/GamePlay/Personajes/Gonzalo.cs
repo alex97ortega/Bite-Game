@@ -20,7 +20,8 @@ public class Gonzalo : Personaje
     {
         if (body.localScale.x < 4)
         {
-            body.localScale += new Vector3(0.05f, 0.043f, 0.055f);
+            PlaySonidoAM();
+            body.localScale += new Vector3(1.25f*Time.deltaTime, 1.0f * Time.deltaTime, 1.6f * Time.deltaTime);
             panelHp.SetActive(false);
             guardaPos = transform.position;
         }
@@ -28,12 +29,12 @@ public class Gonzalo : Personaje
         {
             if(aliado)
             {
-                if(avanzado < 6)
+                if(avanzado < 1)
                 {
-                    avanzado += 0.08f;
-                    transform.position -= new Vector3(0.08f, 0, 0);
+                    avanzado += Time.deltaTime;
+                    transform.position -= new Vector3(0.2f, 0, 0);
                     body.eulerAngles -= new Vector3(10, 0, 0);
-                    if (avanzado > 2)
+                    if (avanzado > 0.5f)
                     {
                         objetivo.RestauraPropiedades();
                         objetivo.transform.position += new Vector3(1.5f, 0.2f, 0);
@@ -50,12 +51,12 @@ public class Gonzalo : Personaje
             //enemigo
             else
             {
-                if (avanzado < 6)
+                if (avanzado < 1)
                 {
-                    avanzado += 0.08f;
-                    transform.position += new Vector3(0.08f, 0, 0);
+                    avanzado += Time.deltaTime;
+                    transform.position += new Vector3(0.2f, 0, 0);
                     body.eulerAngles += new Vector3(10, 0, 0);
-                    if(avanzado > 2)
+                    if(avanzado > 0.5f)
                     {
                         objetivo.RestauraPropiedades();
                         objetivo.transform.position += new Vector3(-1.5f, 0.2f, 0);

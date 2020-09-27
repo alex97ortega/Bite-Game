@@ -19,6 +19,7 @@ public class Personaje : MonoBehaviour
 
     public GameObject panelHp;
     public GameObject barraVerdeHp;
+    public AudioSource sonidoAM, sonidoAD, sonidoAE;
 
     protected int initialHp;
     protected bool aliado = true;
@@ -66,5 +67,21 @@ public class Personaje : MonoBehaviour
         transform.position = new Vector3(casillaX * 3, 0, casillaZ * 3);
         transform.eulerAngles = initialRot;
         transform.localScale = initialScale;
+    }
+
+    public void PlaySonidoAM()
+    {
+        if(!sonidoAM.isPlaying)
+            sonidoAM.Play();
+    }
+    public void PlaySonidoAD()
+    {
+        if (!sonidoAD.isPlaying)
+            sonidoAD.Play();
+    }
+    public void PlaySonidoAE()
+    {
+        if (!sonidoAE.isPlaying)
+            sonidoAE.Play();
     }
 }

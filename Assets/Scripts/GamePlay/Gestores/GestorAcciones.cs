@@ -106,6 +106,9 @@ public class GestorAcciones : MonoBehaviour
             return;
 
         objetivo = tablero.GetCasilla(casillObjX, casillaObjZ).GetPersonajeCasilla();
+        if (objetivo.IsAliado() == gestorPartida.GetPersonajeTurno().IsAliado())
+            return;
+
         menuAcciones.SetActive(false);
 
         if(gestorPartida.GetPersonajeTurno().nombre == "Dani")

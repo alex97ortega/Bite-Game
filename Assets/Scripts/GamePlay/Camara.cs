@@ -37,12 +37,12 @@ public class Camara : MonoBehaviour
         transform.position = playerPos;
         if (isAliado)
         {
-            transform.position += new Vector3(-4, 4, -3f);
+            transform.position += new Vector3(-4, 4.5f, -3f);
             transform.eulerAngles = new Vector3(25, 50, 0);
         }
         else
         {
-            transform.position += new Vector3(3, 4, -2.5f);
+            transform.position += new Vector3(3, 4.5f, -2.5f);
             transform.eulerAngles = new Vector3(25, -50, 0);
         }
     }
