@@ -40,6 +40,7 @@ public class Reygon : Personaje
             else if(avanzado > 1)
             {
                 Restaura();
+                objetivo.HacerDanyo(dmgAM);
                 return true;
             }
         }

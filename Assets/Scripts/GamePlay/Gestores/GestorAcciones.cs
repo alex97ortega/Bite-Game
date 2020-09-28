@@ -22,6 +22,12 @@ public class GestorAcciones : MonoBehaviour
         movimientosEsteTurno = 0;
         objetivo = null;
 
+        if(gestorPartida.GetPersonajeTurno().EstaMuerto())
+        {
+            PasarTurno();
+            return;
+        }
+
         // enemigo
         if (!gestorPartida.GetPersonajeTurno().IsAliado())
         {

@@ -38,6 +38,7 @@ public class Dani : Personaje
             else
             {
                 Restaura();
+                objetivo.HacerDanyo(dmgAM);
                 golpe.Play();
                 musicaFondo.Play();
                 return true;

@@ -219,13 +219,16 @@ MonoBehaviour:
   fumador: 0
   movimientos: 5
   hp: 100
+  dmgAM: 15
+  dmgAD: 0
+  dmgAE: 0
   infoAC: Coge al enemigo que tenga delante, lo mete en una bolas de palomitas y
     lo mete al microondas.
   infoAD: Lanza al enemigo indicado un apio con queso Philadelphia.
   infoAE: 'Programador licenciado: Alex hackea su propio juego proporcionando salud
     a todos los aliados y restando salud a todos los enemigos.'
   panelHp: {fileID: 4905750494191280070}
-  barraVerdeHp: {fileID: 7568331816639006073}
+  barraVerdeHp: {fileID: 8300240014451312671}
   sonidoAM: {fileID: -6255362466771530876}
   sonidoAD: {fileID: 3528091360038473773}
   sonidoAE: {fileID: -2221638544474307017}
@@ -246,7 +249,7 @@ AudioSource:
   OutputAudioMixerGroup: {fileID: 0}
   m_audioClip: {fileID: 8300000, guid: db3a56d931e77e04d907a21423319ae0, type: 3}
   m_PlayOnAwake: 0
-  m_Volume: 1
+  m_Volume: 0.6
   m_Pitch: 1
   Loop: 0
   Mute: 0
@@ -1618,7 +1621,7 @@ Transform:
   m_LocalScale: {x: 0.05, y: 1, z: 0.3}
   m_Children:
   - {fileID: 2885350861697594096}
-  - {fileID: 2432845658651027773}
+  - {fileID: 5199428332527318357}
   m_Father: {fileID: 3124121424425702722}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: -90}
@@ -1790,6 +1793,7 @@ GameObject:
   - component: {fileID: 3779226759898492045}
   - component: {fileID: 4448671092376189762}
   - component: {fileID: 8603841469567136862}
+  - component: {fileID: 8916661250792044911}
   m_Layer: 0
   m_Name: Barra
   m_TagString: Hp
@@ -1805,11 +1809,11 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 7568331816639006073}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -0, y: 0.01, z: 0}
-  m_LocalScale: {x: 0.6, y: 1, z: 0.9}
+  m_LocalPosition: {x: 0, y: 0.0100000035, z: 4.43}
+  m_LocalScale: {x: 0.6000001, y: 1, z: 0.9}
   m_Children: []
-  m_Father: {fileID: 6352688602016418748}
-  m_RootOrder: 1
+  m_Father: {fileID: 5199428332527318357}
+  m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: -90}
 --- !u!33 &3779226759898492045
 MeshFilter:
@@ -1872,3 +1876,49 @@ MeshCollider:
   m_Convex: 0
   m_CookingOptions: 30
   m_Mesh: {fileID: 10209, guid: 0000000000000000e000000000000000, type: 0}
+--- !u!114 &8916661250792044911
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7568331816639006073}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bc792ce5653d7bc428a52d1faf02c603, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  verde: {fileID: 2100000, guid: 1aa997e2ca784ad44882eed9043f9744, type: 2}
+  amarillo: {fileID: 2100000, guid: 7ab5881eabdc9494b84317cab0e58466, type: 2}
+  rojo: {fileID: 2100000, guid: 1b2acc895a3046b469409ba6a5569e8f, type: 2}
+--- !u!1 &8300240014451312671
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 5199428332527318357}
+  m_Layer: 0
+  m_Name: Constraint
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &5199428332527318357
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8300240014451312671}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: -4.5}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children:
+  - {fileID: 2432845658651027773}
+  m_Father: {fileID: 6352688602016418748}
+  m_RootOrder: 1
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}

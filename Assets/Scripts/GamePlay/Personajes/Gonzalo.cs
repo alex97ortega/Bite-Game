@@ -36,15 +36,14 @@ public class Gonzalo : Personaje
                     body.eulerAngles -= new Vector3(10, 0, 0);
                     if (avanzado > 0.5f)
                     {
-                        objetivo.RestauraPropiedades();
-                        objetivo.transform.position += new Vector3(1.5f, 0.2f, 0);
-                        objetivo.transform.eulerAngles += new Vector3(90, 0, 0);
+                        objetivo.Tumbar();
                     }
                 }
                 else
                 {
                     Restaura();
                     objetivo.RestauraPropiedades();
+                    objetivo.HacerDanyo(dmgAM);
                     return true;
                 }
             }
@@ -58,15 +57,14 @@ public class Gonzalo : Personaje
                     body.eulerAngles += new Vector3(10, 0, 0);
                     if(avanzado > 0.5f)
                     {
-                        objetivo.RestauraPropiedades();
-                        objetivo.transform.position += new Vector3(-1.5f, 0.2f, 0);
-                        objetivo.transform.eulerAngles += new Vector3(90, 0, 0);
+                        objetivo.Tumbar();
                     }
                 }
                 else
                 {
                     Restaura();
                     objetivo.RestauraPropiedades();
+                    objetivo.HacerDanyo(dmgAM);
                     return true;
                 }
             }

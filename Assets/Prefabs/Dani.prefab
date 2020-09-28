@@ -780,12 +780,15 @@ MonoBehaviour:
   fumador: 0
   movimientos: 4
   hp: 100
+  dmgAM: 25
+  dmgAD: 0
+  dmgAE: 0
   infoAC: Golpe planetoide al que tenga delante.
   infoAD: "Lanza su antiguo m\xF3vil ladrillo al enemigo que se indique."
   infoAE: "Ulti de esteroides: Dani se toma un aquarius y aumenta su da\xF1o el doble
     por 2 turnos m\xE1s. Tambi\xE9n puede moverse por todo el mapa durante ese tiempo."
   panelHp: {fileID: 5810137288524042913}
-  barraVerdeHp: {fileID: 3210023295796009937}
+  barraVerdeHp: {fileID: 4758141630497605868}
   sonidoAM: {fileID: 2087483233110121296}
   sonidoAD: {fileID: 5512943300167070913}
   sonidoAE: {fileID: 4118673193528495975}
@@ -1678,7 +1681,7 @@ TextMesh:
   m_Color:
     serializedVersion: 2
     rgba: 4287168509
---- !u!1 &3210023295796009937
+--- !u!1 &4483872108755734382
 GameObject:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -1686,10 +1689,11 @@ GameObject:
   m_PrefabAsset: {fileID: 0}
   serializedVersion: 6
   m_Component:
-  - component: {fileID: 4412519675090244728}
-  - component: {fileID: 6356541328551463084}
-  - component: {fileID: 3377272763469145304}
-  - component: {fileID: 4589842905636759999}
+  - component: {fileID: 8308825702782415062}
+  - component: {fileID: 1404221372030236507}
+  - component: {fileID: 7319091377429824304}
+  - component: {fileID: 3099190110428301224}
+  - component: {fileID: 9042566387245519837}
   m_Layer: 0
   m_Name: Barra
   m_TagString: Hp
@@ -1697,35 +1701,35 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!4 &4412519675090244728
+--- !u!4 &8308825702782415062
 Transform:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3210023295796009937}
+  m_GameObject: {fileID: 4483872108755734382}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -0, y: 0.01, z: 0}
-  m_LocalScale: {x: 0.6, y: 1, z: 0.9}
+  m_LocalPosition: {x: 0, y: 0.0100000035, z: 4.43}
+  m_LocalScale: {x: 0.6000001, y: 1, z: 0.9}
   m_Children: []
-  m_Father: {fileID: 123638293920942692}
-  m_RootOrder: 1
+  m_Father: {fileID: 7977881101013479985}
+  m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: -90}
---- !u!33 &6356541328551463084
+--- !u!33 &1404221372030236507
 MeshFilter:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3210023295796009937}
+  m_GameObject: {fileID: 4483872108755734382}
   m_Mesh: {fileID: 10209, guid: 0000000000000000e000000000000000, type: 0}
---- !u!23 &3377272763469145304
+--- !u!23 &7319091377429824304
 MeshRenderer:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3210023295796009937}
+  m_GameObject: {fileID: 4483872108755734382}
   m_Enabled: 1
   m_CastShadows: 1
   m_ReceiveShadows: 1
@@ -1758,13 +1762,13 @@ MeshRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
---- !u!64 &4589842905636759999
+--- !u!64 &3099190110428301224
 MeshCollider:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3210023295796009937}
+  m_GameObject: {fileID: 4483872108755734382}
   m_Material: {fileID: 0}
   m_IsTrigger: 0
   m_Enabled: 1
@@ -1772,6 +1776,52 @@ MeshCollider:
   m_Convex: 0
   m_CookingOptions: 30
   m_Mesh: {fileID: 10209, guid: 0000000000000000e000000000000000, type: 0}
+--- !u!114 &9042566387245519837
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4483872108755734382}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bc792ce5653d7bc428a52d1faf02c603, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  verde: {fileID: 2100000, guid: 1aa997e2ca784ad44882eed9043f9744, type: 2}
+  amarillo: {fileID: 2100000, guid: 7ab5881eabdc9494b84317cab0e58466, type: 2}
+  rojo: {fileID: 2100000, guid: 1b2acc895a3046b469409ba6a5569e8f, type: 2}
+--- !u!1 &4758141630497605868
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 7977881101013479985}
+  m_Layer: 0
+  m_Name: Constraint
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &7977881101013479985
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4758141630497605868}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: -0, z: -4.5}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children:
+  - {fileID: 8308825702782415062}
+  m_Father: {fileID: 123638293920942692}
+  m_RootOrder: 1
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &5810137288524042913
 GameObject:
   m_ObjectHideFlags: 0
@@ -1803,7 +1853,7 @@ Transform:
   m_LocalScale: {x: 0.055555556, y: 1.111111, z: 0.31}
   m_Children:
   - {fileID: 1864470506481763652}
-  - {fileID: 4412519675090244728}
+  - {fileID: 7977881101013479985}
   m_Father: {fileID: 1428302621687902556}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: -90}

@@ -14,6 +14,7 @@ public class Personaje : MonoBehaviour
     public bool fumador;
     public int movimientos;
     public int hp;
+    public int dmgAM, dmgAD, dmgAE;
 
     public string infoAC, infoAD, infoAE;
 
@@ -23,6 +24,7 @@ public class Personaje : MonoBehaviour
 
     protected int initialHp;
     protected bool aliado = true;
+    protected bool muerto = false;
     protected Vector3 initialRot, initialScale;
 
     void Awake()
@@ -64,9 +66,17 @@ public class Personaje : MonoBehaviour
 
     public void RestauraPropiedades()
     {
+        panelHp.SetActive(true);
         transform.position = new Vector3(casillaX * 3, 0, casillaZ * 3);
         transform.eulerAngles = initialRot;
         transform.localScale = initialScale;
+    }
+
+    public void Tumbar()
+    {
+        panelHp.SetActive(false);
+        transform.position = new Vector3(casillaX * 3, 0, casillaZ * 3) + new Vector3(1.5f, 0.2f, 0);
+        transform.eulerAngles = initialRot + new Vector3(90, 0, 0);
     }
 
     public void PlaySonidoAM()
@@ -84,4 +94,24 @@ public class Personaje : MonoBehaviour
         if (!sonidoAE.isPlaying)
             sonidoAE.Play();
     }
+
+    public void HacerDanyo(int dmg)
+    {
+        hp -= dmg;
+        if (hp <= 0)
+        {
+            hp = 0;
+            muerto = true;
+            Tumbar();
+        }
+
+        float relation = (float)hp / (float)initialHp;
+        barraVerdeHp.transform.localScale = new Vector3(1, 1, relation);
+        if (relation < 0.3f)
+            barraVerdeHp.GetComponentInChildren<BarraVida>().CambiaRojo();
+        else if (relation < 0.6f)
+            barraVerdeHp.GetComponentInChildren<BarraVida>().CambiaAmarillo();
+    }
+
+    public bool EstaMuerto() { return muerto; }
 }

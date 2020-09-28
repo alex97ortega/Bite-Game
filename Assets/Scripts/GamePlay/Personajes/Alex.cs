@@ -48,6 +48,7 @@ public class Alex : Personaje
                 if(avanzado>3.5f)
                 {
                     objetivo.gameObject.SetActive(true);
+                    objetivo.HacerDanyo(dmgAM);
                     Restaura();
                     return true;
                 }

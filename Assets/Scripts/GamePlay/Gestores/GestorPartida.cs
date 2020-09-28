@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class GestorPartida : MonoBehaviour
 {
-    public GameObject menuExit;
+    public GameObject menuExit, menuVictory, menuGameOver;
     public Turno turnoPrefab;
     public GameObject parentTurnos;
     public RandomEnemies randomEnemies;
@@ -81,7 +81,49 @@ public class GestorPartida : MonoBehaviour
         foreach (var t in turnosJugadores)
             t.Deslizar();
         turnosJugadores.Peek().ActivarTexto();
+
+        // gestionamos los jugadores muertos, para calaveras y para ver si acabamos la partida
+        // aliados
+        bool todosMuertos = true;
+        for (int i = 0; i < nJugadoresPorEquipo ; i++)
+        {
+            if (aliados[i].EstaMuerto())
+            {
+                foreach (var x in turnosJugadores)
+                {
+                    if (x.GetId() == i)
+                        x.PonerCalavera();
+                }
+            }
+            else
+                todosMuertos = false;
+        }
+        if(todosMuertos)
+        {
+            menuGameOver.SetActive(true);
+            return;
+        }
+
+        todosMuertos = true;
+        // enemigos
+        for (int i = 0; i < nJugadoresPorEquipo; i++)
+        {
+            if (enemigos[i].EstaMuerto())
+            {
+                foreach (var x in turnosJugadores)
+                {
+                    if (x.GetId() == i + nJugadoresPorEquipo)
+                        x.PonerCalavera();
+                }
+            }
+            else
+                todosMuertos = false;
+        }
+        if (todosMuertos)
+            menuVictory.SetActive(true);
     }
+
+
     public int GetTurno() { return turnosJugadores.Peek().GetId(); }
     public int GetNumPersonajesPorEquipo() { return nJugadoresPorEquipo; }
     public Personaje GetPersonajeTurno()

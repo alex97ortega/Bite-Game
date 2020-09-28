@@ -5,7 +5,7 @@ using UnityEngine.UI;
 
 public class Turno : MonoBehaviour
 {
-    public Image colorAzul, colorRojo,foto;
+    public Image colorAzul, colorRojo, foto, calavera;
     public Text text;
     int id;
     
@@ -31,4 +31,5 @@ public class Turno : MonoBehaviour
         text.gameObject.SetActive(false);
     }
     public void Deslizar() { transform.position -= new Vector3(120, 0, 0); }
+    public void PonerCalavera() { calavera.gameObject.SetActive(true); }
 }
