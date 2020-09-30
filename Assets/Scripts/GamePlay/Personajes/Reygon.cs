@@ -6,6 +6,8 @@ public class Reygon : Personaje
 {
     public Transform torso;
     public GameObject escupitajoPrefab;
+    public ParticleSystem pedaco;
+
     Vector3 initialTorsoRot;
     float avanzado = 0;
     bool creadoEscupitajo = false;
@@ -54,6 +56,22 @@ public class Reygon : Personaje
 
     public override bool AnimacionAE(Personaje objetivo)
     {
+        if(avanzado==0)
+        {
+            avanzado++;
+            PlaySonidoAE();
+            ParticleSystem pedo = Instantiate(pedaco);
+            pedo.gameObject.transform.position = transform.position + new Vector3(0, 1.5f, 0);
+        }
+        else
+        {
+            if(!sonidoAE.isPlaying)
+            {
+                avanzado = 0;
+                jugadaUlti = true;
+                return true;
+            }
+        }
         return false;
     }
 

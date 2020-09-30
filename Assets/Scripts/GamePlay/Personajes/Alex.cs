@@ -4,10 +4,10 @@ using UnityEngine;
 
 public class Alex : Personaje
 {
-    public GameObject palomitasPrefab, microondasPrefab;
+    public GameObject palomitasPrefab, microondasPrefab, apioPrefab;
     public AudioSource sonidoMicro;
     float avanzado = 0;
-    GameObject palomitas, microondas;
+    GameObject palomitas, microondas, apio;
     
     public override bool AnimacionAM(Personaje objetivo)
     {
@@ -59,6 +59,20 @@ public class Alex : Personaje
 
     public override bool AnimacionAD(Personaje objetivo)
     {
+        if(apio== null)
+        {
+            apio = Instantiate(apioPrefab);
+            if(aliado)
+            {
+                apio.transform.position = transform.position + new Vector3(0,2.1f, -1.1f);
+                apio.transform.eulerAngles += new Vector3(15, 0, 0);
+            }
+            else
+            {
+                apio.transform.position = transform.position + new Vector3(0, 2.1f, 1.1f);
+                apio.transform.eulerAngles += new Vector3(-15, 0, 0);
+            }
+        }
         return false;
     }
 

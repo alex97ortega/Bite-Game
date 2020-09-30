@@ -1051,6 +1051,7 @@ MonoBehaviour:
   torso: {fileID: 7708293242467862133}
   escupitajoPrefab: {fileID: 1727224877516525829, guid: acd31e833c7318f46bef3d00d7072a13,
     type: 3}
+  pedaco: {fileID: 7648801637047536206, guid: 944fcfb4f2ce9b4478023bc443f14af3, type: 3}
 --- !u!82 &5942830039393054712
 AudioSource:
   m_ObjectHideFlags: 0
@@ -1253,7 +1254,7 @@ AudioSource:
   m_Enabled: 1
   serializedVersion: 4
   OutputAudioMixerGroup: {fileID: 0}
-  m_audioClip: {fileID: 0}
+  m_audioClip: {fileID: 8300000, guid: 09c61aa7b018ef843bfeb6274a551138, type: 3}
   m_PlayOnAwake: 0
   m_Volume: 1
   m_Pitch: 1

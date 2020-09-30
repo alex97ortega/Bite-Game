@@ -25,6 +25,7 @@ public class Personaje : MonoBehaviour
     protected int initialHp;
     protected bool aliado = true;
     protected bool muerto = false;
+    protected bool jugadaUlti = false;
     protected Vector3 initialRot, initialScale;
 
     void Awake()
@@ -114,4 +115,5 @@ public class Personaje : MonoBehaviour
     }
 
     public bool EstaMuerto() { return muerto; }
+    public bool HaJugadoUlti() { return jugadaUlti; }
 }

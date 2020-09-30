@@ -133,6 +133,9 @@ public class GestorAcciones : MonoBehaviour
     }
     public void AtaqueEspecial()
     {
+        if (gestorPartida.GetPersonajeTurno().HaJugadoUlti())
+            return;
+
         menuAcciones.SetActive(false);
         bool isAliado = gestorPartida.GetTurno() < gestorPartida.GetNumPersonajesPorEquipo();
         camara.EnfocaCamaraAE(gestorPartida.GetPersonajeTurno().transform.position, isAliado);
