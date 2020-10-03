@@ -5,8 +5,11 @@ using UnityEngine;
 public class Sergio : Personaje
 {
     public Ropa ropaPrefab;
+    public GameObject cajaPizzaPrefab;
+    public Transform brazoIzq, brazoDch;
     Vector3 initialTorsoRot;
     List<Ropa> ropaRegalada;
+    GameObject cajaPizza;
     float avanzado = 0;
     float acum = 0;
 
@@ -53,6 +56,44 @@ public class Sergio : Personaje
 
     public override bool AnimacionAE(Personaje objetivo)
     {
+        if (cajaPizza == null)
+        {
+            //PlaySonidoAE();
+            cajaPizza = Instantiate(cajaPizzaPrefab);
+            cajaPizza.transform.position = transform.position;
+            brazoDch.eulerAngles += new Vector3(0, -80, 0);
+            brazoIzq.eulerAngles += new Vector3(0, 80, 0);
+
+            if (aliado)
+            {
+                brazoDch.position += new Vector3(-0.3f, 0, -0.2f);
+                brazoIzq.position += new Vector3(-0.3f, 0, 0.2f);
+            }
+            else
+            {
+                brazoDch.position += new Vector3(0.3f, 0, 0.2f);
+                brazoIzq.position += new Vector3(0.3f, 0, -0.2f);
+            }
+        }
+        else if(cajaPizza.GetComponent<CajaPizza>().Finished())
+        {
+            brazoDch.eulerAngles -= new Vector3(0, -80, 0);
+            brazoIzq.eulerAngles -= new Vector3(0, 80, 0);
+            if (aliado)
+            {
+                brazoDch.position -= new Vector3(-0.3f, 0, -0.2f);
+                brazoIzq.position -= new Vector3(-0.3f, 0, 0.2f);
+            }
+            else
+            {
+                brazoDch.position -= new Vector3(0.3f, 0, 0.2f);
+                brazoIzq.position -= new Vector3(0.3f, 0, -0.2f);
+            }
+            Restaura();
+            Curar(initialHp);
+            jugadaUlti = true;
+            return true;
+        }
         return false;
     }
 
@@ -64,5 +105,7 @@ public class Sergio : Personaje
         foreach (var r in ropaRegalada)
             Destroy(r.gameObject);
         ropaRegalada.Clear();
+        if (cajaPizza != null)
+            Destroy(cajaPizza);
     }
 }

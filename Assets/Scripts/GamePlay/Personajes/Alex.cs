@@ -4,10 +4,12 @@ using UnityEngine;
 
 public class Alex : Personaje
 {
-    public GameObject palomitasPrefab, microondasPrefab, apioPrefab;
+    public GameObject palomitasPrefab, microondasPrefab, apioPrefab, sillaPrefab, ordenadorPrefab;
+    public Transform piernas, rodillas, brazoIzq, brazoDch;
     public AudioSource sonidoMicro;
     float avanzado = 0;
-    GameObject palomitas, microondas, apio;
+    GameObject palomitas, microondas, apio, silla, ordenador;
+    bool sentado = false;
     
     public override bool AnimacionAM(Personaje objetivo)
     {
@@ -78,6 +80,100 @@ public class Alex : Personaje
 
     public override bool AnimacionAE(Personaje objetivo)
     {
+        if (avanzado < 0.5f)
+        {
+            if(silla == null)
+            {
+                panelHp.SetActive(false);
+                PlaySonidoAE();
+                silla = Instantiate(sillaPrefab);
+                silla.transform.position = transform.position;
+                if(aliado)
+                {
+                    transform.position -= new Vector3(0.2f, 0, 0);
+                }
+                else
+                {
+                    silla.transform.eulerAngles += new Vector3(0, 180, 0);
+                    transform.position += new Vector3(0.2f, 0, 0);
+                }
+
+            }
+            avanzado += Time.deltaTime;
+        }
+        else
+        {
+            if(!sentado)
+            {
+                sentado = true;
+                piernas.eulerAngles += new Vector3(75, 0, 0);
+                rodillas.eulerAngles += new Vector3(-50, 0, 0);
+                if(aliado)
+                    transform.position += new Vector3(0.7f, -0.5f, 0);
+                else
+                    transform.position += new Vector3(-0.7f, -0.5f, 0);
+            }
+            else if(!sonidoAE.isPlaying)
+            {
+                piernas.eulerAngles += new Vector3(-75, 0, 0);
+                rodillas.eulerAngles += new Vector3(50, 0, 0);
+
+                brazoDch.eulerAngles -= new Vector3(0, -80, 0);
+                brazoIzq.eulerAngles -= new Vector3(0, 80, 0);
+
+                if (aliado)
+                {
+                    transform.position += new Vector3(-0.5f, 0.5f, 0);
+
+                    brazoDch.position -= new Vector3(-0.4f, 0, -0.3f);
+                    brazoIzq.position -= new Vector3(-0.4f, 0, 0.3f);
+
+                    foreach (var p in FindObjectOfType<GestorPartida>().GetAllEnemigos())
+                        p.HacerDanyo(dmgAE);
+                    foreach (var p in FindObjectOfType<GestorPartida>().GetAllAliados())
+                        p.Curar(dmgAE);
+                }
+                else
+                {
+                    transform.position += new Vector3(0.5f, 0.5f, 0);
+
+                    brazoDch.position -= new Vector3(0.4f, 0, 0.3f);
+                    brazoIzq.position -= new Vector3(0.4f, 0, -0.3f);
+
+                    foreach (var p in FindObjectOfType<GestorPartida>().GetAllAliados())
+                        p.HacerDanyo(dmgAE);
+                    foreach (var p in FindObjectOfType<GestorPartida>().GetAllEnemigos())
+                        p.Curar(dmgAE);
+                }
+                
+
+                Restaura();
+                jugadaUlti = true;
+                return true;
+            }
+            if(ordenador==null && avanzado>3)
+            {
+                ordenador = Instantiate(ordenadorPrefab);
+                ordenador.transform.position = transform.position;
+
+                brazoDch.eulerAngles += new Vector3(0, -80, 0);
+                brazoIzq.eulerAngles += new Vector3(0, 80, 0);
+
+                if (aliado)
+                {
+                    brazoDch.position += new Vector3(-0.4f, 0, -0.3f);
+                    brazoIzq.position += new Vector3(-0.4f, 0, 0.3f);
+                }
+                else
+                {
+                    ordenador.transform.eulerAngles += new Vector3(0, 180, 0);
+                    brazoDch.position += new Vector3(0.4f, 0, 0.3f);
+                    brazoIzq.position += new Vector3(0.4f, 0, -0.3f);
+                }
+           
+            }
+            avanzado += Time.deltaTime;
+        }
         return false;
     }
 
@@ -88,7 +184,12 @@ public class Alex : Personaje
             Destroy(palomitas);
         if (microondas != null)
             Destroy(microondas);
+        if (silla != null)
+            Destroy(silla);
+        if (ordenador != null)
+            Destroy(ordenador);
 
         avanzado = 0;
+        sentado = false;
     }
 }

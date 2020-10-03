@@ -81,4 +81,37 @@ public class Terreno : MonoBehaviour
             return false;
         return !tablero[casX, casZ].EstaOcupada();
     }
+    public void EnvenenarCasillas(int casX, int casZ, int rango, int dmg)
+    {
+        if(rango == 0)
+        {
+            tablero[casX, casZ].Envenenar(dmg);
+            return;
+        }
+
+        for (int i = -rango; i <= rango; i++)
+        {
+            for (int j = -rango; j <= rango; j++)
+            {
+                int newCasX = casX + i;
+                int newCasZ = casZ + j;
+                if (newCasX >= 0 && newCasX < filas && newCasZ >= 0 && newCasZ < columnas)
+                {
+                    tablero[newCasX, newCasZ].Envenenar(dmg);
+                }
+            }
+        }
+    }
+
+    public void GestionaEnvenenamientosCasillas(string nombreP)
+    {
+        if (nombreP == "Reygon") //inmune
+            return;
+
+        foreach (var c in tablero)
+        {
+            if (c.EstaEnvenenada() && c.EstaOcupada() && (c.GetPersonajeCasilla().nombre == nombreP))
+                c.GetPersonajeCasilla().HacerDanyo(c.GetVenenoDmg());
+        }
+    }
 }

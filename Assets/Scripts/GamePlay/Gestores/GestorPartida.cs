@@ -23,7 +23,7 @@ public class GestorPartida : MonoBehaviour
 
         Queue<int> turnos = new Queue<int>();
         turnosJugadores = new Queue<Turno>();
-
+        // seleccion aleatoria de turnos
         for (int i = 0; i< nJugadoresPorEquipo * 2; i++)
         {
             int x;
@@ -35,9 +35,26 @@ public class GestorPartida : MonoBehaviour
             } while (turnos.Contains(x) && veces < 1000);
             turnos.Enqueue(x);
         }
-        int num = 0;
+        // recorremos entera la cola anterior. Si está Alex, le forzamos a que sea el primero.
+        for (int i = 0; i < nJugadoresPorEquipo * 2; i++)
+        {
+            if (turnos.Peek() < nJugadoresPorEquipo)
+            {
+                if (aliados[turnos.Peek()].nombre == "Alex")
+                    break;
+            }
+            else 
+            {
+                if (enemigos[turnos.Peek() - nJugadoresPorEquipo].nombre == "Alex")
+                    break;
+            }
+            int turnoAux = turnos.Dequeue();
+            turnos.Enqueue(turnoAux);
+        }
 
-        foreach(int x in turnos)
+        // ahora sí vamos creando los personajes
+        int num = 0;
+        foreach (int x in turnos)
         {
             Turno aux = Instantiate(turnoPrefab);
             if (x < nJugadoresPorEquipo)
@@ -66,6 +83,7 @@ public class GestorPartida : MonoBehaviour
         }
     }
     public Personaje[] GetAllAliados() { return aliados; }
+    public Personaje[] GetAllEnemigos() { return enemigos; }
     public Personaje GetAliado(int n)  { return aliados[n]; }
     public Personaje GetEnemigo(int n) { return enemigos[n]; }
     public void SetAliado(Personaje p, int n) { aliados[n] = p;  }

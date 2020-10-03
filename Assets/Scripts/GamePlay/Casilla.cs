@@ -5,8 +5,10 @@ using UnityEngine;
 public class Casilla : MonoBehaviour
 {
     private bool ocupada = false;
+    private bool envenenada = false;
     private Vector3 cas;
     private Personaje personajeCasilla;
+    private int veneno = 0;
     
     public bool EstaOcupada() { return ocupada; }
 
@@ -29,4 +31,12 @@ public class Casilla : MonoBehaviour
     }
     public Vector3 GetCas() { return cas; }
     public Personaje GetPersonajeCasilla() { return personajeCasilla; }
+
+    public bool EstaEnvenenada() { return envenenada; }
+    public int GetVenenoDmg() { return veneno; }
+    public void Envenenar(int dmg)
+    {
+        envenenada = true;
+        veneno += dmg;
+    }
 }

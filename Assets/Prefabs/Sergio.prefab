@@ -1041,6 +1041,10 @@ MonoBehaviour:
   sonidoAE: {fileID: 6090679346988450267}
   ropaPrefab: {fileID: 7689147391856078383, guid: bdc52280456f48447aefd495437f937d,
     type: 3}
+  cajaPizzaPrefab: {fileID: 6444998601396617329, guid: 1935dc6abc81e3046826c6f66745014b,
+    type: 3}
+  brazoIzq: {fileID: 2219190185727798441}
+  brazoDch: {fileID: 2219190186081695667}
 --- !u!82 &-284566458900830857
 AudioSource:
   m_ObjectHideFlags: 0
@@ -1594,7 +1598,7 @@ Transform:
   m_GameObject: {fileID: 3635851475004570693}
   m_LocalRotation: {x: -0, y: -0, z: -0.7071068, w: 0.7071068}
   m_LocalPosition: {x: 0, y: 4, z: 0}
-  m_LocalScale: {x: 0.05, y: 1, z: 0.3}
+  m_LocalScale: {x: 0.05, y: 1, z: 0.25}
   m_Children:
   - {fileID: 2748369932422326752}
   - {fileID: 599703807709511098}

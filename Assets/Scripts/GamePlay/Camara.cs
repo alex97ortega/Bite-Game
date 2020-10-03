@@ -37,13 +37,13 @@ public class Camara : MonoBehaviour
         transform.position = playerPos;
         if (isAliado)
         {
-            transform.position += new Vector3(-4, 4.5f, -3f);
-            transform.eulerAngles = new Vector3(25, 50, 0);
+            transform.position += new Vector3(-3, 3.5f, -3f);
+            transform.eulerAngles = new Vector3(20, 50, 0);
         }
         else
         {
-            transform.position += new Vector3(3, 4.5f, -2.5f);
-            transform.eulerAngles = new Vector3(25, -50, 0);
+            transform.position += new Vector3(3, 3.5f, -3f);
+            transform.eulerAngles = new Vector3(20, -50, 0);
         }
     }
     public void EnfocaCamaraAE(Vector3 playerPos, bool isAliado)
@@ -51,13 +51,27 @@ public class Camara : MonoBehaviour
         transform.position = playerPos;
         if (isAliado)
         {
-            transform.position += new Vector3(-5, 3, 0);
+            transform.position += new Vector3(-3, 3, 0);
             transform.eulerAngles = new Vector3(15, 90, 0);
         }
         else
         {
-            transform.position += new Vector3(5, 3, 0);
+            transform.position += new Vector3(3, 3, 0);
             transform.eulerAngles = new Vector3(15, -90, 0);
+        }
+    }
+    public void EnfocaCamaraAE2(Vector3 playerPos, bool isAliado)
+    {
+        transform.position = playerPos;
+        if (isAliado)
+        {
+            transform.position += new Vector3(-3.5f, 3, -1);
+            transform.eulerAngles = new Vector3(15, 75, 0);
+        }
+        else
+        {
+            transform.position += new Vector3(3.5f, 3, 1);
+            transform.eulerAngles = new Vector3(15, -75, 0);
         }
     }
 }

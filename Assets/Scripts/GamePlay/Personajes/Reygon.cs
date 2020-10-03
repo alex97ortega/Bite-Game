@@ -43,6 +43,7 @@ public class Reygon : Personaje
             {
                 Restaura();
                 objetivo.HacerDanyo(dmgAM);
+                FindObjectOfType<Terreno>().EnvenenarCasillas(objetivo.GetCasillaX(), objetivo.GetCasillaZ(), 0, dmgAM);
                 return true;
             }
         }
@@ -69,6 +70,7 @@ public class Reygon : Personaje
             {
                 avanzado = 0;
                 jugadaUlti = true;
+                FindObjectOfType<Terreno>().EnvenenarCasillas(casillaX, casillaZ, 1, dmgAE);
                 return true;
             }
         }

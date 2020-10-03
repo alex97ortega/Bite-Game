@@ -491,7 +491,7 @@ GameObject:
   - component: {fileID: 71544560}
   - component: {fileID: 71544559}
   m_Layer: 5
-  m_Name: AD
+  m_Name: BotonAD
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -541,7 +541,7 @@ MonoBehaviour:
     m_HighlightedColor: {r: 0.764151, g: 0.518286, b: 0.1549929, a: 1}
     m_PressedColor: {r: 0.76470596, g: 0.5176471, b: 0.15686275, a: 1}
     m_SelectedColor: {r: 0.92549026, g: 0.6627451, b: 0.27450982, a: 1}
-    m_DisabledColor: {r: 0.78431374, g: 0.78431374, b: 0.78431374, a: 0.5019608}
+    m_DisabledColor: {r: 0.5647059, g: 0.6392157, b: 0.65882355, a: 0.5019608}
     m_ColorMultiplier: 1
     m_FadeDuration: 0.1
   m_SpriteState:
@@ -899,7 +899,7 @@ GameObject:
   - component: {fileID: 139098537}
   - component: {fileID: 139098536}
   m_Layer: 5
-  m_Name: Panel
+  m_Name: PanelMovimientos
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1289,7 +1289,7 @@ GameObject:
   - component: {fileID: 237054775}
   - component: {fileID: 237054774}
   m_Layer: 5
-  m_Name: AC
+  m_Name: BotonAC
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -3979,6 +3979,7 @@ MonoBehaviour:
   menuAcciones: {fileID: 268958143}
   aliadoAzul: {fileID: 2100000, guid: 6885767f901fffd46a2942d2cda63870, type: 2}
   aliadoAmarillo: {fileID: 2100000, guid: 7ab5881eabdc9494b84317cab0e58466, type: 2}
+  botonAE: {fileID: 2026047266}
 --- !u!1 &1205003091
 GameObject:
   m_ObjectHideFlags: 0
@@ -5805,7 +5806,7 @@ GameObject:
   - component: {fileID: 2026047267}
   - component: {fileID: 2026047266}
   m_Layer: 5
-  m_Name: AE
+  m_Name: BotonAE
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -5855,7 +5856,7 @@ MonoBehaviour:
     m_HighlightedColor: {r: 0.0745098, g: 0.4973969, b: 0.7647059, a: 1}
     m_PressedColor: {r: 0.07450981, g: 0.49803925, b: 0.76470596, a: 1}
     m_SelectedColor: {r: 0.28627452, g: 0.7137255, b: 0.8117648, a: 1}
-    m_DisabledColor: {r: 0.78431374, g: 0.78431374, b: 0.78431374, a: 0.5019608}
+    m_DisabledColor: {r: 0.56381273, g: 0.6379099, b: 0.6603774, a: 0.5019608}
     m_ColorMultiplier: 1
     m_FadeDuration: 0.1
   m_SpriteState:

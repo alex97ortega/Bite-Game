@@ -968,7 +968,7 @@ Transform:
   m_GameObject: {fileID: 3940062562007444143}
   m_LocalRotation: {x: -0, y: -0, z: -0.7071068, w: 0.7071068}
   m_LocalPosition: {x: 0, y: 3.7, z: 0}
-  m_LocalScale: {x: 0.05, y: 1, z: 0.3}
+  m_LocalScale: {x: 0.05, y: 1, z: 0.25}
   m_Children:
   - {fileID: 4707017816165748020}
   - {fileID: 5499814844218451969}
@@ -1928,9 +1928,9 @@ MonoBehaviour:
   dmgAE: 0
   infoAC: "Destripa con sus u\xF1as al jugador que tenga delante."
   infoAD: Lanza una hamburguesa vegana al enemigo indicado.
-  infoAE: "Feminismo forever: Laura se pone a hablar de feminismo y hace da\xF1o
-    a todos los jugadores masculinos tanto aliados como enemigos. El ataque tendr\xE1
-    el doble de potencia si a su lado se encuentra Carolina o Carmen."
+  infoAE: "No hay quien la calle: Laura se pone a hablar durante 2 minutos sin parar
+    haciendo da\xF1o a enemigos y aliados cada vez que sea su turno hasta que pare
+    de hablar o la maten por cansina."
   panelHp: {fileID: 3940062562007444143}
   barraVerdeHp: {fileID: 3830991400748968989}
   sonidoAM: {fileID: 1421052650466371545}

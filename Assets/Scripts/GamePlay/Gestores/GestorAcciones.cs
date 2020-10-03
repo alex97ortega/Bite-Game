@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class GestorAcciones : MonoBehaviour
 {
@@ -9,6 +10,7 @@ public class GestorAcciones : MonoBehaviour
     public Camara camara;
     public GameObject menuAcciones;
     public Material aliadoAzul, aliadoAmarillo;
+    public Button botonAE;
 
     int movimientosEsteTurno;
     bool lanzaAnimacionAM = false;
@@ -19,6 +21,7 @@ public class GestorAcciones : MonoBehaviour
     public void PreparaTurno()
     {
         tablero.RestauraTablero();
+        tablero.GestionaEnvenenamientosCasillas(gestorPartida.GetPersonajeTurno().nombre);
         movimientosEsteTurno = 0;
         objetivo = null;
 
@@ -42,6 +45,8 @@ public class GestorAcciones : MonoBehaviour
             tablero.PintaCasillasAmarillas(gestorPartida.GetPersonajeTurno().GetCasillaX(), 
                                            gestorPartida.GetPersonajeTurno().GetCasillaZ(),
                                            gestorPartida.GetPersonajeTurno().movimientos);
+            
+            botonAE.interactable = !gestorPartida.GetPersonajeTurno().HaJugadoUlti();
         }
     }
 
@@ -116,8 +121,9 @@ public class GestorAcciones : MonoBehaviour
             return;
 
         menuAcciones.SetActive(false);
+        string nombre = gestorPartida.GetPersonajeTurno().nombre;
 
-        if(gestorPartida.GetPersonajeTurno().nombre == "Dani")
+        if (nombre == "Dani")
             camara.EnfocaCamaraAD(gestorPartida.GetPersonajeTurno().transform.position, gestorPartida.GetPersonajeTurno().IsAliado());
         else
             camara.EnfocaCamaraAC(gestorPartida.GetPersonajeTurno().transform.position, gestorPartida.GetPersonajeTurno().IsAliado());
@@ -137,8 +143,13 @@ public class GestorAcciones : MonoBehaviour
             return;
 
         menuAcciones.SetActive(false);
-        bool isAliado = gestorPartida.GetTurno() < gestorPartida.GetNumPersonajesPorEquipo();
-        camara.EnfocaCamaraAE(gestorPartida.GetPersonajeTurno().transform.position, isAliado);
+        string nombre = gestorPartida.GetPersonajeTurno().nombre;
+        if (nombre == "Alex")
+            camara.EnfocaCamaraAD(gestorPartida.GetPersonajeTurno().transform.position, gestorPartida.GetPersonajeTurno().IsAliado());
+        else if (nombre == "Sergio")
+            camara.EnfocaCamaraAE2(gestorPartida.GetPersonajeTurno().transform.position, gestorPartida.GetPersonajeTurno().IsAliado());
+        else
+            camara.EnfocaCamaraAE(gestorPartida.GetPersonajeTurno().transform.position, gestorPartida.GetPersonajeTurno().IsAliado());
 
         lanzaAnimacionAE = true;
     }

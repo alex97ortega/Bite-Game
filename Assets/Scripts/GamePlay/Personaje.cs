@@ -4,7 +4,6 @@ using UnityEngine;
 
 public class Personaje : MonoBehaviour
 {
-    int casillaX, casillaZ;
     public int id;
     public string nombre;
     public Sprite foto;
@@ -22,6 +21,7 @@ public class Personaje : MonoBehaviour
     public GameObject barraVerdeHp;
     public AudioSource sonidoAM, sonidoAD, sonidoAE;
 
+    protected int casillaX, casillaZ;
     protected int initialHp;
     protected bool aliado = true;
     protected bool muerto = false;
@@ -111,6 +111,24 @@ public class Personaje : MonoBehaviour
         if (relation < 0.3f)
             barraVerdeHp.GetComponentInChildren<BarraVida>().CambiaRojo();
         else if (relation < 0.6f)
+            barraVerdeHp.GetComponentInChildren<BarraVida>().CambiaAmarillo();
+    }
+
+    public void Curar(int cantidad)
+    {
+        if (muerto)
+            return;
+
+        hp += cantidad;
+        if (hp > initialHp)
+            hp = initialHp;
+
+        float relation = (float)hp / (float)initialHp;
+        barraVerdeHp.transform.localScale = new Vector3(1, 1, relation);
+
+        if (relation >= 0.6f)
+            barraVerdeHp.GetComponentInChildren<BarraVida>().CambiaVerde();
+        else if (relation >= 0.3f)
             barraVerdeHp.GetComponentInChildren<BarraVida>().CambiaAmarillo();
     }
 
