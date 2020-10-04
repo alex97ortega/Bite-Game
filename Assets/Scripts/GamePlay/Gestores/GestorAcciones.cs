@@ -119,12 +119,14 @@ public class GestorAcciones : MonoBehaviour
         objetivo = tablero.GetCasilla(casillObjX, casillaObjZ).GetPersonajeCasilla();
         if (objetivo.IsAliado() == gestorPartida.GetPersonajeTurno().IsAliado())
             return;
+        if (objetivo.EstaMuerto())
+            return;
 
         menuAcciones.SetActive(false);
         string nombre = gestorPartida.GetPersonajeTurno().nombre;
 
         if (nombre == "Dani")
-            camara.EnfocaCamaraAD(gestorPartida.GetPersonajeTurno().transform.position, gestorPartida.GetPersonajeTurno().IsAliado());
+            camara.EnfocaCamaraAMDani(gestorPartida.GetPersonajeTurno().transform.position, gestorPartida.GetPersonajeTurno().IsAliado());
         else
             camara.EnfocaCamaraAC(gestorPartida.GetPersonajeTurno().transform.position, gestorPartida.GetPersonajeTurno().IsAliado());
 

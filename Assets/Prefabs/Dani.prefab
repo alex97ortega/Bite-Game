@@ -434,11 +434,11 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1428302620871930339}
   m_LocalRotation: {x: -0, y: -0, z: 0.35836798, w: 0.93358046}
-  m_LocalPosition: {x: 0.6, y: 2.2, z: 0}
-  m_LocalScale: {x: 0.3, y: 0.6, z: 0.3}
+  m_LocalPosition: {x: 0.25, y: -0.29999995, z: 0}
+  m_LocalScale: {x: 0.30000004, y: 0.6, z: 0.29999998}
   m_Children:
   - {fileID: 1428302620826769324}
-  m_Father: {fileID: 1428302621286166250}
+  m_Father: {fileID: 2663804056605364342}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 42}
 --- !u!33 &1428302620871930343
@@ -622,8 +622,8 @@ Transform:
   m_LocalPosition: {x: 0, y: -1.49, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
-  - {fileID: 1428302620871930340}
-  - {fileID: 1428302621527812862}
+  - {fileID: 7656189033355579090}
+  - {fileID: 2663804056605364342}
   m_Father: {fileID: 8419064470761880871}
   m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -654,12 +654,12 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1428302621527812861}
   m_LocalRotation: {x: -0, y: -0, z: -0.35836798, w: 0.93358046}
-  m_LocalPosition: {x: -0.6, y: 2.2, z: 0}
-  m_LocalScale: {x: 0.3, y: 0.6, z: 0.3}
+  m_LocalPosition: {x: -0.25, y: -0.29999995, z: 0}
+  m_LocalScale: {x: 0.30000004, y: 0.6, z: 0.29999998}
   m_Children:
   - {fileID: 1428302620669470635}
-  m_Father: {fileID: 1428302621286166250}
-  m_RootOrder: 1
+  m_Father: {fileID: 7656189033355579090}
+  m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: -42}
 --- !u!33 &1428302621527812849
 MeshFilter:
@@ -751,7 +751,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1428302621687902555}
   m_LocalRotation: {x: 0, y: 0.7071068, z: 0, w: 0.7071068}
-  m_LocalPosition: {x: 12, y: 0, z: 0}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 0.9, y: 0.9, z: 0.9}
   m_Children:
   - {fileID: 4369465491177720911}
@@ -794,6 +794,11 @@ MonoBehaviour:
   sonidoAE: {fileID: 4118673193528495975}
   cabesa: {fileID: 1428302620666770442}
   torso: {fileID: 8419064470761880871}
+  hombroDch: {fileID: 7656189033355579090}
+  aquariusPrefab: {fileID: 9048012388022089095, guid: 375891675f5bdae4dad3d9b754cba61e,
+    type: 3}
+  culturistaPrefab: {fileID: 7573453045511921115, guid: 94ad08459b27f314f8e79770d8fb6964,
+    type: 3}
   golpe: {fileID: -8071997868361737179}
 --- !u!82 &2087483233110121296
 AudioSource:
@@ -997,7 +1002,7 @@ AudioSource:
   m_Enabled: 1
   serializedVersion: 4
   OutputAudioMixerGroup: {fileID: 0}
-  m_audioClip: {fileID: 0}
+  m_audioClip: {fileID: 8300000, guid: e83fffe0b62d18844a6c097b4304958e, type: 3}
   m_PlayOnAwake: 0
   m_Volume: 1
   m_Pitch: 1
@@ -1918,6 +1923,37 @@ MeshCollider:
   m_Convex: 0
   m_CookingOptions: 30
   m_Mesh: {fileID: 10209, guid: 0000000000000000e000000000000000, type: 0}
+--- !u!1 &6166943539238334028
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 2663804056605364342}
+  m_Layer: 0
+  m_Name: HombroIzq
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &2663804056605364342
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6166943539238334028}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0.35, y: 2.5, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children:
+  - {fileID: 1428302620871930340}
+  m_Father: {fileID: 1428302621286166250}
+  m_RootOrder: 1
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &7748917447236269093
 GameObject:
   m_ObjectHideFlags: 0
@@ -1948,5 +1984,36 @@ Transform:
   - {fileID: 8419064470761880871}
   - {fileID: 1428302622576104520}
   m_Father: {fileID: 1428302621687902556}
+  m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &8061528035817000731
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 7656189033355579090}
+  m_Layer: 0
+  m_Name: HombroDch
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &7656189033355579090
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8061528035817000731}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: -0.35, y: 2.5, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children:
+  - {fileID: 1428302621527812862}
+  m_Father: {fileID: 1428302621286166250}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}

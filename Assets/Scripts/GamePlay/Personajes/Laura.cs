@@ -4,8 +4,8 @@ using UnityEngine;
 
 public class Laura : Personaje
 {
-    public Transform torso, brazoIzq, brazoDch;
-    Vector3 iniPosDch, iniPosIzq, iniRotIzq, iniRotDch;
+    public Transform torso, hombroIzq, hombroDch;
+    Vector3 iniRotIzq, iniRotDch;
     Vector3 iniRotTorso;
 
     int veces = 0;
@@ -14,11 +14,8 @@ public class Laura : Personaje
 
     private void Start()
     {
-        iniPosIzq = brazoIzq.localPosition;
-        iniPosDch = brazoDch.localPosition;
-
-        iniRotIzq = brazoIzq.eulerAngles;
-        iniRotDch = brazoDch.eulerAngles;
+        iniRotIzq = hombroIzq.eulerAngles;
+        iniRotDch = hombroDch.eulerAngles;
 
 
         iniRotTorso = torso.eulerAngles;
@@ -26,37 +23,32 @@ public class Laura : Personaje
 
     public override bool AnimacionAM(Personaje objetivo)
     {
-        
-        if (veces < 20)
+        if (veces == 0 && !sonidoAM.isPlaying)
         {
-            if (veces == 0)
-            {
-                PlaySonidoAM();
-                panelHp.SetActive(false);
-            }
+            PlaySonidoAM();
+            panelHp.SetActive(false);
+        }
+        else
+        {
             if(ataqueIzq)
             {
                 if(movido<120)
                 {
                     if(movido>=60)
                     {
-                        brazoIzq.localPosition = iniPosIzq + new Vector3(0, 0.35f, 0);
-                        brazoIzq.eulerAngles = iniRotIzq + new Vector3(90, 0, 0);
-                        brazoDch.localPosition = iniPosDch + new Vector3(0, 0.35f, 0);
-                        brazoDch.eulerAngles = iniRotDch + new Vector3(90, 0, 0);
+                        hombroIzq.eulerAngles = iniRotIzq + new Vector3(70, 0, 0);
+                        hombroDch.eulerAngles = iniRotDch + new Vector3(70, 0, 0);
                     }
                     movido+= 500*Time.deltaTime;
-                    torso.eulerAngles += new Vector3(0, 10, 0);
+                    torso.eulerAngles += new Vector3(0, 500 * Time.deltaTime, 0);
                 }
                 else
                 {
                     veces++;
                     movido = 0;
                     ataqueIzq = false;
-                    brazoIzq.localPosition = iniPosIzq;
-                    brazoIzq.eulerAngles = iniRotIzq;
-                    brazoDch.localPosition = new Vector3(-0.6f, 2.7f, 0);
-                    brazoDch.eulerAngles = new Vector3(180, 0, 0);
+                    hombroIzq.eulerAngles = iniRotIzq;
+                    hombroDch.eulerAngles += new Vector3(70, 0, 0);
                 }
             }
             else
@@ -65,32 +57,28 @@ public class Laura : Personaje
                 {
                     if (movido >= 60)
                     {
-                        brazoIzq.localPosition = iniPosIzq + new Vector3(0, 0.35f, 0);
-                        brazoIzq.eulerAngles = iniRotIzq + new Vector3(90, 0, 0);
-                        brazoDch.localPosition = iniPosDch + new Vector3(0, 0.35f, 0);
-                        brazoDch.eulerAngles =iniRotDch +new Vector3(90, 0, 0);
+                        hombroIzq.eulerAngles = iniRotIzq + new Vector3(70, 0, 0);
+                        hombroDch.eulerAngles =iniRotDch +new Vector3(70, 0, 0);
                     }
                     movido +=500*Time.deltaTime;
-                    torso.eulerAngles -= new Vector3(0, 10, 0);
+                    torso.eulerAngles -= new Vector3(0, 500 * Time.deltaTime, 0);
                 }
                 else
                 {
                     veces++;
                     movido = 0;
                     ataqueIzq = true;
-                    brazoIzq.localPosition += new Vector3(0, 0.35f, 0);
-                    brazoIzq.eulerAngles += new Vector3(90, 0, 0);
-                    brazoDch.localPosition = iniPosDch;
-                    brazoDch.eulerAngles = iniRotDch;
+                    hombroIzq.eulerAngles += new Vector3(70, 0, 0);
+                    hombroDch.eulerAngles = iniRotDch;
                 }
             }
-        }
-        else
-        {
-            Restaura();
-            objetivo.HacerDanyo(dmgAM);
-            return true;
-        }
+            if(!sonidoAM.isPlaying)
+            {
+                Restaura();
+                objetivo.HacerDanyo(dmgAM);
+                return true;
+            }
+        }      
                 
         return false;
     }
@@ -111,11 +99,9 @@ public class Laura : Personaje
         movido = 60;
         veces = 0;
         torso.eulerAngles = iniRotTorso;
-        brazoIzq.localPosition = iniPosIzq;
-        brazoIzq.eulerAngles = iniRotIzq;
 
-        brazoDch.localPosition = iniPosDch;
-        brazoDch.eulerAngles = iniRotDch;
+        hombroIzq.eulerAngles = iniRotIzq;
+        hombroDch.eulerAngles = iniRotDch;
         panelHp.SetActive(true);
     }
 }

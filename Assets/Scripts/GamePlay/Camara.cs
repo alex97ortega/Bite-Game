@@ -37,12 +37,12 @@ public class Camara : MonoBehaviour
         transform.position = playerPos;
         if (isAliado)
         {
-            transform.position += new Vector3(-3, 3.5f, -3f);
+            transform.position += new Vector3(-3, 3.0f, -3f);
             transform.eulerAngles = new Vector3(20, 50, 0);
         }
         else
         {
-            transform.position += new Vector3(3, 3.5f, -3f);
+            transform.position += new Vector3(3, 3.0f, -3f);
             transform.eulerAngles = new Vector3(20, -50, 0);
         }
     }
@@ -70,8 +70,22 @@ public class Camara : MonoBehaviour
         }
         else
         {
-            transform.position += new Vector3(3.5f, 3, 1);
+            transform.position += new Vector3(3.5f, 3, -1);
             transform.eulerAngles = new Vector3(15, -75, 0);
+        }
+    }
+    public void EnfocaCamaraAMDani(Vector3 playerPos, bool isAliado)
+    {
+        transform.position = playerPos;
+        if (isAliado)
+        {
+            transform.position += new Vector3(-3, 4, -3f);
+            transform.eulerAngles = new Vector3(20, 50, 0);
+        }
+        else
+        {
+            transform.position += new Vector3(3, 4, -3f);
+            transform.eulerAngles = new Vector3(20, -50, 0);
         }
     }
 }

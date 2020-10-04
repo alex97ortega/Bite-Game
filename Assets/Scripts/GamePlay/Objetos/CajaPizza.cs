@@ -8,6 +8,7 @@ public class CajaPizza : MonoBehaviour
 
     Queue<Transform> bordes;
     bool finish = false;
+    bool aliado = true;
 
     private void Start()
     {
@@ -29,7 +30,11 @@ public class CajaPizza : MonoBehaviour
                 finish = true;
             else
             {
-                bordes.Peek().position += new Vector3(2*Time.deltaTime, 2*Time.deltaTime, 0);
+                if(aliado)
+                    bordes.Peek().position += new Vector3(2 * Time.deltaTime, 2 * Time.deltaTime, 0);
+                else
+                    bordes.Peek().position += new Vector3(-2 * Time.deltaTime, 2 * Time.deltaTime, 0);
+
                 if (bordes.Peek().position.y > 2.6f)
                 {
                     Destroy(bordes.Dequeue().gameObject);
@@ -38,4 +43,5 @@ public class CajaPizza : MonoBehaviour
         }
     }
     public bool Finished() { return finish; }
+    public void SetEnemigo() { aliado = false; }
 }

@@ -5,7 +5,7 @@ using UnityEngine;
 public class Alex : Personaje
 {
     public GameObject palomitasPrefab, microondasPrefab, apioPrefab, sillaPrefab, ordenadorPrefab;
-    public Transform piernas, rodillas, brazoIzq, brazoDch;
+    public Transform piernas, rodillas, hombroIzq, hombroDch;
     public AudioSource sonidoMicro;
     float avanzado = 0;
     GameObject palomitas, microondas, apio, silla, ordenador;
@@ -118,15 +118,12 @@ public class Alex : Personaje
                 piernas.eulerAngles += new Vector3(-75, 0, 0);
                 rodillas.eulerAngles += new Vector3(50, 0, 0);
 
-                brazoDch.eulerAngles -= new Vector3(0, -80, 0);
-                brazoIzq.eulerAngles -= new Vector3(0, 80, 0);
+                hombroDch.eulerAngles -= new Vector3(0, -80, 0);
+                hombroIzq.eulerAngles -= new Vector3(0, 80, 0);
 
                 if (aliado)
                 {
                     transform.position += new Vector3(-0.5f, 0.5f, 0);
-
-                    brazoDch.position -= new Vector3(-0.4f, 0, -0.3f);
-                    brazoIzq.position -= new Vector3(-0.4f, 0, 0.3f);
 
                     foreach (var p in FindObjectOfType<GestorPartida>().GetAllEnemigos())
                         p.HacerDanyo(dmgAE);
@@ -136,9 +133,6 @@ public class Alex : Personaje
                 else
                 {
                     transform.position += new Vector3(0.5f, 0.5f, 0);
-
-                    brazoDch.position -= new Vector3(0.4f, 0, 0.3f);
-                    brazoIzq.position -= new Vector3(0.4f, 0, -0.3f);
 
                     foreach (var p in FindObjectOfType<GestorPartida>().GetAllAliados())
                         p.HacerDanyo(dmgAE);
@@ -156,21 +150,13 @@ public class Alex : Personaje
                 ordenador = Instantiate(ordenadorPrefab);
                 ordenador.transform.position = transform.position;
 
-                brazoDch.eulerAngles += new Vector3(0, -80, 0);
-                brazoIzq.eulerAngles += new Vector3(0, 80, 0);
-
-                if (aliado)
-                {
-                    brazoDch.position += new Vector3(-0.4f, 0, -0.3f);
-                    brazoIzq.position += new Vector3(-0.4f, 0, 0.3f);
-                }
-                else
+                if (!aliado)
                 {
                     ordenador.transform.eulerAngles += new Vector3(0, 180, 0);
-                    brazoDch.position += new Vector3(0.4f, 0, 0.3f);
-                    brazoIzq.position += new Vector3(0.4f, 0, -0.3f);
                 }
-           
+
+                hombroDch.eulerAngles += new Vector3(0, -80, 0);
+                hombroIzq.eulerAngles += new Vector3(0, 80, 0);
             }
             avanzado += Time.deltaTime;
         }

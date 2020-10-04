@@ -6,7 +6,7 @@ public class Sergio : Personaje
 {
     public Ropa ropaPrefab;
     public GameObject cajaPizzaPrefab;
-    public Transform brazoIzq, brazoDch;
+    public Transform hombroIzq, hombroDch;
     Vector3 initialTorsoRot;
     List<Ropa> ropaRegalada;
     GameObject cajaPizza;
@@ -61,34 +61,19 @@ public class Sergio : Personaje
             //PlaySonidoAE();
             cajaPizza = Instantiate(cajaPizzaPrefab);
             cajaPizza.transform.position = transform.position;
-            brazoDch.eulerAngles += new Vector3(0, -80, 0);
-            brazoIzq.eulerAngles += new Vector3(0, 80, 0);
-
-            if (aliado)
+            hombroDch.eulerAngles += new Vector3(0, -80, 0);
+            hombroIzq.eulerAngles += new Vector3(0, 80, 0);
+            
+            if(!aliado)
             {
-                brazoDch.position += new Vector3(-0.3f, 0, -0.2f);
-                brazoIzq.position += new Vector3(-0.3f, 0, 0.2f);
-            }
-            else
-            {
-                brazoDch.position += new Vector3(0.3f, 0, 0.2f);
-                brazoIzq.position += new Vector3(0.3f, 0, -0.2f);
+                cajaPizza.transform.eulerAngles += new Vector3(0, 180, 0);
+                cajaPizza.GetComponent<CajaPizza>().SetEnemigo();
             }
         }
         else if(cajaPizza.GetComponent<CajaPizza>().Finished())
         {
-            brazoDch.eulerAngles -= new Vector3(0, -80, 0);
-            brazoIzq.eulerAngles -= new Vector3(0, 80, 0);
-            if (aliado)
-            {
-                brazoDch.position -= new Vector3(-0.3f, 0, -0.2f);
-                brazoIzq.position -= new Vector3(-0.3f, 0, 0.2f);
-            }
-            else
-            {
-                brazoDch.position -= new Vector3(0.3f, 0, 0.2f);
-                brazoIzq.position -= new Vector3(0.3f, 0, -0.2f);
-            }
+            hombroDch.eulerAngles -= new Vector3(0, -80, 0);
+            hombroIzq.eulerAngles -= new Vector3(0, 80, 0);
             Restaura();
             Curar(initialHp);
             jugadaUlti = true;
