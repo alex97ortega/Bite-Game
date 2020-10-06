@@ -3979,6 +3979,7 @@ MonoBehaviour:
   menuAcciones: {fileID: 268958143}
   aliadoAzul: {fileID: 2100000, guid: 6885767f901fffd46a2942d2cda63870, type: 2}
   aliadoAmarillo: {fileID: 2100000, guid: 7ab5881eabdc9494b84317cab0e58466, type: 2}
+  botonAD: {fileID: 71544559}
   botonAE: {fileID: 2026047266}
 --- !u!1 &1205003091
 GameObject:

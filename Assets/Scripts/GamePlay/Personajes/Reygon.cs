@@ -5,12 +5,13 @@ using UnityEngine;
 public class Reygon : Personaje
 {
     public Transform torso;
-    public GameObject escupitajoPrefab;
+    public GameObject escupitajoPrefab, microfonoPrefab;
     public ParticleSystem pedaco;
 
     Vector3 initialTorsoRot;
     float avanzado = 0;
     bool creadoEscupitajo = false;
+    GameObject microfono;
 
     private void Start()
     {
@@ -52,6 +53,26 @@ public class Reygon : Personaje
 
     public override bool AnimacionAD(Personaje objetivo)
     {
+        if(microfono == null)
+        {
+            transform.position += new Vector3(0, 1000, 0);
+            objetivo.PlayCancion();
+            microfono = Instantiate(microfonoPrefab);
+            microfono.transform.position = objetivo.transform.position;
+            if (!aliado)
+                microfono.transform.eulerAngles += new Vector3(0, 180, 0);
+        }
+        else if(objetivo.CancionFinished())
+        {
+            transform.position -= new Vector3(0, 1000, 0);
+            Restaura();
+            ultimaJugoAD = true;
+            foreach (var p in FindObjectOfType<GestorPartida>().GetAllEnemigos())
+                p.HacerDanyo(dmgAD);
+            foreach (var p in FindObjectOfType<GestorPartida>().GetAllAliados())
+                p.HacerDanyo(dmgAD);
+            return true;
+        }
         return false;
     }
 
@@ -83,5 +104,7 @@ public class Reygon : Personaje
         creadoEscupitajo = false;
         avanzado = 0;
         torso.eulerAngles = initialTorsoRot;
+        if (microfono != null)
+            Destroy(microfono);
     }
 }

@@ -19,14 +19,18 @@ public class Personaje : MonoBehaviour
 
     public GameObject panelHp;
     public GameObject barraVerdeHp;
-    public AudioSource sonidoAM, sonidoAD, sonidoAE;
+    public AudioSource sonidoAM, sonidoAD, sonidoAE, cancion;
 
     protected int casillaX, casillaZ;
+    protected Vector3 initialRot, initialScale;
     protected int initialHp;
+
     protected bool aliado = true;
     protected bool muerto = false;
     protected bool jugadaUlti = false;
-    protected Vector3 initialRot, initialScale;
+    protected bool ultimaJugoAD = false;
+    protected int turnosParalizado = 0;
+    protected int turnosInmune = 0;
 
     void Awake()
     {
@@ -64,6 +68,7 @@ public class Personaje : MonoBehaviour
     public virtual bool AnimacionAM(Personaje objetivo) { return false; }
     public virtual bool AnimacionAD(Personaje objetivo) { return false; }
     public virtual bool AnimacionAE(Personaje objetivo) { return false; }
+    protected virtual void RestauraEspecial() { }
 
     public void RestauraPropiedades()
     {
@@ -82,22 +87,35 @@ public class Personaje : MonoBehaviour
 
     public void PlaySonidoAM()
     {
-        if(!sonidoAM.isPlaying)
+        if(sonidoAM != null && !sonidoAM.isPlaying)
             sonidoAM.Play();
     }
     public void PlaySonidoAD()
     {
-        if (!sonidoAD.isPlaying)
+        if (sonidoAD != null && !sonidoAD.isPlaying)
             sonidoAD.Play();
     }
     public void PlaySonidoAE()
     {
-        if (!sonidoAE.isPlaying)
+        if (sonidoAE != null && !sonidoAE.isPlaying)
             sonidoAE.Play();
     }
+    public void PlayCancion()
+    {
+        if (cancion != null && !cancion.isPlaying)
+            cancion.Play();
+    }
+    public bool CancionFinished()
+    {
+        return !cancion.isPlaying;
+    }
+
 
     public void HacerDanyo(int dmg)
     {
+        if (turnosInmune > 0)
+            return;
+
         hp -= dmg;
         if (hp <= 0)
         {
@@ -134,4 +152,30 @@ public class Personaje : MonoBehaviour
 
     public bool EstaMuerto() { return muerto; }
     public bool HaJugadoUlti() { return jugadaUlti; }
+    public bool EsInmune() { return turnosInmune > 0; }
+
+    public bool EstaParalizado()
+    {
+        if (turnosInmune != 0)
+            turnosInmune--;
+
+        if (turnosParalizado == 0)
+        {
+            RestauraEspecial();
+            return false;
+        }
+
+        turnosParalizado--;
+        return true;
+    }
+
+    public bool UltimaJugoAtaqueDistancia()
+    {
+        if(ultimaJugoAD)
+        {
+            ultimaJugoAD = false;
+            return true;
+        }
+        return false;
+    }
 }

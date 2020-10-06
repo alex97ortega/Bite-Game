@@ -10,7 +10,7 @@ public class GestorAcciones : MonoBehaviour
     public Camara camara;
     public GameObject menuAcciones;
     public Material aliadoAzul, aliadoAmarillo;
-    public Button botonAE;
+    public Button botonAD, botonAE;
 
     int movimientosEsteTurno;
     bool lanzaAnimacionAM = false;
@@ -25,7 +25,7 @@ public class GestorAcciones : MonoBehaviour
         movimientosEsteTurno = 0;
         objetivo = null;
 
-        if(gestorPartida.GetPersonajeTurno().EstaMuerto())
+        if(gestorPartida.GetPersonajeTurno().EstaMuerto() || gestorPartida.GetPersonajeTurno().EstaParalizado())
         {
             PasarTurno();
             return;
@@ -45,7 +45,8 @@ public class GestorAcciones : MonoBehaviour
             tablero.PintaCasillasAmarillas(gestorPartida.GetPersonajeTurno().GetCasillaX(), 
                                            gestorPartida.GetPersonajeTurno().GetCasillaZ(),
                                            gestorPartida.GetPersonajeTurno().movimientos);
-            
+
+            botonAD.interactable = !gestorPartida.GetPersonajeTurno().UltimaJugoAtaqueDistancia();
             botonAE.interactable = !gestorPartida.GetPersonajeTurno().HaJugadoUlti();
         }
     }
@@ -99,6 +100,7 @@ public class GestorAcciones : MonoBehaviour
         }
     }
 
+    /////////////////////////////////////////
     public void AtaqueCuerpo()
     {
         // primero ver que hay un objetivo delante
@@ -119,7 +121,7 @@ public class GestorAcciones : MonoBehaviour
         objetivo = tablero.GetCasilla(casillObjX, casillaObjZ).GetPersonajeCasilla();
         if (objetivo.IsAliado() == gestorPartida.GetPersonajeTurno().IsAliado())
             return;
-        if (objetivo.EstaMuerto())
+        if (objetivo.EstaMuerto() || objetivo.EsInmune())
             return;
 
         menuAcciones.SetActive(false);
@@ -132,13 +134,34 @@ public class GestorAcciones : MonoBehaviour
 
         lanzaAnimacionAM = true;
     }
+
+    /////////////////////////////////////////
     public void AtaqueDistancia()
     {
+        string nombre = gestorPartida.GetPersonajeTurno().nombre;
+
+        // para ataque de reygon tiene que haber un aliado al lado
+        if (nombre == "Reygon")
+        {
+            Personaje aliadoAdyacente = tablero.EncuentraAliadoAdyacente(gestorPartida.GetPersonajeTurno().GetCasillaX(),
+                                                                         gestorPartida.GetPersonajeTurno().GetCasillaZ(),
+                                                                         gestorPartida.GetPersonajeTurno().IsAliado());
+            if (aliadoAdyacente == null)
+                return;
+            objetivo = aliadoAdyacente;
+            camara.EnfocaCamaraAD(objetivo.transform.position, gestorPartida.GetPersonajeTurno().IsAliado());
+        }
+        else
+        {
+            camara.EnfocaCamaraAD(gestorPartida.GetPersonajeTurno().transform.position, gestorPartida.GetPersonajeTurno().IsAliado());
+        }
+
         menuAcciones.SetActive(false);
-        camara.EnfocaCamaraAD(gestorPartida.GetPersonajeTurno().transform.position, gestorPartida.GetPersonajeTurno().IsAliado());
 
         lanzaAnimacionAD = true;
     }
+
+    /////////////////////////////////////////
     public void AtaqueEspecial()
     {
         if (gestorPartida.GetPersonajeTurno().HaJugadoUlti())

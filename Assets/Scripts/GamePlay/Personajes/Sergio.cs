@@ -23,7 +23,7 @@ public class Sergio : Personaje
         if (ropaRegalada.Count < 30)
         {
             if (ropaRegalada.Count == 0)
-                ;// PlaySonidoAM();
+                PlaySonidoAM();
 
             avanzado += Time.deltaTime;
             if(avanzado > 0.15f)
@@ -58,7 +58,7 @@ public class Sergio : Personaje
     {
         if (cajaPizza == null)
         {
-            //PlaySonidoAE();
+            PlaySonidoAE();
             cajaPizza = Instantiate(cajaPizzaPrefab);
             cajaPizza.transform.position = transform.position;
             hombroDch.eulerAngles += new Vector3(0, -80, 0);

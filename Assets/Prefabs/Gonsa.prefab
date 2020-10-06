@@ -952,6 +952,7 @@ GameObject:
   - component: {fileID: -6587755410902663478}
   - component: {fileID: -309772410309751213}
   - component: {fileID: 2886986559527079314}
+  - component: {fileID: 3127160466680254766}
   m_Layer: 0
   m_Name: Gonsa
   m_TagString: Untagged
@@ -1003,14 +1004,17 @@ MonoBehaviour:
   infoAD: Lanza un pelotazo al enemigo indicado. 40% de probabilidad de esquivar
     el ataque jugadores deportistas.
   infoAE: "La marmota se va a dormir: Gonzalo vuelve a su casilla inicial, recobra
-    su vida entera y es inmune durante 2 turnos, pero no puede realizar ninguna acci\xF3n
+    su vida entera y es inmune durante 3 turnos, pero no puede realizar ninguna acci\xF3n
     por ese tiempo."
   panelHp: {fileID: 8257873720359699819}
   barraVerdeHp: {fileID: 1285433994764474561}
   sonidoAM: {fileID: -6587755410902663478}
   sonidoAD: {fileID: -309772410309751213}
   sonidoAE: {fileID: 2886986559527079314}
+  cancion: {fileID: 3127160466680254766}
   body: {fileID: 1993801122477999079}
+  camaPrefab: {fileID: 5434141459449974168, guid: 6f15b364ab7602f46b6e3655382b51ec,
+    type: 3}
 --- !u!82 &-6587755410902663478
 AudioSource:
   m_ObjectHideFlags: 0
@@ -1021,7 +1025,7 @@ AudioSource:
   m_Enabled: 1
   serializedVersion: 4
   OutputAudioMixerGroup: {fileID: 0}
-  m_audioClip: {fileID: 8300000, guid: f7b4b6e9f154d0141a0f0bc88fc4c160, type: 3}
+  m_audioClip: {fileID: 8300000, guid: e68d0759a748df44e9c3732e79f2e5a4, type: 3}
   m_PlayOnAwake: 0
   m_Volume: 1
   m_Pitch: 1
@@ -1117,7 +1121,7 @@ AudioSource:
   m_Enabled: 1
   serializedVersion: 4
   OutputAudioMixerGroup: {fileID: 0}
-  m_audioClip: {fileID: 0}
+  m_audioClip: {fileID: 8300000, guid: f613bb8cc0c9ba34b99ba3842abdfe38, type: 3}
   m_PlayOnAwake: 0
   m_Volume: 1
   m_Pitch: 1
@@ -1204,6 +1208,102 @@ AudioSource:
     m_PostInfinity: 2
     m_RotationOrder: 4
 --- !u!82 &2886986559527079314
+AudioSource:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1993801123778416682}
+  m_Enabled: 1
+  serializedVersion: 4
+  OutputAudioMixerGroup: {fileID: 0}
+  m_audioClip: {fileID: 8300000, guid: e85d1b9d54895254491e0e0522dee052, type: 3}
+  m_PlayOnAwake: 0
+  m_Volume: 1
+  m_Pitch: 1
+  Loop: 0
+  Mute: 0
+  Spatialize: 0
+  SpatializePostEffects: 0
+  Priority: 128
+  DopplerLevel: 1
+  MinDistance: 1
+  MaxDistance: 500
+  Pan2D: 0
+  rolloffMode: 0
+  BypassEffects: 0
+  BypassListenerEffects: 0
+  BypassReverbZones: 0
+  rolloffCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    - serializedVersion: 3
+      time: 1
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  panLevelCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  spreadCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  reverbZoneMixCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+--- !u!82 &3127160466680254766
 AudioSource:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}

@@ -6,7 +6,6 @@ public class Dani : Personaje
 {
     public Transform cabesa, torso, hombroDch;
     public GameObject aquariusPrefab, culturistaPrefab;
-    public AudioSource golpe;
 
     GameObject aquarius, culturista;
     AudioSource musicaFondo;
@@ -37,8 +36,6 @@ public class Dani : Personaje
             if (avanzado < 80)
             {
                 avanzado +=10;
-                if(avanzado == 60)
-                    golpe.Play();
                 torso.eulerAngles -= new Vector3(10, 0, 0);
             }
             else
@@ -86,7 +83,7 @@ public class Dani : Personaje
                 else
                     aquarius.transform.Rotate(-40 * Time.deltaTime, 0, -120 * Time.deltaTime);
             }
-            else if (avanzado > 14 && culturista==null)
+            else if (avanzado > 13.8f && culturista==null)
             {
                 float guardavanzado = avanzado;
                 Restaura();

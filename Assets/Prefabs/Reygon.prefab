@@ -987,6 +987,7 @@ GameObject:
   - component: {fileID: 5942830039393054712}
   - component: {fileID: -8392481167614749465}
   - component: {fileID: 4383350219519172342}
+  - component: {fileID: 2150094163884427561}
   m_Layer: 0
   m_Name: Reygon
   m_TagString: Untagged
@@ -1032,7 +1033,7 @@ MonoBehaviour:
   movimientos: 3
   hp: 120
   dmgAM: 10
-  dmgAD: 0
+  dmgAD: 20
   dmgAE: 20
   infoAC: "Escupe en el suelo creando un charco alrededor del enemigo que tenga en
     frente. Restar\xE1 puntos cada turno a cualquier enemigo que est\xE9 en esa casilla."
@@ -1048,8 +1049,11 @@ MonoBehaviour:
   sonidoAM: {fileID: 5942830039393054712}
   sonidoAD: {fileID: -8392481167614749465}
   sonidoAE: {fileID: 4383350219519172342}
+  cancion: {fileID: 2150094163884427561}
   torso: {fileID: 7708293242467862133}
   escupitajoPrefab: {fileID: 1727224877516525829, guid: acd31e833c7318f46bef3d00d7072a13,
+    type: 3}
+  microfonoPrefab: {fileID: 2450918684327149588, guid: 94c7a82f6eff6294890d3f9f2abc03d2,
     type: 3}
   pedaco: {fileID: 7648801637047536206, guid: 944fcfb4f2ce9b4478023bc443f14af3, type: 3}
 --- !u!82 &5942830039393054712
@@ -1255,6 +1259,102 @@ AudioSource:
   serializedVersion: 4
   OutputAudioMixerGroup: {fileID: 0}
   m_audioClip: {fileID: 8300000, guid: 09c61aa7b018ef843bfeb6274a551138, type: 3}
+  m_PlayOnAwake: 0
+  m_Volume: 1
+  m_Pitch: 1
+  Loop: 0
+  Mute: 0
+  Spatialize: 0
+  SpatializePostEffects: 0
+  Priority: 128
+  DopplerLevel: 1
+  MinDistance: 1
+  MaxDistance: 500
+  Pan2D: 0
+  rolloffMode: 0
+  BypassEffects: 0
+  BypassListenerEffects: 0
+  BypassReverbZones: 0
+  rolloffCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    - serializedVersion: 3
+      time: 1
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  panLevelCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  spreadCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  reverbZoneMixCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+--- !u!82 &2150094163884427561
+AudioSource:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8109745315791451131}
+  m_Enabled: 1
+  serializedVersion: 4
+  OutputAudioMixerGroup: {fileID: 0}
+  m_audioClip: {fileID: 0}
   m_PlayOnAwake: 0
   m_Volume: 1
   m_Pitch: 1

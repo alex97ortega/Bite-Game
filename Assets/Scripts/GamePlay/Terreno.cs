@@ -114,4 +114,39 @@ public class Terreno : MonoBehaviour
                 c.GetPersonajeCasilla().HacerDanyo(c.GetVenenoDmg());
         }
     }
+
+    public Personaje EncuentraAliadoAdyacente(int casX, int casZ, bool aliado)
+    {
+
+        if (casX != 0)
+        {
+            Personaje aux = tablero[casX - 1, casZ].GetPersonajeCasilla();
+
+            if (aux != null && (aux.IsAliado() == aliado))
+                return aux;
+        }
+        if (casX != filas-1)
+        {
+            Personaje aux = tablero[casX + 1, casZ].GetPersonajeCasilla();
+
+            if (aux != null && (aux.IsAliado() == aliado))
+                return aux;
+        }
+        if (casZ != 0)
+        {
+            Personaje aux = tablero[casX, casZ - 1].GetPersonajeCasilla();
+
+            if (aux != null && (aux.IsAliado() == aliado))
+                return aux;
+        }
+        if (casZ != columnas-1)
+        {
+            Personaje aux = tablero[casX, casZ + 1].GetPersonajeCasilla();
+
+            if (aux != null && (aux.IsAliado() == aliado))
+                return aux;
+        }
+
+        return null;
+    }
 }

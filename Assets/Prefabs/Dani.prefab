@@ -735,7 +735,7 @@ GameObject:
   - component: {fileID: 2087483233110121296}
   - component: {fileID: 5512943300167070913}
   - component: {fileID: 4118673193528495975}
-  - component: {fileID: -8071997868361737179}
+  - component: {fileID: 331870994327028354}
   m_Layer: 0
   m_Name: Dani
   m_TagString: Untagged
@@ -792,6 +792,7 @@ MonoBehaviour:
   sonidoAM: {fileID: 2087483233110121296}
   sonidoAD: {fileID: 5512943300167070913}
   sonidoAE: {fileID: 4118673193528495975}
+  cancion: {fileID: 331870994327028354}
   cabesa: {fileID: 1428302620666770442}
   torso: {fileID: 8419064470761880871}
   hombroDch: {fileID: 7656189033355579090}
@@ -799,7 +800,6 @@ MonoBehaviour:
     type: 3}
   culturistaPrefab: {fileID: 7573453045511921115, guid: 94ad08459b27f314f8e79770d8fb6964,
     type: 3}
-  golpe: {fileID: -8071997868361737179}
 --- !u!82 &2087483233110121296
 AudioSource:
   m_ObjectHideFlags: 0
@@ -1088,7 +1088,7 @@ AudioSource:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
---- !u!82 &-8071997868361737179
+--- !u!82 &331870994327028354
 AudioSource:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -1098,7 +1098,7 @@ AudioSource:
   m_Enabled: 1
   serializedVersion: 4
   OutputAudioMixerGroup: {fileID: 0}
-  m_audioClip: {fileID: 8300000, guid: 9a6503f1fac836942910bce34e875ea1, type: 3}
+  m_audioClip: {fileID: 0}
   m_PlayOnAwake: 0
   m_Volume: 1
   m_Pitch: 1

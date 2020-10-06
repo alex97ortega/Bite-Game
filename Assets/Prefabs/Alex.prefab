@@ -454,7 +454,7 @@ GameObject:
   - component: {fileID: -6255362466771530876}
   - component: {fileID: 3528091360038473773}
   - component: {fileID: -2221638544474307017}
-  - component: {fileID: 8044492981592898286}
+  - component: {fileID: -3575716455013749870}
   m_Layer: 0
   m_Name: Alex
   m_TagString: Untagged
@@ -512,6 +512,7 @@ MonoBehaviour:
   sonidoAM: {fileID: -6255362466771530876}
   sonidoAD: {fileID: 3528091360038473773}
   sonidoAE: {fileID: -2221638544474307017}
+  cancion: {fileID: -3575716455013749870}
   palomitasPrefab: {fileID: 7612065812354187792, guid: 9f4cf2c5ed2c9064b81aaf5cfcd2a527,
     type: 3}
   microondasPrefab: {fileID: 6991416525440823067, guid: 54c9a6c2bc6f07045842d84f5572c9ac,
@@ -526,7 +527,6 @@ MonoBehaviour:
   rodillas: {fileID: 3124121425414975574}
   hombroIzq: {fileID: 1279404808038985868}
   hombroDch: {fileID: 7405262196150177178}
-  sonidoMicro: {fileID: 8044492981592898286}
 --- !u!82 &-6255362466771530876
 AudioSource:
   m_ObjectHideFlags: 0
@@ -815,7 +815,7 @@ AudioSource:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
---- !u!82 &8044492981592898286
+--- !u!82 &-3575716455013749870
 AudioSource:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -825,7 +825,7 @@ AudioSource:
   m_Enabled: 1
   serializedVersion: 4
   OutputAudioMixerGroup: {fileID: 0}
-  m_audioClip: {fileID: 8300000, guid: 4966c77703bc482408e77748e852eb7e, type: 3}
+  m_audioClip: {fileID: 8300000, guid: 5bb591a31ff3ca64b9d4ec0796dc8b42, type: 3}
   m_PlayOnAwake: 0
   m_Volume: 1
   m_Pitch: 1

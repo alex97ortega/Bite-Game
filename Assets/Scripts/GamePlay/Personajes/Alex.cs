@@ -6,7 +6,6 @@ public class Alex : Personaje
 {
     public GameObject palomitasPrefab, microondasPrefab, apioPrefab, sillaPrefab, ordenadorPrefab;
     public Transform piernas, rodillas, hombroIzq, hombroDch;
-    public AudioSource sonidoMicro;
     float avanzado = 0;
     GameObject palomitas, microondas, apio, silla, ordenador;
     bool sentado = false;
@@ -42,12 +41,11 @@ public class Alex : Personaje
                 microondas.transform.position = objetivo.transform.position + new Vector3(0, 1, 0);
                 if (!aliado)
                     microondas.transform.eulerAngles = new Vector3(0, -240, 0);
-                sonidoMicro.Play();
             }
             else
             {
                 avanzado+= Time.deltaTime;
-                if(avanzado>3.5f)
+                if(avanzado>3.7f)
                 {
                     objetivo.gameObject.SetActive(true);
                     objetivo.HacerDanyo(dmgAM);
