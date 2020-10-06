@@ -41,7 +41,8 @@ public class Dani : Personaje
             else
             {
                 Restaura();
-                objetivo.HacerDanyo(dmgAM);
+                log.LanzaLog("Se estrelló un meteorito al lado de " + objetivo.nombre + ".");
+                objetivo.HacerDanyo(dmgAM * bonifDmg);
                 musicaFondo.Play();
                 return true;
             }
@@ -100,8 +101,15 @@ public class Dani : Personaje
             }
             if (!sonidoAE.isPlaying)
             {
+                panelHp.SetActive(true);
+                avanzado = 0;
                 jugadaUlti = true;
                 Destroy(culturista);
+
+                turnosBonifVelocidad = 2;
+                movimientos = 20;
+                BonificacionDamage(2);
+                log.LanzaLog("Parece que Dani se ha hinchado a esteriodes.");
                 return true;
             }
         }

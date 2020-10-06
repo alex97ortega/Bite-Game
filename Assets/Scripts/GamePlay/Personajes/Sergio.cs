@@ -42,7 +42,8 @@ public class Sergio : Personaje
             if (avanzado > 0.5f)
             {
                 Restaura();
-                objetivo.HacerDanyo(dmgAM);
+                log.LanzaLog("Sergio regaló toda su ropa a " + objetivo.nombre + " y le terminó aplastando.");
+                objetivo.HacerDanyo(dmgAM * bonifDmg);
                 return true;
             }
         }
@@ -77,6 +78,7 @@ public class Sergio : Personaje
             Restaura();
             Curar(initialHp);
             jugadaUlti = true;
+            log.LanzaLog("Sergio nunca desaprovecha los bordes de pizza del día anterior.");
             return true;
         }
         return false;

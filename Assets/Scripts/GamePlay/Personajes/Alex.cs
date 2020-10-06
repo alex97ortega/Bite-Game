@@ -48,7 +48,8 @@ public class Alex : Personaje
                 if(avanzado>3.7f)
                 {
                     objetivo.gameObject.SetActive(true);
-                    objetivo.HacerDanyo(dmgAM);
+                    log.LanzaLog("Alex metió en una bolsa de palomitas a " + objetivo.nombre + ".");
+                    objetivo.HacerDanyo(dmgAM * bonifDmg);
                     Restaura();
                     return true;
                 }
@@ -119,12 +120,14 @@ public class Alex : Personaje
                 hombroDch.eulerAngles -= new Vector3(0, -80, 0);
                 hombroIzq.eulerAngles -= new Vector3(0, 80, 0);
 
+                log.LanzaLog("Alex hackeó su propio juego dando salud a sus aliados y restandosela a sus enemigos.");
+
                 if (aliado)
                 {
                     transform.position += new Vector3(-0.5f, 0.5f, 0);
 
                     foreach (var p in FindObjectOfType<GestorPartida>().GetAllEnemigos())
-                        p.HacerDanyo(dmgAE);
+                        p.HacerDanyo(dmgAE * bonifDmg);
                     foreach (var p in FindObjectOfType<GestorPartida>().GetAllAliados())
                         p.Curar(dmgAE);
                 }
@@ -133,7 +136,7 @@ public class Alex : Personaje
                     transform.position += new Vector3(0.5f, 0.5f, 0);
 
                     foreach (var p in FindObjectOfType<GestorPartida>().GetAllAliados())
-                        p.HacerDanyo(dmgAE);
+                        p.HacerDanyo(dmgAE * bonifDmg);
                     foreach (var p in FindObjectOfType<GestorPartida>().GetAllEnemigos())
                         p.Curar(dmgAE);
                 }

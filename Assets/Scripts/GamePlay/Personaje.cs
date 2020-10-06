@@ -22,8 +22,9 @@ public class Personaje : MonoBehaviour
     public AudioSource sonidoAM, sonidoAD, sonidoAE, cancion;
 
     protected int casillaX, casillaZ;
+    protected int initialHp, initialMovs;
     protected Vector3 initialRot, initialScale;
-    protected int initialHp;
+    protected Log log;
 
     protected bool aliado = true;
     protected bool muerto = false;
@@ -31,12 +32,18 @@ public class Personaje : MonoBehaviour
     protected bool ultimaJugoAD = false;
     protected int turnosParalizado = 0;
     protected int turnosInmune = 0;
+    protected int turnosBonifVelocidad = 0;
+    protected Stack<int> turnosDmgx2;
+    protected int bonifDmg = 1;
 
     void Awake()
     {
         initialHp = hp;
+        initialMovs = movimientos;
         initialRot = transform.eulerAngles;
         initialScale = transform.localScale;
+        log = FindObjectOfType<Log>();
+        turnosDmgx2 = new Stack<int>();
     }
 
     public void SetPos(int x, int z)
@@ -113,7 +120,7 @@ public class Personaje : MonoBehaviour
 
     public void HacerDanyo(int dmg)
     {
-        if (turnosInmune > 0)
+        if (muerto || turnosInmune > 0)
             return;
 
         hp -= dmg;
@@ -122,6 +129,13 @@ public class Personaje : MonoBehaviour
             hp = 0;
             muerto = true;
             Tumbar();
+            int rnd = Random.Range(0, 3);
+            if (rnd == 0)
+                log.LanzaLog("Baia, " + nombre + " se ha quedao tieso.");
+            else if (rnd == 1)
+                log.LanzaLog(nombre + " no ha podido aguantar ese fatal ataque.");
+            else
+                log.LanzaLog("Parece que " + nombre + " la acaba de palmar.");
         }
 
         float relation = (float)hp / (float)initialHp;
@@ -154,10 +168,10 @@ public class Personaje : MonoBehaviour
     public bool HaJugadoUlti() { return jugadaUlti; }
     public bool EsInmune() { return turnosInmune > 0; }
 
+    // en esta llamada aprovechamos y ya gestionamos todo al empezar el turno
     public bool EstaParalizado()
     {
-        if (turnosInmune != 0)
-            turnosInmune--;
+        ComienzoTurno();
 
         if (turnosParalizado == 0)
         {
@@ -167,6 +181,49 @@ public class Personaje : MonoBehaviour
 
         turnosParalizado--;
         return true;
+    }
+
+    private void ComienzoTurno()
+    {
+        if (turnosInmune != 0)
+            turnosInmune--;
+        if (turnosBonifVelocidad != 0)
+            turnosBonifVelocidad--;
+        else
+            movimientos = initialMovs;
+
+        if(turnosDmgx2.Count != 0)
+        {
+            int aux = turnosDmgx2.Pop();
+            aux--;
+            if (aux < 0)
+                bonifDmg /= 2;
+            else
+                turnosDmgx2.Push(aux);
+        }
+    }
+
+    protected void BonificacionDamage(int turnos)
+    {
+        bonifDmg *= 2;
+
+        Queue<int> cola = new Queue<int>();
+        int turnosActualesDmgx2 = 0;
+
+        while(turnosDmgx2.Count != 0)
+        {
+            int aux = turnosDmgx2.Pop();
+            turnosActualesDmgx2 += aux;
+            cola.Enqueue(aux);
+        }
+        turnos -= turnosActualesDmgx2;
+        turnosDmgx2.Push(turnos);
+
+        while(cola.Count!=0)
+        {
+            int aux = cola.Dequeue();
+            turnosDmgx2.Push(aux);
+        }
     }
 
     public bool UltimaJugoAtaqueDistancia()

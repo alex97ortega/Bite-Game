@@ -11,6 +11,7 @@ public class GestorAcciones : MonoBehaviour
     public GameObject menuAcciones;
     public Material aliadoAzul, aliadoAmarillo;
     public Button botonAD, botonAE;
+    public Log log;
 
     int movimientosEsteTurno;
     bool lanzaAnimacionAM = false;
@@ -24,6 +25,7 @@ public class GestorAcciones : MonoBehaviour
         tablero.GestionaEnvenenamientosCasillas(gestorPartida.GetPersonajeTurno().nombre);
         movimientosEsteTurno = 0;
         objetivo = null;
+        log.gameObject.SetActive(true);
 
         if(gestorPartida.GetPersonajeTurno().EstaMuerto() || gestorPartida.GetPersonajeTurno().EstaParalizado())
         {
@@ -124,7 +126,6 @@ public class GestorAcciones : MonoBehaviour
         if (objetivo.EstaMuerto() || objetivo.EsInmune())
             return;
 
-        menuAcciones.SetActive(false);
         string nombre = gestorPartida.GetPersonajeTurno().nombre;
 
         if (nombre == "Dani")
@@ -132,6 +133,8 @@ public class GestorAcciones : MonoBehaviour
         else
             camara.EnfocaCamaraAC(gestorPartida.GetPersonajeTurno().transform.position, gestorPartida.GetPersonajeTurno().IsAliado());
 
+        menuAcciones.SetActive(false);
+        log.gameObject.SetActive(false);
         lanzaAnimacionAM = true;
     }
 
@@ -147,7 +150,10 @@ public class GestorAcciones : MonoBehaviour
                                                                          gestorPartida.GetPersonajeTurno().GetCasillaZ(),
                                                                          gestorPartida.GetPersonajeTurno().IsAliado());
             if (aliadoAdyacente == null)
+            {
+                log.LanzaLog("Reygon intentó usar a un compañero, pero está más solo que la una.");
                 return;
+            }
             objetivo = aliadoAdyacente;
             camara.EnfocaCamaraAD(objetivo.transform.position, gestorPartida.GetPersonajeTurno().IsAliado());
         }
@@ -157,6 +163,7 @@ public class GestorAcciones : MonoBehaviour
         }
 
         menuAcciones.SetActive(false);
+        log.gameObject.SetActive(false);
 
         lanzaAnimacionAD = true;
     }
@@ -167,7 +174,6 @@ public class GestorAcciones : MonoBehaviour
         if (gestorPartida.GetPersonajeTurno().HaJugadoUlti())
             return;
 
-        menuAcciones.SetActive(false);
         string nombre = gestorPartida.GetPersonajeTurno().nombre;
         if (nombre == "Alex")
             camara.EnfocaCamaraAD(gestorPartida.GetPersonajeTurno().transform.position, gestorPartida.GetPersonajeTurno().IsAliado());
@@ -176,6 +182,8 @@ public class GestorAcciones : MonoBehaviour
         else
             camara.EnfocaCamaraAE(gestorPartida.GetPersonajeTurno().transform.position, gestorPartida.GetPersonajeTurno().IsAliado());
 
+        menuAcciones.SetActive(false);
+        log.gameObject.SetActive(false);
         lanzaAnimacionAE = true;
     }
 

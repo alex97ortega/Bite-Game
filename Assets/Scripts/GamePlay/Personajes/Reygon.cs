@@ -43,7 +43,8 @@ public class Reygon : Personaje
             else if(avanzado > 1)
             {
                 Restaura();
-                objetivo.HacerDanyo(dmgAM);
+                log.LanzaLog("Reygon creó una piscina artificial debajo de " + objetivo.nombre + ".");
+                objetivo.HacerDanyo(dmgAM * bonifDmg);
                 FindObjectOfType<Terreno>().EnvenenarCasillas(objetivo.GetCasillaX(), objetivo.GetCasillaZ(), 0, dmgAM);
                 return true;
             }
@@ -67,10 +68,11 @@ public class Reygon : Personaje
             transform.position -= new Vector3(0, 1000, 0);
             Restaura();
             ultimaJugoAD = true;
+            log.LanzaLog(objetivo.nombre + " acaba de cantar una preciosa canción encima de Microfonomán.");
             foreach (var p in FindObjectOfType<GestorPartida>().GetAllEnemigos())
-                p.HacerDanyo(dmgAD);
+                p.HacerDanyo(dmgAD * bonifDmg);
             foreach (var p in FindObjectOfType<GestorPartida>().GetAllAliados())
-                p.HacerDanyo(dmgAD);
+                p.HacerDanyo(dmgAD * bonifDmg);
             return true;
         }
         return false;
@@ -92,6 +94,7 @@ public class Reygon : Personaje
                 avanzado = 0;
                 jugadaUlti = true;
                 FindObjectOfType<Terreno>().EnvenenarCasillas(casillaX, casillaZ, 1, dmgAE);
+                log.LanzaLog("Yo no me acercaría mucho a ese menda.");
                 return true;
             }
         }

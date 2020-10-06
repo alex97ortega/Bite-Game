@@ -75,7 +75,8 @@ public class Laura : Personaje
             if(!sonidoAM.isPlaying)
             {
                 Restaura();
-                objetivo.HacerDanyo(dmgAM);
+                log.LanzaLog("Lobezno ha entrado en combate.");
+                objetivo.HacerDanyo(dmgAM * bonifDmg);
                 return true;
             }
         }      

@@ -29,46 +29,31 @@ public class Gonzalo : Personaje
         }
         else
         {
-            if(aliado)
+            if(avanzado < 1.2f)
             {
-                if(avanzado < 1.2f)
+                avanzado += Time.deltaTime;
+                if (aliado)
                 {
-                    avanzado += Time.deltaTime;
                     transform.position -= new Vector3(0.2f, 0, 0);
                     body.eulerAngles -= new Vector3(10, 0, 0);
-                    if (avanzado > 0.5f)
-                    {
-                        objetivo.Tumbar();
-                    }
                 }
                 else
                 {
-                    Restaura();
-                    objetivo.RestauraPropiedades();
-                    objetivo.HacerDanyo(dmgAM);
-                    return true;
-                }
-            }
-            //enemigo
-            else
-            {
-                if (avanzado < 1.2f)
-                {
-                    avanzado += Time.deltaTime;
                     transform.position += new Vector3(0.2f, 0, 0);
                     body.eulerAngles += new Vector3(10, 0, 0);
-                    if(avanzado > 0.5f)
-                    {
-                        objetivo.Tumbar();
-                    }
                 }
-                else
+                if (avanzado > 0.5f)
                 {
-                    Restaura();
-                    objetivo.RestauraPropiedades();
-                    objetivo.HacerDanyo(dmgAM);
-                    return true;
+                    objetivo.Tumbar();
                 }
+            }
+            else
+            {
+                Restaura();
+                objetivo.RestauraPropiedades();
+                log.LanzaLog("Gonzalo usó desenrollar sobre " + objetivo.nombre + ".");
+                objetivo.HacerDanyo(dmgAM * bonifDmg);
+                return true;
             }
         }
         return false;
@@ -102,6 +87,7 @@ public class Gonzalo : Personaje
             turnosInmune = 3;
             turnosParalizado = 3;
             Curar(initialHp);
+            log.LanzaLog("La marmota se fue a dormir.");
             return true;
         }
         return false;
@@ -145,6 +131,7 @@ public class Gonzalo : Personaje
             transform.position -= new Vector3(0, 1.5f, 0);
             transform.eulerAngles = initialRot;
             Destroy(cama);
+            log.LanzaLog("Parecía que nunca iba a llegar este momento, pero Gonzalo se acaba de despertar.");
         }
 
         panelHp.SetActive(true);
