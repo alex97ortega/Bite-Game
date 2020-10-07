@@ -59,7 +59,9 @@ public class GameManager : MonoBehaviour
         jugadoresPartida.Add(personaje);
         numJugadoresSeleccionados++;
         if (numJugadoresSeleccionados == numJugadoresCombate)
+        {
             SceneManager.LoadScene("GamePlay");
+        }
     }
 
     public void DeseleccionarJugador(Personaje personaje)

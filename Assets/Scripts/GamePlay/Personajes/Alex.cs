@@ -9,6 +9,7 @@ public class Alex : Personaje
     float avanzado = 0;
     GameObject palomitas, microondas, apio, silla, ordenador;
     bool sentado = false;
+    bool calculadaTrayectoria = false;
     
     public override bool AnimacionAM(Personaje objetivo)
     {
@@ -48,8 +49,17 @@ public class Alex : Personaje
                 if(avanzado>3.7f)
                 {
                     objetivo.gameObject.SetActive(true);
-                    log.LanzaLog("Alex metió en una bolsa de palomitas a " + objetivo.nombre + ".");
-                    objetivo.HacerDanyo(dmgAM * bonifDmg);
+
+                    if (objetivo.nombre == "Gonzalo")
+                    {
+                        log.LanzaLog("Gonzalo no pudo soportar el olor de las palomitas de Alex, es muy eficaz!!");
+                        objetivo.HacerDanyo(dmgAM * bonifDmg * 2);
+                    }
+                    else
+                    {
+                        log.LanzaLog("Alex metió en una bolsa de palomitas a " + objetivo.nombre + ".");
+                        objetivo.HacerDanyo(dmgAM * bonifDmg);
+                    }
                     Restaura();
                     return true;
                 }
@@ -62,6 +72,7 @@ public class Alex : Personaje
     {
         if(apio== null)
         {
+            PlaySonidoAD();
             apio = Instantiate(apioPrefab);
             if(aliado)
             {
@@ -73,6 +84,27 @@ public class Alex : Personaje
                 apio.transform.position = transform.position + new Vector3(0, 2.1f, 1.1f);
                 apio.transform.eulerAngles += new Vector3(-15, 0, 0);
             }
+        }
+        else if (!sonidoAD.isPlaying)
+        {
+            //FindObjectOfType<Camara>().RestauraCamara();
+            //if(!calculadaTrayectoria)
+            //{
+            //    calculadaTrayectoria = true;
+            //}
+            if(objetivo.nombre == "Laura" || objetivo.nombre == "Sergio")
+            {
+                log.LanzaLog("Alex le dio apio con queso a " + objetivo.nombre + ". Es muy eficaz!!");
+                objetivo.HacerDanyo(dmgAD * bonifDmg * 2);
+            }
+            else
+            {
+                log.LanzaLog("Alex le dio apio con queso a " + objetivo.nombre + ".");
+                objetivo.HacerDanyo(dmgAD * bonifDmg);
+            }
+            Restaura();
+            ultimaJugoAD = true;
+            return true;
         }
         return false;
     }
@@ -175,8 +207,11 @@ public class Alex : Personaje
             Destroy(silla);
         if (ordenador != null)
             Destroy(ordenador);
+        if (apio != null)
+            Destroy(apio);
 
         avanzado = 0;
         sentado = false;
+        calculadaTrayectoria = false;
     }
 }

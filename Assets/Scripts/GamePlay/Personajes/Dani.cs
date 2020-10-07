@@ -60,6 +60,7 @@ public class Dani : Personaje
         if(avanzado < 1 && aquarius==null)
         {
             PlaySonidoAE();
+            musicaFondo.Pause();
             aquarius = Instantiate(aquariusPrefab);
             if(aliado)
             {
@@ -105,6 +106,7 @@ public class Dani : Personaje
                 avanzado = 0;
                 jugadaUlti = true;
                 Destroy(culturista);
+                musicaFondo.Play();
 
                 turnosBonifVelocidad = 2;
                 movimientos = 20;

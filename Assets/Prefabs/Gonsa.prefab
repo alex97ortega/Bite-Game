@@ -995,14 +995,14 @@ MonoBehaviour:
   deportista: 1
   gaymer: 1
   fumador: 0
+  necesitaObjetivoAD: 1
   movimientos: 4
   hp: 120
   dmgAM: 20
-  dmgAD: 0
+  dmgAD: 20
   dmgAE: 0
   infoAC: Se convierte en una bola enorme y aplasta al jugador que tenga delante.
-  infoAD: Lanza un pelotazo al enemigo indicado. 40% de probabilidad de esquivar
-    el ataque jugadores deportistas.
+  infoAD: Lanza un balonazo al enemigo indicado.
   infoAE: "La marmota se va a dormir: Gonzalo vuelve a su casilla inicial, recobra
     su vida entera y es inmune durante 3 turnos, pero no puede realizar ninguna acci\xF3n
     por ese tiempo."

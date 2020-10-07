@@ -1984,10 +1984,11 @@ MonoBehaviour:
   deportista: 0
   gaymer: 0
   fumador: 1
+  necesitaObjetivoAD: 1
   movimientos: 3
   hp: 90
   dmgAM: 20
-  dmgAD: 0
+  dmgAD: 15
   dmgAE: 0
   infoAC: "Destripa con sus u\xF1as al jugador que tenga delante."
   infoAD: Lanza una hamburguesa vegana al enemigo indicado.

@@ -11,6 +11,7 @@ public class GestorAcciones : MonoBehaviour
     public GameObject menuAcciones;
     public Material aliadoAzul, aliadoAmarillo;
     public Button botonAD, botonAE;
+    public GestorObjetivosAD objetivosAD;
     public Log log;
 
     int movimientosEsteTurno;
@@ -135,6 +136,7 @@ public class GestorAcciones : MonoBehaviour
 
         menuAcciones.SetActive(false);
         log.gameObject.SetActive(false);
+        objetivosAD.gameObject.SetActive(false);
         lanzaAnimacionAM = true;
     }
 
@@ -156,14 +158,32 @@ public class GestorAcciones : MonoBehaviour
             }
             objetivo = aliadoAdyacente;
             camara.EnfocaCamaraAD(objetivo.transform.position, gestorPartida.GetPersonajeTurno().IsAliado());
+            menuAcciones.SetActive(false);
+            log.gameObject.SetActive(false);
+
+            lanzaAnimacionAD = true;
+        }
+        else if (gestorPartida.GetPersonajeTurno().necesitaObjetivoAD)
+        {
+            objetivosAD.gameObject.SetActive(!objetivosAD.gameObject.activeSelf);
+            if(objetivosAD.gameObject.activeSelf)
+            {
+                objetivosAD.ActualizaEnemigos();
+            }
         }
         else
         {
-            camara.EnfocaCamaraAD(gestorPartida.GetPersonajeTurno().transform.position, gestorPartida.GetPersonajeTurno().IsAliado());
+            ConfirmadoObjetivoAD(null);
         }
+    }
 
+    public void ConfirmadoObjetivoAD(Personaje objetivoAD)
+    {
+        objetivo = objetivoAD;
+        camara.EnfocaCamaraAD(gestorPartida.GetPersonajeTurno().transform.position, gestorPartida.GetPersonajeTurno().IsAliado());
         menuAcciones.SetActive(false);
         log.gameObject.SetActive(false);
+        objetivosAD.gameObject.SetActive(false);
 
         lanzaAnimacionAD = true;
     }
@@ -184,6 +204,7 @@ public class GestorAcciones : MonoBehaviour
 
         menuAcciones.SetActive(false);
         log.gameObject.SetActive(false);
+        objetivosAD.gameObject.SetActive(false);
         lanzaAnimacionAE = true;
     }
 

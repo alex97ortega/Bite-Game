@@ -11,6 +11,7 @@ public class Personaje : MonoBehaviour
     public bool deportista;
     public bool gaymer;
     public bool fumador;
+    public bool necesitaObjetivoAD;
     public int movimientos;
     public int hp;
     public int dmgAM, dmgAD, dmgAE;
@@ -197,7 +198,15 @@ public class Personaje : MonoBehaviour
             int aux = turnosDmgx2.Pop();
             aux--;
             if (aux < 0)
+            {
                 bonifDmg /= 2;
+                // quitamos si hubiera algun 0
+                while(turnosDmgx2.Count != 0 && turnosDmgx2.Peek()==0)
+                {
+                    turnosDmgx2.Pop();
+                    bonifDmg /= 2;
+                }
+            }
             else
                 turnosDmgx2.Push(aux);
         }

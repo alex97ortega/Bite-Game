@@ -497,11 +497,12 @@ MonoBehaviour:
   deportista: 1
   gaymer: 1
   fumador: 0
+  necesitaObjetivoAD: 1
   movimientos: 5
   hp: 100
-  dmgAM: 15
-  dmgAD: 0
-  dmgAE: 30
+  dmgAM: 20
+  dmgAD: 15
+  dmgAE: 20
   infoAC: Coge al enemigo que tenga delante, lo mete en una bolas de palomitas y
     lo mete al microondas.
   infoAD: Lanza al enemigo indicado un apio con queso Philadelphia.
@@ -633,7 +634,7 @@ AudioSource:
   m_Enabled: 1
   serializedVersion: 4
   OutputAudioMixerGroup: {fileID: 0}
-  m_audioClip: {fileID: 0}
+  m_audioClip: {fileID: 8300000, guid: 42724a5b183cbfd4389709c11574df2c, type: 3}
   m_PlayOnAwake: 0
   m_Volume: 1
   m_Pitch: 1

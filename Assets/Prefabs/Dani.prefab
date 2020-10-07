@@ -778,10 +778,11 @@ MonoBehaviour:
   deportista: 1
   gaymer: 1
   fumador: 0
+  necesitaObjetivoAD: 1
   movimientos: 4
   hp: 100
   dmgAM: 25
-  dmgAD: 0
+  dmgAD: 20
   dmgAE: 0
   infoAC: Golpe planetoide al que tenga delante.
   infoAD: "Lanza su antiguo m\xF3vil ladrillo al enemigo que se indique."
@@ -1002,9 +1003,9 @@ AudioSource:
   m_Enabled: 1
   serializedVersion: 4
   OutputAudioMixerGroup: {fileID: 0}
-  m_audioClip: {fileID: 8300000, guid: e83fffe0b62d18844a6c097b4304958e, type: 3}
+  m_audioClip: {fileID: 8300000, guid: 29d7a202058dd3a458ac8f6976d2069a, type: 3}
   m_PlayOnAwake: 0
-  m_Volume: 0.6
+  m_Volume: 1
   m_Pitch: 1
   Loop: 0
   Mute: 0
