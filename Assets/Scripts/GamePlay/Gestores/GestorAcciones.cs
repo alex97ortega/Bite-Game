@@ -137,6 +137,7 @@ public class GestorAcciones : MonoBehaviour
         menuAcciones.SetActive(false);
         log.gameObject.SetActive(false);
         objetivosAD.gameObject.SetActive(false);
+        tablero.RestauraTablero();
         lanzaAnimacionAM = true;
     }
 
@@ -160,6 +161,7 @@ public class GestorAcciones : MonoBehaviour
             camara.EnfocaCamaraAD(objetivo.transform.position, gestorPartida.GetPersonajeTurno().IsAliado());
             menuAcciones.SetActive(false);
             log.gameObject.SetActive(false);
+            tablero.RestauraTablero();
 
             lanzaAnimacionAD = true;
         }
@@ -184,6 +186,7 @@ public class GestorAcciones : MonoBehaviour
         menuAcciones.SetActive(false);
         log.gameObject.SetActive(false);
         objetivosAD.gameObject.SetActive(false);
+        tablero.RestauraTablero();
 
         lanzaAnimacionAD = true;
     }
@@ -205,6 +208,7 @@ public class GestorAcciones : MonoBehaviour
         menuAcciones.SetActive(false);
         log.gameObject.SetActive(false);
         objetivosAD.gameObject.SetActive(false);
+        tablero.RestauraTablero();
         lanzaAnimacionAE = true;
     }
 

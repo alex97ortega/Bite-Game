@@ -1207,7 +1207,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   verde: {fileID: 2100000, guid: 1aa997e2ca784ad44882eed9043f9744, type: 2}
   amarillo: {fileID: 2100000, guid: 7ab5881eabdc9494b84317cab0e58466, type: 2}
-  rojo: {fileID: 2100000, guid: 1b2acc895a3046b469409ba6a5569e8f, type: 2}
+  rojo: {fileID: 2100000, guid: 386a60ca767f6ff4cb2e968a37dc0de3, type: 2}
 --- !u!1 &6126899503302947063
 GameObject:
   m_ObjectHideFlags: 0
@@ -1989,7 +1989,7 @@ MonoBehaviour:
   hp: 90
   dmgAM: 20
   dmgAD: 15
-  dmgAE: 0
+  dmgAE: 10
   infoAC: "Destripa con sus u\xF1as al jugador que tenga delante."
   infoAD: Lanza una hamburguesa vegana al enemigo indicado.
   infoAE: "No hay quien la calle: Laura se pone a hablar durante 2 minutos sin parar
@@ -2206,9 +2206,9 @@ AudioSource:
   m_Enabled: 1
   serializedVersion: 4
   OutputAudioMixerGroup: {fileID: 0}
-  m_audioClip: {fileID: 0}
+  m_audioClip: {fileID: 8300000, guid: 4fea538d6575ae6409ebd6897a6e3a13, type: 3}
   m_PlayOnAwake: 0
-  m_Volume: 1
+  m_Volume: 0.72
   m_Pitch: 1
   Loop: 0
   Mute: 0

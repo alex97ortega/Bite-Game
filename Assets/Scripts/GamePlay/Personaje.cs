@@ -89,7 +89,10 @@ public class Personaje : MonoBehaviour
     public void Tumbar()
     {
         panelHp.SetActive(false);
-        transform.position = new Vector3(casillaX * 3, 0, casillaZ * 3) + new Vector3(1.5f, 0.2f, 0);
+        if(aliado)
+            transform.position = new Vector3(casillaX * 3, 0, casillaZ * 3) + new Vector3(-1.5f, 0.2f, 0);
+        else
+            transform.position = new Vector3(casillaX * 3, 0, casillaZ * 3) + new Vector3(1.5f, 0.2f, 0);
         transform.eulerAngles = initialRot + new Vector3(90, 0, 0);
     }
 
@@ -130,13 +133,26 @@ public class Personaje : MonoBehaviour
             hp = 0;
             muerto = true;
             Tumbar();
-            int rnd = Random.Range(0, 3);
-            if (rnd == 0)
-                log.LanzaLog("Baia, " + nombre + " se ha quedao tieso.");
-            else if (rnd == 1)
-                log.LanzaLog(nombre + " no ha podido aguantar ese fatal ataque.");
+            if (nombre == "Laura" && sonidoAE.isPlaying)
+            {
+                sonidoAE.Stop();
+                log.LanzaLog("Al fin se calló.");
+            }
             else
-                log.LanzaLog("Parece que " + nombre + " la acaba de palmar.");
+            {
+                int rnd = Random.Range(0, 3);
+                if (rnd == 0)
+                {
+                    if(chico)
+                        log.LanzaLog("Baia, " + nombre + " se ha quedao tieso.");
+                    else
+                        log.LanzaLog("Baia, " + nombre + " se ha quedao tiesa.");
+                }
+                else if (rnd == 1)
+                    log.LanzaLog(nombre + " no ha podido aguantar ese fatal golpe.");
+                else
+                    log.LanzaLog("Parece que " + nombre + " la acaba de palmar.");
+            }
         }
 
         float relation = (float)hp / (float)initialHp;
@@ -186,6 +202,18 @@ public class Personaje : MonoBehaviour
 
     private void ComienzoTurno()
     {
+        if(nombre == "Laura" && sonidoAE.isPlaying)
+        {
+            log.LanzaLog("Y mientras Laura que no se calla ni debajo del agua...");
+            foreach (var p in FindObjectOfType<GestorPartida>().GetAllAliados())
+            {
+                if(p.nombre != "Laura")
+                    p.HacerDanyo(dmgAE * bonifDmg);
+            }
+            foreach (var p in FindObjectOfType<GestorPartida>().GetAllEnemigos())
+                p.HacerDanyo(dmgAE * bonifDmg);
+        }
+
         if (turnosInmune != 0)
             turnosInmune--;
         if (turnosBonifVelocidad != 0)

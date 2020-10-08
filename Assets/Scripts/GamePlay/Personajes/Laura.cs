@@ -9,8 +9,9 @@ public class Laura : Personaje
     Vector3 iniRotTorso;
 
     int veces = 0;
-    float movido = 60;
+    float movido = 60, avanzado = 0;
     bool ataqueIzq = true;
+    bool seCallo = false;
 
     private void Start()
     {
@@ -19,6 +20,14 @@ public class Laura : Personaje
 
 
         iniRotTorso = torso.eulerAngles;
+    }
+    private void Update()
+    {
+        if(jugadaUlti && !muerto && !seCallo && !sonidoAE.isPlaying)
+        {
+            seCallo = true;
+            log.LanzaLog("Habéis conseguido aguantar sin matarla hasta que se calló, enhorabuena!!");
+        }
     }
 
     public override bool AnimacionAM(Personaje objetivo)
@@ -99,6 +108,18 @@ public class Laura : Personaje
 
     public override bool AnimacionAE(Personaje objetivo)
     {
+        if(!sonidoAE.isPlaying)
+        {
+            PlaySonidoAE();
+        }
+        avanzado += Time.deltaTime;
+        if(avanzado>=3.8f)
+        {
+            Restaura();
+            jugadaUlti = true;
+            log.LanzaLog("¿Alguien tiene unos tapones para los oídos?");
+            return true;
+        }
         return false;
     }
 
@@ -107,6 +128,7 @@ public class Laura : Personaje
         ataqueIzq = true;
         movido = 60;
         veces = 0;
+        avanzado = 0;
         torso.eulerAngles = iniRotTorso;
 
         hombroIzq.eulerAngles = iniRotIzq;

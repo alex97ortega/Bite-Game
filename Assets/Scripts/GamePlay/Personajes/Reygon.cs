@@ -43,7 +43,7 @@ public class Reygon : Personaje
             else if(avanzado > 1)
             {
                 Restaura();
-                log.LanzaLog("Reygon creó una piscina artificial debajo de " + objetivo.nombre + ".");
+                log.LanzaLog("Reygon creó un jacuzzi debajo de " + objetivo.nombre + ".");
                 objetivo.HacerDanyo(dmgAM * bonifDmg);
                 FindObjectOfType<Terreno>().EnvenenarCasillas(objetivo.GetCasillaX(), objetivo.GetCasillaZ(), 0, dmgAM);
                 return true;

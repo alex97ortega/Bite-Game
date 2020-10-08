@@ -5,12 +5,14 @@ using UnityEngine;
 public class Gonzalo : Personaje
 {
     public Transform body;
-    public GameObject camaPrefab;
-    GameObject cama;
+    public GameObject camaPrefab, balonPrefab;
+    public AudioSource despertar, golpe;
+
+    GameObject cama, balon;
     Vector3 initialBodyScale;
     Vector3 initialBodyRotation;
     Vector3 guardaPos;
-    float avanzado = 0;
+    float avanzado = 0, velBalonX = 0, velBalonZ=0;
 
     private void Start()
     {
@@ -23,7 +25,7 @@ public class Gonzalo : Personaje
         if (body.localScale.x < 4)
         {
             PlaySonidoAM();
-            body.localScale += new Vector3(1.5f*Time.deltaTime, 1.1f * Time.deltaTime, 1.75f * Time.deltaTime);
+            body.localScale += new Vector3(1.3f*Time.deltaTime, 1.0f * Time.deltaTime, 1.5f * Time.deltaTime);
             panelHp.SetActive(false);
             guardaPos = transform.position;
         }
@@ -61,6 +63,61 @@ public class Gonzalo : Personaje
 
     public override bool AnimacionAD(Personaje objetivo)
     {
+        if (balon == null)
+        {
+            PlaySonidoAD();
+            balon = Instantiate(balonPrefab);
+            if(aliado)
+                balon.transform.position = transform.position + new Vector3(-0.75f, 0.4f, 0.5f);
+            else
+                balon.transform.position = transform.position + new Vector3(0.75f, 0.4f, -0.5f);
+        }
+        else if (avanzado>4)
+        {
+            if (velBalonX == 0 && velBalonZ == 0)
+            {
+                FindObjectOfType<Camara>().RestauraCamara();
+                velBalonX = objetivo.transform.position.x - balon.transform.position.x;
+                velBalonZ = objetivo.transform.position.z - balon.transform.position.z;
+            }
+            bool llegadoX, llegadoZ;
+            if (velBalonX > 0)
+                llegadoX = balon.transform.position.x >= objetivo.transform.position.x;
+            else
+                llegadoX = balon.transform.position.x <= objetivo.transform.position.x;
+
+            if (velBalonZ > 0)
+                llegadoZ = balon.transform.position.z >= objetivo.transform.position.z;
+            else
+                llegadoZ = balon.transform.position.z <= objetivo.transform.position.z;
+
+            if (llegadoX && llegadoZ)
+            {
+                golpe.Play();
+                if (!objetivo.deportista)
+                {
+                    log.LanzaLog("Gonzalo jugó al matapollos con " + objetivo.nombre + ". Es muy eficaz!!");
+                    objetivo.HacerDanyo(dmgAD * bonifDmg * 2);
+                }
+                else
+                {
+                    log.LanzaLog("Gonzalo le dio un pase largo a " + objetivo.nombre + ", pero calculó mal.");
+                    objetivo.HacerDanyo(dmgAD * bonifDmg);
+                }
+                velBalonX = 0;
+                velBalonZ = 0;
+                avanzado = 0;
+                Destroy(balon);
+                panelHp.SetActive(true);
+                ultimaJugoAD = true;
+                return true;
+            }
+            else
+            {
+                balon.transform.position += new Vector3(velBalonX * Time.deltaTime, 2*Time.deltaTime, velBalonZ * Time.deltaTime);
+            }
+        }
+        avanzado += Time.deltaTime;
         return false;
     }
 
@@ -118,7 +175,7 @@ public class Gonzalo : Personaje
                 tablero.GetCasilla(fila, i).Ocupar(this);
                 tablero.GetCasilla(fila, i+1).Ocupar(this);
                 SetPos(fila, i);
-                FindObjectOfType<Camara>().EnfocaCamaraAE(transform.position + new Vector3(0, -0.5f, 2), aliado);
+                FindObjectOfType<Camara>().EnfocaCamaraAE(transform.position + new Vector3(0, -0.5f, 1.5f), aliado);
                 break;
             }
         }
@@ -127,6 +184,7 @@ public class Gonzalo : Personaje
     {
         if (cama != null)
         {
+            despertar.Play();
             FindObjectOfType<Terreno>().GetCasilla(casillaX, casillaZ + 1).Desocupar();
             transform.position -= new Vector3(0, 1.5f, 0);
             transform.eulerAngles = initialRot;
