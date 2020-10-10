@@ -211,7 +211,10 @@ public class Personaje : MonoBehaviour
                     p.HacerDanyo(dmgAE * bonifDmg);
             }
             foreach (var p in FindObjectOfType<GestorPartida>().GetAllEnemigos())
-                p.HacerDanyo(dmgAE * bonifDmg);
+            {
+                if (p.nombre != "Laura")
+                    p.HacerDanyo(dmgAE * bonifDmg);
+            }
         }
 
         if (turnosInmune != 0)

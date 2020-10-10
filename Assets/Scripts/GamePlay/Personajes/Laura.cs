@@ -5,11 +5,15 @@ using UnityEngine;
 public class Laura : Personaje
 {
     public Transform torso, hombroIzq, hombroDch;
+    public GameObject burgerPrefab;
+    public AudioSource golpe;
+
+    GameObject burger;
     Vector3 iniRotIzq, iniRotDch;
     Vector3 iniRotTorso;
 
     int veces = 0;
-    float movido = 60, avanzado = 0;
+    float movido = 60, avanzado = 0, velBurgerX = 0, velBurgerZ = 0;
     bool ataqueIzq = true;
     bool seCallo = false;
 
@@ -103,6 +107,59 @@ public class Laura : Personaje
 
     public override bool AnimacionAD(Personaje objetivo)
     {
+        if (burger == null)
+        {
+            PlaySonidoAD();
+            burger = Instantiate(burgerPrefab);
+            hombroDch.transform.eulerAngles -= new Vector3(25, 0, 70);
+            if (aliado)
+            {
+                burger.transform.position = transform.position + new Vector3(-0.1f, 2.7f, 0.85f);
+            }
+            else
+            {
+                burger.transform.position = transform.position + new Vector3(0.1f, 2.7f, -0.85f);
+            }
+        }
+        else if (avanzado >= 1.5f)
+        {
+            if (velBurgerX == 0 && velBurgerZ == 0)
+            {
+                FindObjectOfType<Camara>().RestauraCamara();
+                velBurgerX = objetivo.transform.position.x - burger.transform.position.x;
+                velBurgerZ = objetivo.transform.position.z - burger.transform.position.z;
+            }
+            bool llegadoX, llegadoZ;
+            if (velBurgerX > 0)
+                llegadoX = burger.transform.position.x >= objetivo.transform.position.x;
+            else
+                llegadoX = burger.transform.position.x <= objetivo.transform.position.x;
+
+            if (velBurgerZ > 0)
+                llegadoZ = burger.transform.position.z >= objetivo.transform.position.z;
+            else
+                llegadoZ = burger.transform.position.z <= objetivo.transform.position.z;
+
+            if (llegadoX && llegadoZ)
+            {
+                golpe.Play();
+                log.LanzaLog("Parece que a " + objetivo.nombre + " no le ha gustado la hamburguesa del TFG.");
+                objetivo.HacerDanyo(dmgAD * bonifDmg);
+                avanzado = 0;
+                velBurgerX = 0;
+                velBurgerZ = 0;
+                Destroy(burger);
+                hombroDch.transform.eulerAngles += new Vector3(25, 0, 70);
+                ultimaJugoAD = true;
+                return true;
+            }
+            else
+            {
+                burger.transform.position += new Vector3(velBurgerX * 1.5f * Time.deltaTime, 0, velBurgerZ * 1.5f * Time.deltaTime);
+                burger.transform.Rotate(-50 * Time.deltaTime, 0, -50 * Time.deltaTime);
+            }
+        }
+        avanzado += Time.deltaTime;
         return false;
     }
 

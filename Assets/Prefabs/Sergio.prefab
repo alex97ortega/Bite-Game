@@ -1046,6 +1046,8 @@ MonoBehaviour:
     type: 3}
   cajaPizzaPrefab: {fileID: 6444998601396617329, guid: 1935dc6abc81e3046826c6f66745014b,
     type: 3}
+  cartasMagicPrefab: {fileID: 8015307696230747304, guid: 5e3da480457c07f46a5a26e31c0fbffd,
+    type: 3}
   hombroIzq: {fileID: 3882133180004927662}
   hombroDch: {fileID: 1745954139192147321}
 --- !u!82 &-284566458900830857

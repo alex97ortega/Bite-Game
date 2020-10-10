@@ -9,7 +9,7 @@ public class GestorAcciones : MonoBehaviour
     public Terreno tablero;
     public Camara camara;
     public GameObject menuAcciones;
-    public Material aliadoAzul, aliadoAmarillo;
+    public Material aliadoAzul,enemigoRojo, aliadoAmarillo;
     public Button botonAD, botonAE;
     public GestorObjetivosAD objetivosAD;
     public Log log;
@@ -35,7 +35,8 @@ public class GestorAcciones : MonoBehaviour
         }
 
         // enemigo
-        if (!gestorPartida.GetPersonajeTurno().IsAliado())
+        //provisional hasta multiplayer
+        if (false)//!gestorPartida.GetPersonajeTurno().IsAliado())
         {
             menuAcciones.SetActive(false);
             PasarTurno(); // sin ia, quitar
@@ -58,6 +59,8 @@ public class GestorAcciones : MonoBehaviour
     {
         if(gestorPartida.GetPersonajeTurno().IsAliado())
             gestorPartida.GetPersonajeTurno().SetColor(aliadoAzul);
+        else
+            gestorPartida.GetPersonajeTurno().SetColor(enemigoRojo);
         gestorPartida.SiguienteTurno();
         camara.RestauraCamara();
         PreparaTurno();
@@ -170,7 +173,7 @@ public class GestorAcciones : MonoBehaviour
             objetivosAD.gameObject.SetActive(!objetivosAD.gameObject.activeSelf);
             if(objetivosAD.gameObject.activeSelf)
             {
-                objetivosAD.ActualizaEnemigos();
+                objetivosAD.ActualizaEnemigos(gestorPartida.GetPersonajeTurno().IsAliado());
             }
         }
         else
@@ -182,7 +185,11 @@ public class GestorAcciones : MonoBehaviour
     public void ConfirmadoObjetivoAD(Personaje objetivoAD)
     {
         objetivo = objetivoAD;
-        camara.EnfocaCamaraAD(gestorPartida.GetPersonajeTurno().transform.position, gestorPartida.GetPersonajeTurno().IsAliado());
+        string nombre = gestorPartida.GetPersonajeTurno().nombre;
+        if (nombre == "Dani" || nombre == "Laura" || nombre == "Sergio")
+            camara.EnfocaCamaraAE2(gestorPartida.GetPersonajeTurno().transform.position, gestorPartida.GetPersonajeTurno().IsAliado());
+        else
+            camara.EnfocaCamaraAD(gestorPartida.GetPersonajeTurno().transform.position, gestorPartida.GetPersonajeTurno().IsAliado());
         menuAcciones.SetActive(false);
         log.gameObject.SetActive(false);
         objetivosAD.gameObject.SetActive(false);

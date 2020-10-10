@@ -5,8 +5,10 @@ using UnityEngine;
 public class Sergio : Personaje
 {
     public Ropa ropaPrefab;
-    public GameObject cajaPizzaPrefab;
+    public GameObject cajaPizzaPrefab, cartasMagicPrefab;
     public Transform hombroIzq, hombroDch;
+
+    GameObject cartasMagic;
     Vector3 initialTorsoRot;
     List<Ropa> ropaRegalada;
     GameObject cajaPizza;
@@ -52,6 +54,39 @@ public class Sergio : Personaje
 
     public override bool AnimacionAD(Personaje objetivo)
     {
+        if (cartasMagic == null)
+        {
+            PlaySonidoAD();
+            hombroDch.transform.eulerAngles += new Vector3(52, 0, 54);
+            hombroIzq.transform.eulerAngles += new Vector3(52, 0, -54);
+            cartasMagic = Instantiate(cartasMagicPrefab);
+            cartasMagic.transform.position = transform.position;
+            if (!aliado)
+                cartasMagic.transform.Rotate(0, 180, 0);
+            cartasMagic.GetComponent<CartasMagic>().SetObjetivo(objetivo.transform.position.x, objetivo.transform.position.z);
+        }
+        else if (!sonidoAD.isPlaying)
+        {
+            FindObjectOfType<Camara>().RestauraCamara();
+            if (cartasMagic.GetComponent<CartasMagic>().LanzadasTodasLasCartas())
+            {
+                if (objetivo.nombre == "Alex" || objetivo.nombre == "Dani")
+                {
+                    log.LanzaLog(objetivo.nombre + " perdió dolorosamente a las Magic contra Sergio. Es muy eficaz!!");
+                    objetivo.HacerDanyo(dmgAD * bonifDmg * 2);
+                }
+                else
+                {
+                    log.LanzaLog("Sergio se marcó un dinamó sobre " + objetivo.nombre + ".");
+                    objetivo.HacerDanyo(dmgAD * bonifDmg);
+                }
+                ultimaJugoAD = true;
+                hombroDch.transform.eulerAngles -= new Vector3(52, 0, 54);
+                hombroIzq.transform.eulerAngles -= new Vector3(52, 0, -54);
+                Destroy(cartasMagic);
+                return true;
+            }
+        }
         return false;
     }
 

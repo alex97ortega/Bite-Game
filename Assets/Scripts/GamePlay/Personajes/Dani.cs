@@ -5,13 +5,14 @@ using UnityEngine;
 public class Dani : Personaje
 {
     public Transform cabesa, torso, hombroDch;
-    public GameObject aquariusPrefab, culturistaPrefab;
+    public GameObject aquariusPrefab, culturistaPrefab, movilPrefab;
+    public AudioSource golpe;
 
-    GameObject aquarius, culturista;
+    GameObject aquarius, culturista, movil;
     AudioSource musicaFondo;
     Vector3 initialCabesaScale;
     Vector3 initialTorsoRot, initialHombroRot;
-    float avanzado = 0;
+    float avanzado = 0, velMovilX = 0, velMovilZ = 0;
 
     private void Start()
     {
@@ -52,6 +53,61 @@ public class Dani : Personaje
 
     public override bool AnimacionAD(Personaje objetivo)
     {
+        if (movil == null)
+        {
+            PlaySonidoAD();
+            movil = Instantiate(movilPrefab);
+            hombroDch.transform.eulerAngles -= new Vector3(25,0,70);
+            if (aliado)
+            {
+                movil.transform.position = transform.position + new Vector3(-0.25f, 2.75f, 1.25f);
+                movil.transform.eulerAngles += new Vector3(7, 0, 0);
+            }
+            else
+            {
+                movil.transform.position = transform.position + new Vector3(0.25f, 2.75f, -1.25f);
+                movil.transform.eulerAngles += new Vector3(7, 180, 0);
+            }
+        }
+        else if (avanzado >= 1.5f)
+        {
+            if (velMovilX == 0 && velMovilZ == 0)
+            {
+                FindObjectOfType<Camara>().RestauraCamara();
+                velMovilX = objetivo.transform.position.x - movil.transform.position.x;
+                velMovilZ = objetivo.transform.position.z - movil.transform.position.z;
+            }
+            bool llegadoX, llegadoZ;
+            if (velMovilX > 0)
+                llegadoX = movil.transform.position.x >= objetivo.transform.position.x;
+            else
+                llegadoX = movil.transform.position.x <= objetivo.transform.position.x;
+
+            if (velMovilZ > 0)
+                llegadoZ = movil.transform.position.z >= objetivo.transform.position.z;
+            else
+                llegadoZ = movil.transform.position.z <= objetivo.transform.position.z;
+
+            if (llegadoX && llegadoZ)
+            {
+                golpe.Play();
+                log.LanzaLog("Vaya hostión se ha llevado " + objetivo.nombre + ".");
+                objetivo.HacerDanyo(dmgAD * bonifDmg);
+                avanzado = 0;
+                velMovilX = 0;
+                velMovilZ = 0;
+                Destroy(movil);
+                hombroDch.transform.eulerAngles += new Vector3(25, 0, 70);
+                ultimaJugoAD = true;
+                return true;
+            }
+            else
+            {
+                movil.transform.position += new Vector3(velMovilX * 1.5f * Time.deltaTime, 0, velMovilZ * 1.5f * Time.deltaTime);
+                movil.transform.Rotate(-500 * Time.deltaTime, 0, -500 * Time.deltaTime);
+            }
+        }
+        avanzado += Time.deltaTime;
         return false;
     }
 
