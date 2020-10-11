@@ -5,7 +5,7 @@ using UnityEngine.UI;
 
 public class ObjetivoAD : MonoBehaviour
 {
-    public Image foto, calavera;
+    public Image foto, calavera, inmune;
     Personaje personaje;
 
     public void SetProperties(Personaje p, Sprite sp)
@@ -17,12 +17,16 @@ public class ObjetivoAD : MonoBehaviour
     public void ActualizaEnemigo()
     {
         if(personaje.EstaMuerto())
+        {
             calavera.gameObject.SetActive(true);
+            return;
+        }
+        inmune.gameObject.SetActive(personaje.EsInmune());
     }
 
     public void Seleccionado()
     {
-        if (calavera.gameObject.activeSelf)
+        if (calavera.gameObject.activeSelf || inmune.gameObject.activeSelf)
             return ;
         FindObjectOfType<GestorAcciones>().ConfirmadoObjetivoAD(personaje);
     }

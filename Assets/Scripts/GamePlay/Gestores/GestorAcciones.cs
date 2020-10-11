@@ -23,12 +23,14 @@ public class GestorAcciones : MonoBehaviour
     public void PreparaTurno()
     {
         tablero.RestauraTablero();
-        tablero.GestionaEnvenenamientosCasillas(gestorPartida.GetPersonajeTurno().nombre);
         movimientosEsteTurno = 0;
         objetivo = null;
         log.gameObject.SetActive(true);
 
-        if(gestorPartida.GetPersonajeTurno().EstaMuerto() || gestorPartida.GetPersonajeTurno().EstaParalizado())
+        gestorPartida.GetPersonajeTurno().ComienzoTurno();
+        tablero.GestionaEnvenenamientosCasillas(gestorPartida.GetPersonajeTurno().nombre);
+
+        if (gestorPartida.GetPersonajeTurno().EstaMuerto() || gestorPartida.GetPersonajeTurno().EstaParalizado())
         {
             PasarTurno();
             return;

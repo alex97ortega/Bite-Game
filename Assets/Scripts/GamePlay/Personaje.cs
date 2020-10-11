@@ -32,7 +32,7 @@ public class Personaje : MonoBehaviour
     protected bool jugadaUlti = false;
     protected bool ultimaJugoAD = false;
     protected int turnosParalizado = 0;
-    protected int turnosInmune = 0;
+    protected int turnosInmune = -1;
     protected int turnosBonifVelocidad = 0;
     protected Stack<int> turnosDmgx2;
     protected int bonifDmg = 1;
@@ -124,8 +124,10 @@ public class Personaje : MonoBehaviour
 
     public void HacerDanyo(int dmg)
     {
-        if (muerto || turnosInmune > 0)
+        if (muerto || EsInmune())
+        {
             return;
+        }
 
         hp -= dmg;
         if (hp <= 0)
@@ -183,13 +185,11 @@ public class Personaje : MonoBehaviour
 
     public bool EstaMuerto() { return muerto; }
     public bool HaJugadoUlti() { return jugadaUlti; }
-    public bool EsInmune() { return turnosInmune > 0; }
+    public bool EsInmune() { return turnosInmune > -1; }
 
     // en esta llamada aprovechamos y ya gestionamos todo al empezar el turno
     public bool EstaParalizado()
     {
-        ComienzoTurno();
-
         if (turnosParalizado == 0)
         {
             RestauraEspecial();
@@ -200,9 +200,12 @@ public class Personaje : MonoBehaviour
         return true;
     }
 
-    private void ComienzoTurno()
+    public void ComienzoTurno()
     {
-        if(nombre == "Laura" && sonidoAE.isPlaying)
+        if (EsInmune())
+            turnosInmune--;
+
+        if (nombre == "Laura" && sonidoAE.isPlaying)
         {
             log.LanzaLog("Y mientras Laura que no se calla ni debajo del agua...");
             foreach (var p in FindObjectOfType<GestorPartida>().GetAllAliados())
@@ -217,8 +220,6 @@ public class Personaje : MonoBehaviour
             }
         }
 
-        if (turnosInmune != 0)
-            turnosInmune--;
         if (turnosBonifVelocidad != 0)
             turnosBonifVelocidad--;
         else
