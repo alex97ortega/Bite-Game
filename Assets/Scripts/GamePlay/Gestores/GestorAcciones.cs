@@ -8,17 +8,20 @@ public class GestorAcciones : MonoBehaviour
     public GestorPartida gestorPartida;
     public Terreno tablero;
     public Camara camara;
-    public GameObject menuAcciones;
+    public GameObject menuAcciones, turnos;
     public Material aliadoAzul,enemigoRojo, aliadoAmarillo;
     public Button botonAD, botonAE;
     public GestorObjetivosAD objetivosAD;
     public Log log;
+    public Text cronometro;
+    public int tiempoTurnos;
 
     int movimientosEsteTurno;
     bool lanzaAnimacionAM = false;
     bool lanzaAnimacionAD = false;
     bool lanzaAnimacionAE = false;
     Personaje objetivo;
+    float startTime, time;
 
     public void PreparaTurno()
     {
@@ -26,6 +29,8 @@ public class GestorAcciones : MonoBehaviour
         movimientosEsteTurno = 0;
         objetivo = null;
         log.gameObject.SetActive(true);
+        cronometro.gameObject.SetActive(true);
+        startTime = tiempoTurnos + 1 + Time.time;
 
         gestorPartida.GetPersonajeTurno().ComienzoTurno();
         tablero.GestionaEnvenenamientosCasillas(gestorPartida.GetPersonajeTurno().nombre);
@@ -63,8 +68,10 @@ public class GestorAcciones : MonoBehaviour
             gestorPartida.GetPersonajeTurno().SetColor(aliadoAzul);
         else
             gestorPartida.GetPersonajeTurno().SetColor(enemigoRojo);
-        gestorPartida.SiguienteTurno();
         camara.RestauraCamara();
+
+        turnos.SetActive(true);
+        gestorPartida.SiguienteTurno();
         PreparaTurno();
     }
 
@@ -139,9 +146,8 @@ public class GestorAcciones : MonoBehaviour
         else
             camara.EnfocaCamaraAC(gestorPartida.GetPersonajeTurno().transform.position, gestorPartida.GetPersonajeTurno().IsAliado());
 
-        menuAcciones.SetActive(false);
-        log.gameObject.SetActive(false);
-        objetivosAD.gameObject.SetActive(false);
+
+        DesactivaGUI();
         tablero.RestauraTablero();
         lanzaAnimacionAM = true;
     }
@@ -164,8 +170,8 @@ public class GestorAcciones : MonoBehaviour
             }
             objetivo = aliadoAdyacente;
             camara.EnfocaCamaraAD(objetivo.transform.position, gestorPartida.GetPersonajeTurno().IsAliado());
-            menuAcciones.SetActive(false);
-            log.gameObject.SetActive(false);
+
+            DesactivaGUI();
             tablero.RestauraTablero();
 
             lanzaAnimacionAD = true;
@@ -192,9 +198,8 @@ public class GestorAcciones : MonoBehaviour
             camara.EnfocaCamaraAE2(gestorPartida.GetPersonajeTurno().transform.position, gestorPartida.GetPersonajeTurno().IsAliado());
         else
             camara.EnfocaCamaraAD(gestorPartida.GetPersonajeTurno().transform.position, gestorPartida.GetPersonajeTurno().IsAliado());
-        menuAcciones.SetActive(false);
-        log.gameObject.SetActive(false);
-        objetivosAD.gameObject.SetActive(false);
+
+        DesactivaGUI();
         tablero.RestauraTablero();
 
         lanzaAnimacionAD = true;
@@ -214,9 +219,7 @@ public class GestorAcciones : MonoBehaviour
         else
             camara.EnfocaCamaraAE(gestorPartida.GetPersonajeTurno().transform.position, gestorPartida.GetPersonajeTurno().IsAliado());
 
-        menuAcciones.SetActive(false);
-        log.gameObject.SetActive(false);
-        objetivosAD.gameObject.SetActive(false);
+        DesactivaGUI();
         tablero.RestauraTablero();
         lanzaAnimacionAE = true;
     }
@@ -247,5 +250,34 @@ public class GestorAcciones : MonoBehaviour
                 PasarTurno();
             }
         }
+        //cronometro
+        else
+        {
+            time = startTime - Time.time;
+            if (time >= 0)
+            {
+                if (time > tiempoTurnos)
+                    time = tiempoTurnos;
+                string  seg;
+                if (time == 0)
+                    seg = "00";
+                else if (time < 10)
+                    seg = "0" + ((int)time % tiempoTurnos).ToString();
+                else
+                    seg = ((int)time).ToString();
+
+                cronometro.text = seg;
+            }
+            else
+                PasarTurno();
+        }
+    }
+    private void DesactivaGUI()
+    {
+        menuAcciones.SetActive(false);
+        log.gameObject.SetActive(false);
+        cronometro.gameObject.SetActive(false);
+        objetivosAD.gameObject.SetActive(false);
+        turnos.SetActive(false);
     }
 }
