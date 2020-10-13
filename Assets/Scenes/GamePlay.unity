@@ -6118,6 +6118,7 @@ Transform:
   - {fileID: 1183058517}
   - {fileID: 925942984}
   - {fileID: 1698347244}
+  - {fileID: 1541970204}
   m_Father: {fileID: 0}
   m_RootOrder: 8
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -6417,6 +6418,50 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1530070250}
   m_CullTransparentMesh: 0
+--- !u!1 &1541970203
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1541970204}
+  - component: {fileID: 1541970205}
+  m_Layer: 0
+  m_Name: GestorMultiplayer
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1541970204
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1541970203}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 1422698234}
+  m_RootOrder: 5
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1541970205
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1541970203}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c24ac57370d4b194eb4b26b35a31aa0f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  gestorPartida: {fileID: 1698347243}
 --- !u!1 &1570017492
 GameObject:
   m_ObjectHideFlags: 0
@@ -6803,6 +6848,8 @@ MonoBehaviour:
   parentTurnos: {fileID: 1909028358}
   randomEnemies: {fileID: 1205003093}
   gestorAcciones: {fileID: 1183058518}
+  gestorMultiplayer: {fileID: 1541970205}
+  tablero: {fileID: 1129468086}
 --- !u!4 &1698347244
 Transform:
   m_ObjectHideFlags: 0

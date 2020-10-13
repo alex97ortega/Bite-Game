@@ -9,9 +9,12 @@ public class GestorPartida : MonoBehaviour
     public GameObject parentTurnos;
     public RandomEnemies randomEnemies;
     public GestorAcciones gestorAcciones;
+    public GestorMultiplayer gestorMultiplayer;
+    public Terreno tablero;
 
     Personaje[] aliados;
     Personaje[] enemigos;
+    Queue<int> turnos;
     Queue<Turno> turnosJugadores;
     GameManager gm;
     int nJugadoresPorEquipo;
@@ -19,12 +22,22 @@ public class GestorPartida : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        randomEnemies.GenerateRandomEnemies();
+        randomEnemies.GenerateEnemies();
 
-        Queue<int> turnos = new Queue<int>();
         turnosJugadores = new Queue<Turno>();
-        // seleccion aleatoria de turnos
-        for (int i = 0; i< nJugadoresPorEquipo * 2; i++)
+        turnos = new Queue<int>();
+        if (!gestorMultiplayer.gameObject.activeSelf || gestorMultiplayer.EsAnfitrion())
+        {
+            turnos = SeleccionAleatoria();
+            // ahora sí vamos creando los personajes
+            CreaTurnos(turnos);
+        }
+    }
+
+    // seleccion aleatoria de turnos
+    private Queue<int> SeleccionAleatoria()
+    {
+        for (int i = 0; i < nJugadoresPorEquipo * 2; i++)
         {
             int x;
             int veces = 0;
@@ -43,7 +56,7 @@ public class GestorPartida : MonoBehaviour
                 if (aliados[turnos.Peek()].nombre == "Alex")
                     break;
             }
-            else 
+            else
             {
                 if (enemigos[turnos.Peek() - nJugadoresPorEquipo].nombre == "Alex")
                     break;
@@ -51,10 +64,14 @@ public class GestorPartida : MonoBehaviour
             int turnoAux = turnos.Dequeue();
             turnos.Enqueue(turnoAux);
         }
-
-        // ahora sí vamos creando los personajes
+        return turnos;
+    }
+   
+    // crea los iconos de los turnos y la cola
+    public void CreaTurnos(Queue<int> ordenTurnos)
+    {
         int num = 0;
-        foreach (int x in turnos)
+        foreach (int x in ordenTurnos)
         {
             Turno aux = Instantiate(turnoPrefab);
             if (x < nJugadoresPorEquipo)
@@ -71,7 +88,6 @@ public class GestorPartida : MonoBehaviour
         gestorAcciones.PreparaTurno();
     }
 
-   
     public void Init()
     {
         gm = FindObjectOfType<GameManager>();
@@ -159,5 +175,50 @@ public class GestorPartida : MonoBehaviour
     public void Menu()
     {
         menuExit.SetActive(!menuExit.activeSelf);
+    }
+    public bool Ready() { return turnosJugadores.Count > 0; } 
+    public void AddTurno(int turno)
+    {
+        turnos.Enqueue(turno);
+        if(turnos.Count==6)
+            CreaTurnos(turnos);
+    }
+    public void LanzaMensajeTurnos()
+    {
+        if (gestorMultiplayer.EsAnfitrion())
+        {
+            foreach (var x in turnos)
+                gestorMultiplayer.SendOrdenTurnos(x);
+            int[] posAliadosZ = new int[nJugadoresPorEquipo];
+            int[] posEnemigosZ = new int[nJugadoresPorEquipo];
+            for (int i = 0; i < enemigos.Length; i++)
+            {
+                posAliadosZ[i] = aliados[i].GetCasillaZ();
+                posEnemigosZ[i] = enemigos[i].GetCasillaZ();
+            }
+            gestorMultiplayer.SendPosicionesAliados(posAliadosZ);
+            gestorMultiplayer.SendPosicionesEnemigos(posEnemigosZ);
+        }
+    }
+
+    public void ColocaAliados(int[] posicionesZ)
+    {
+        for(int i = 0; i < aliados.Length;i++)        
+        {
+            tablero.GetCasilla(aliados[i].GetCasillaX(), aliados[i].GetCasillaZ()).Desocupar();
+            tablero.GetCasilla(aliados[i].GetCasillaX(), posicionesZ[i]).Ocupar(aliados[i]);
+            aliados[i].SetPos(aliados[i].GetCasillaX(), posicionesZ[i]);
+        }
+        gestorAcciones.PreparaTurno();
+    }
+    public void ColocaEnemigos(int[] posicionesZ)
+    {
+        for (int i = 0; i < enemigos.Length; i++)
+        {
+            tablero.GetCasilla(enemigos[i].GetCasillaX(), enemigos[i].GetCasillaZ()).Desocupar();
+            tablero.GetCasilla(enemigos[i].GetCasillaX(), posicionesZ[i]).Ocupar(enemigos[i]);
+            enemigos[i].SetPos(enemigos[i].GetCasillaX(), posicionesZ[i]);
+        }
+        gestorAcciones.PreparaTurno();
     }
 }

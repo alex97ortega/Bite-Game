@@ -226,6 +226,9 @@ public class GestorAcciones : MonoBehaviour
 
     private void Update()
     {
+        if (!gestorPartida.Ready())
+            return;
+
         if(lanzaAnimacionAM)
         {
             if(gestorPartida.GetPersonajeTurno().AnimacionAM(objetivo))

@@ -47,11 +47,11 @@ public class Personaje : MonoBehaviour
         turnosDmgx2 = new Stack<int>();
     }
 
-    public void SetPos(int x, int z)
+    public void SetPos(int casx, int casz)
     {
-        casillaX = x;
-        casillaZ = z;
-        transform.position = new Vector3(x * 3, 0, z * 3);
+        casillaX = casx;
+        casillaZ = casz;
+        transform.position = new Vector3(casx * 3, 0, casz * 3);
     }
     public void Girar()
     {

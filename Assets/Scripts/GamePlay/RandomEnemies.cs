@@ -8,10 +8,41 @@ public class RandomEnemies : MonoBehaviour
     public GestorPartida gestor;
     public Terreno tablero;
     public Material rojoEnemigo;
-    
+    GameManager gm;
+
+    public void GenerateEnemies()
+    {
+        gm = FindObjectOfType<GameManager>();
+        if(gm)
+        {
+            if (gm.GetJugadoresEnemigos().Count == 0)
+                GenerateRandomEnemies(); // enemigos aleatorios para el solo play
+            else
+            {
+                // enemigos escogidos en multiplayer
+                int n = 0;
+                foreach (Personaje p in gm.GetJugadoresEnemigos())
+                {
+                    gestor.SetEnemigo(Instantiate(p), n);
+                    int z;
+                    do
+                    {
+                        z = Random.Range(0, tablero.GetColumnas());
+                    } while (tablero.GetCasilla(0, z).EstaOcupada());
+
+                    tablero.GetCasilla(0, z).Ocupar(gestor.GetEnemigo(n));
+
+                    gestor.GetEnemigo(n).SetPos(0, z);
+                    gestor.GetEnemigo(n).Girar();
+                    gestor.GetEnemigo(n).SetEnemigo();
+                    gestor.GetEnemigo(n).SetColor(rojoEnemigo);
+                    n++;
+                }
+            }
+        }
+    }
     public void GenerateRandomEnemies()
     {
-        GameManager gm = FindObjectOfType<GameManager>();
         if (gm)
         {
             List<int> enemies = new List<int>();

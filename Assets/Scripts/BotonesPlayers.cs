@@ -8,6 +8,7 @@ public class BotonesPlayers : MonoBehaviour
     public int id;
     public GameObject tick, tickAzul, tickRojo;
     GameManager gm;
+    bool fijo = false;
 
     private void Start()
     {
@@ -33,24 +34,29 @@ public class BotonesPlayers : MonoBehaviour
 
     public void SelectOnline()
     {
-        Select(FindObjectOfType<Photon.Pun.Demo.PunBasics.AutoLobby>().IsAliado(), true);
+        Select(FindObjectOfType<Photon.Pun.Demo.PunBasics.AutoLobby>().IsAliado());
     }
 
-    public void Select(bool aliado, bool enviarMensajes)
+    public void Select(bool aliado)
+    {
+        if (!FindObjectOfType<Photon.Pun.Demo.PunBasics.AutoLobby>().PuedeSeleccionar())
+            return;
+
+        if (fijo)
+            return;
+
+        FindObjectOfType<SelectManager>().DeseleccionaAnterior();
+
+        PintaBoton(aliado);
+    }
+
+    public void PintaBoton(bool aliado)
     {
         if (aliado && !tickRojo.activeSelf)
         {
             if (!tickAzul.activeSelf)
             {
                 tickAzul.SetActive(true);
-                if (enviarMensajes)
-                    FindObjectOfType<Photon.Pun.Demo.PunBasics.AutoLobby>().SeleccionaAliado(id);
-            }
-            else
-            {
-                tickAzul.SetActive(false);
-                if (enviarMensajes)
-                    FindObjectOfType<Photon.Pun.Demo.PunBasics.AutoLobby>().DeseleccionaAliado(id);
             }
         }
         else if (!aliado && !tickAzul.activeSelf)
@@ -58,15 +64,25 @@ public class BotonesPlayers : MonoBehaviour
             if (!tickRojo.activeSelf)
             {
                 tickRojo.SetActive(true);
-                if (enviarMensajes)
-                    FindObjectOfType<Photon.Pun.Demo.PunBasics.AutoLobby>().SeleccionaEnemigo(id);
-            }
-            else
-            {
-                tickRojo.SetActive(false);
-                if (enviarMensajes)
-                    FindObjectOfType<Photon.Pun.Demo.PunBasics.AutoLobby>().DeseleccionaEnemigo(id);
             }
         }
+    }
+
+    public void Deselect()
+    {
+        if (fijo)
+            return;
+        tickAzul.SetActive(false);
+        tickRojo.SetActive(false);
+    }
+
+    public void Fijar()
+    {
+        if (tickAzul.activeSelf || tickRojo.activeSelf)
+            fijo = true;
+    }
+    public bool EstaSeleccionadoPeroNoFijo()
+    {
+        return !fijo && (tickAzul.activeSelf || tickRojo.activeSelf);
     }
 }

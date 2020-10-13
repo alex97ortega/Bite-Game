@@ -18,21 +18,24 @@ namespace Photon.Pun.Demo.PunBasics
         public byte minPlayersPerRoom = 2;
         public Button buttonJoinRoom;
         public Button buttonLoadJuego;
-        public Text nombre;
+        public Button buttonComenzarPartida;
+        public Button buttonElegir;
+        public Text nombre, turnoElegir;
         public GameObject menuMultijugador, menuPersonajes;
         public SelectManager selectManager;
 
         private string roomName = "salaBite";
         private bool aliado = true;
+        private string[] turnosElegir;
+        private int turno = 0;
+
         enum Eventos
         {
             JUGADOR_UNIDO,
             MENU_SELECCION_PERSONAJE,
             SET_EQUIPO_ROJO,
             SELECCIONAR_ALIADO,
-            DESELECCIONAR_ALIADO,
             SELECCIONAR_ENEMIGO,
-            DESELECCIONAR_ENEMIGO,
             NUM_EVENTOS
         }
 
@@ -42,7 +45,6 @@ namespace Photon.Pun.Demo.PunBasics
             // Debemos resetear las PlayerPrefs para evitar ciertos problemas de conexión
             PlayerPrefs.DeleteAll();
             ConnectToPhoton();
-            PlayerCount.text = "Jugadores: " + playersCount + "/" + maxPlayersPerRoom;
             buttonJoinRoom.interactable = false;
             buttonLoadJuego.interactable = false;
         }
@@ -71,7 +73,7 @@ namespace Photon.Pun.Demo.PunBasics
         public override void OnConnected()
         {
             base.OnConnected();
-            Log.text += "\nConexión correcta!";
+            Log.text += "\nConectado!";
 
             buttonJoinRoom.interactable = true;
             buttonLoadJuego.interactable = false;
@@ -92,8 +94,6 @@ namespace Photon.Pun.Demo.PunBasics
                 RoomOptions roomOptions = new RoomOptions(); //2
                 TypedLobby typedLobby = new TypedLobby(roomName, LobbyType.Default); //3
                 PhotonNetwork.JoinOrCreateRoom(roomName, roomOptions, typedLobby); //4
-
-                Log.text += "\n" + PhotonNetwork.LocalPlayer.NickName + " se unió a la sala";
             }
         }
 
@@ -109,8 +109,25 @@ namespace Photon.Pun.Demo.PunBasics
             {
                 buttonJoinRoom.interactable = false;
                 Log.text += "\nConectado a la sala";
+                //comprobamos que el nombre no sea exactamente igual que alguno que ya tenemos
+                string firstNickName = PhotonNetwork.LocalPlayer.NickName;
+                int addN = 2;
+                int i = 0;
+                do
+                {
+                    if(PhotonNetwork.PlayerList[i] != PhotonNetwork.LocalPlayer &&
+                        PhotonNetwork.PlayerList[i].NickName == PhotonNetwork.LocalPlayer.NickName)
+                    {
+                        PhotonNetwork.LocalPlayer.NickName = firstNickName + " " + addN.ToString();
+                        addN++;
+                        i = 0;
+                    }
+                    else
+                        i++;
+                } while (i<PhotonNetwork.PlayerList.Length);
+
                 PhotonNetwork.RaiseEvent((byte)Eventos.JUGADOR_UNIDO, PhotonNetwork.LocalPlayer.NickName,
-                    new Photon.Realtime.RaiseEventOptions { Receivers = Photon.Realtime.ReceiverGroup.Others }, 
+                    new Photon.Realtime.RaiseEventOptions { Receivers = Photon.Realtime.ReceiverGroup.All }, 
                     new ExitGames.Client.Photon.SendOptions() { });
             }
         }
@@ -119,7 +136,6 @@ namespace Photon.Pun.Demo.PunBasics
         {
             if (PhotonNetwork.CurrentRoom.PlayerCount == 2 || PhotonNetwork.CurrentRoom.PlayerCount == 6)
             {
-                //PhotonNetwork.LoadLevel("SelectPlayers");
                 PhotonNetwork.RaiseEvent((byte)Eventos.MENU_SELECCION_PERSONAJE, PhotonNetwork.LocalPlayer.NickName,
                     new Photon.Realtime.RaiseEventOptions { Receivers = Photon.Realtime.ReceiverGroup.All },
                     new ExitGames.Client.Photon.SendOptions() { });
@@ -174,26 +190,32 @@ namespace Photon.Pun.Demo.PunBasics
                     }
                     break;
                 case Eventos.MENU_SELECCION_PERSONAJE:
+                    turnosElegir = new string[PhotonNetwork.CurrentRoom.PlayerCount];
+                    int i = 0;
+                    foreach(var p in PhotonNetwork.PlayerList)
+                    {
+                        turnosElegir[i] = p.NickName;
+                        i++;
+                    }
                     menuMultijugador.SetActive(false);
                     menuPersonajes.SetActive(true);
+                    buttonComenzarPartida.interactable = false;
+                    turnoElegir.text = "Le toca elegir personaje a " + turnosElegir[turno % PhotonNetwork.CurrentRoom.PlayerCount];
                     break;
                 case Eventos.SET_EQUIPO_ROJO:
                     if(eventData.CustomData.ToString() == PhotonNetwork.LocalPlayer.NickName)
                     {
                         aliado = false;
+                        selectManager.SetEnemigo();
                     }
                     break;
                 case Eventos.SELECCIONAR_ALIADO:
                     selectManager.Seleccionar((int)eventData.CustomData, true);
-                    break;
-                case Eventos.DESELECCIONAR_ALIADO:
-                    selectManager.Seleccionar((int)eventData.CustomData, true);
+                    PasarTurno();
                     break;
                 case Eventos.SELECCIONAR_ENEMIGO:
                     selectManager.Seleccionar((int)eventData.CustomData, false);
-                    break;
-                case Eventos.DESELECCIONAR_ENEMIGO:
-                    selectManager.Seleccionar((int)eventData.CustomData, false);
+                    PasarTurno();
                     break;
                 default:
                     break;
@@ -204,31 +226,42 @@ namespace Photon.Pun.Demo.PunBasics
             return aliado;
         }
 
-        public void SeleccionaAliado(int boton)
+        public void SeleccionadoPersonaje(int boton)
         {
-            PhotonNetwork.RaiseEvent((byte)Eventos.SELECCIONAR_ALIADO, boton,
+            Eventos evt = Eventos.SELECCIONAR_ALIADO;
+            if (!aliado)
+                evt = Eventos.SELECCIONAR_ENEMIGO;
+            PhotonNetwork.RaiseEvent((byte)evt, boton,
                              new Photon.Realtime.RaiseEventOptions { Receivers = Photon.Realtime.ReceiverGroup.Others },
                              new ExitGames.Client.Photon.SendOptions() { });
+            PasarTurno();
         }
-        public void DeseleccionaAliado(int boton)
+        public bool PuedeSeleccionar()
         {
-            PhotonNetwork.RaiseEvent((byte)Eventos.DESELECCIONAR_ALIADO, boton,
-                             new Photon.Realtime.RaiseEventOptions { Receivers = Photon.Realtime.ReceiverGroup.Others },
-                             new ExitGames.Client.Photon.SendOptions() { });
-        }
-
-        public void SeleccionaEnemigo(int boton)
-        {
-            PhotonNetwork.RaiseEvent((byte)Eventos.SELECCIONAR_ENEMIGO, boton,
-                             new Photon.Realtime.RaiseEventOptions { Receivers = Photon.Realtime.ReceiverGroup.Others },
-                             new ExitGames.Client.Photon.SendOptions() { });
-        }
-        public void DeseleccionaEnemigo(int boton)
-        {
-            PhotonNetwork.RaiseEvent((byte)Eventos.DESELECCIONAR_ENEMIGO, boton,
-                             new Photon.Realtime.RaiseEventOptions { Receivers = Photon.Realtime.ReceiverGroup.Others },
-                             new ExitGames.Client.Photon.SendOptions() { });
+            return (turno < 6)&&(PhotonNetwork.LocalPlayer.NickName == turnosElegir[turno % PhotonNetwork.CurrentRoom.PlayerCount]);
         }
 
+        private void PasarTurno()
+        {
+            turno++;
+            
+            if (turno == 6)
+            {
+                if (PhotonNetwork.IsMasterClient)
+                    buttonComenzarPartida.interactable = true;
+
+                buttonElegir.interactable = false;
+                turnoElegir.text = "El anfitrión ya puede comenzar la partida";
+            }
+            else
+            {
+                buttonElegir.interactable = PuedeSeleccionar();
+                turnoElegir.text = "Le toca elegir personaje a " + turnosElegir[turno % PhotonNetwork.CurrentRoom.PlayerCount];
+            }
+        }
+        public void ComenzarPartida()
+        {
+            PhotonNetwork.LoadLevel("GamePlay");
+        }
     }
 }

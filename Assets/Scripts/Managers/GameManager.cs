@@ -8,7 +8,9 @@ public class GameManager : MonoBehaviour
     private int numJugadoresCombate;
     private int numJugadoresSeleccionados;
 
-    List<Personaje> jugadoresPartida;
+    List<Personaje> jugadoresPartidaAliados;
+    List<Personaje> jugadoresPartidaEnemigos;
+    bool aliado = true;
 
     //singletone
     public static GameManager instance;
@@ -41,7 +43,9 @@ public class GameManager : MonoBehaviour
     {
         numJugadoresCombate = 0;
         numJugadoresSeleccionados = 0;
-        jugadoresPartida = new List<Personaje>();
+        jugadoresPartidaAliados = new List<Personaje>();
+        jugadoresPartidaEnemigos = new List<Personaje>();
+        aliado = true;
     }
 
     public int GetNumJugadoresCombate() { return numJugadoresCombate; }
@@ -50,13 +54,14 @@ public class GameManager : MonoBehaviour
     public void SetNumJugadoresCombate(int n) {
         numJugadoresCombate = n;
         numJugadoresSeleccionados = 0;
-        jugadoresPartida = new List<Personaje>();
+        jugadoresPartidaAliados = new List<Personaje>();
+        jugadoresPartidaEnemigos = new List<Personaje>();
     }
 
     // para menu de seleccion
     public void SeleccionarJugador(Personaje personaje)
     {
-        jugadoresPartida.Add(personaje);
+        jugadoresPartidaAliados.Add(personaje);
         numJugadoresSeleccionados++;
         if (numJugadoresSeleccionados == numJugadoresCombate)
         {
@@ -66,10 +71,22 @@ public class GameManager : MonoBehaviour
 
     public void DeseleccionarJugador(Personaje personaje)
     {
-        jugadoresPartida.Remove(personaje);        
+        jugadoresPartidaAliados.Remove(personaje);        
         numJugadoresSeleccionados--;
     }
 
-    public List<Personaje> GetJugadoresPartida() { return jugadoresPartida; }
+    public List<Personaje> GetJugadoresPartida() { return jugadoresPartidaAliados; }
+    public List<Personaje> GetJugadoresEnemigos() { return jugadoresPartidaEnemigos; }
 
+    public void SeleccionarJugadorAliado(Personaje personaje)
+    {
+        jugadoresPartidaAliados.Add(personaje);
+    }
+    public void SeleccionarJugadorEnemigo(Personaje personaje)
+    {
+        jugadoresPartidaEnemigos.Add(personaje);
+    }
+
+    public bool IsAliado() { return aliado; }
+    public void SetEnemigo() { aliado = false; }
 }
