@@ -28,6 +28,6 @@ public class ObjetivoAD : MonoBehaviour
     {
         if (calavera.gameObject.activeSelf || inmune.gameObject.activeSelf)
             return ;
-        FindObjectOfType<GestorAcciones>().ConfirmadoObjetivoAD(personaje);
+        FindObjectOfType<GestorAcciones>().ConfirmadoObjetivoAD(personaje.nombre, true);
     }
 }

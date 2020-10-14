@@ -8,10 +8,11 @@ public class GestorAcciones : MonoBehaviour
     public GestorPartida gestorPartida;
     public Terreno tablero;
     public Camara camara;
-    public GameObject menuAcciones, turnos;
+    public GameObject menuAcciones, turnos, loading;
     public Material aliadoAzul,enemigoRojo, aliadoAmarillo;
     public Button botonAD, botonAE;
     public GestorObjetivosAD objetivosAD;
+    public GestorMultiplayer gestorMultiplayer;
     public Log log;
     public Text cronometro;
     public int tiempoTurnos;
@@ -21,8 +22,23 @@ public class GestorAcciones : MonoBehaviour
     bool lanzaAnimacionAD = false;
     bool lanzaAnimacionAE = false;
     Personaje objetivo;
-    float startTime, time;
+    float startTime, time, cont;
+    GameManager gm;
 
+    bool tieneQueAtacarAC    = false;
+    bool tieneQueAtacarAD    = false;
+    bool tieneQueAtacarAE    = false;
+    bool tieneQueMoverIzq    = false;
+    bool tieneQueMoverDch    = false;
+    bool tieneQueMoverAbajo  = false;
+    bool tieneQueMoverArriba = false;
+    bool tieneQuePasarTurno  = false;
+    string objetivoADnombre = "";
+
+    private void Start()
+    {
+        gm = FindObjectOfType<GameManager>();
+    }
     public void PreparaTurno()
     {
         tablero.RestauraTablero();
@@ -37,16 +53,15 @@ public class GestorAcciones : MonoBehaviour
 
         if (gestorPartida.GetPersonajeTurno().EstaMuerto() || gestorPartida.GetPersonajeTurno().EstaParalizado())
         {
-            PasarTurno();
+            PasarTurno(false);
             return;
         }
-
+        
         // enemigo
-        //provisional hasta multiplayer
-        if (false)//!gestorPartida.GetPersonajeTurno().IsAliado())
+        if (gm.IsAliado() != gestorPartida.GetPersonajeTurno().IsAliado())
         {
             menuAcciones.SetActive(false);
-            PasarTurno(); // sin ia, quitar
+            //PasarTurno(false); // sin ia, quitar
         }
         //aliado
         else
@@ -62,8 +77,11 @@ public class GestorAcciones : MonoBehaviour
         }
     }
 
-    public void PasarTurno()
+    public void PasarTurno(bool enviaMensaje)
     {
+        if (enviaMensaje)
+            gestorMultiplayer.SendMensajePasarTurno();
+
         if(gestorPartida.GetPersonajeTurno().IsAliado())
             gestorPartida.GetPersonajeTurno().SetColor(aliadoAzul);
         else
@@ -75,20 +93,28 @@ public class GestorAcciones : MonoBehaviour
         PreparaTurno();
     }
 
-    public void MueveIzq()
+    public void MueveIzq(bool enviaMensaje)
     {
+        if(enviaMensaje)
+            gestorMultiplayer.SendMensajeMoverIzq();
         MueveCasilla(-1, 0);
     }
-    public void MueveDch()
+    public void MueveDch(bool enviaMensaje)
     {
+        if (enviaMensaje)
+            gestorMultiplayer.SendMensajeMoverDch();
         MueveCasilla(1, 0);
     }
-    public void MueveArriba()
+    public void MueveArriba(bool enviaMensaje)
     {
+        if (enviaMensaje)
+            gestorMultiplayer.SendMensajeMoverArriba();
         MueveCasilla(0, 1);
     }
-    public void MueveAbajo()
+    public void MueveAbajo(bool enviaMensaje)
     {
+        if (enviaMensaje)
+            gestorMultiplayer.SendMensajeMoverAbajo();
         MueveCasilla(0, -1);
     }
 
@@ -111,13 +137,16 @@ public class GestorAcciones : MonoBehaviour
             tablero.GetCasilla(oldPosX, oldPosZ).Desocupar();
             tablero.GetCasilla(newPosX, newPosZ).Ocupar(gestorPartida.GetPersonajeTurno());
             tablero.RestauraTablero();
-            tablero.PintaCasillasAmarillas(newPosX, newPosZ, movs- movimientosEsteTurno);
+            if(gm.IsAliado() == gestorPartida.GetPersonajeTurno().IsAliado())
+                tablero.PintaCasillasAmarillas(newPosX, newPosZ, movs- movimientosEsteTurno);
         }
     }
 
     /////////////////////////////////////////
-    public void AtaqueCuerpo()
+    public void AtaqueCuerpo(bool enviaMensaje)
     {
+        if (enviaMensaje)
+            gestorMultiplayer.SendMensajeAtaqueAC();
         // primero ver que hay un objetivo delante
         int casillObjX;
         int casillaObjZ = gestorPartida.GetPersonajeTurno().GetCasillaZ();
@@ -138,7 +167,7 @@ public class GestorAcciones : MonoBehaviour
             return;
         if (objetivo.EstaMuerto() || objetivo.EsInmune())
             return;
-
+        
         string nombre = gestorPartida.GetPersonajeTurno().nombre;
 
         if (nombre == "Dani")
@@ -153,7 +182,7 @@ public class GestorAcciones : MonoBehaviour
     }
 
     /////////////////////////////////////////
-    public void AtaqueDistancia()
+    public void AtaqueDistancia(bool enviaMensaje)
     {
         string nombre = gestorPartida.GetPersonajeTurno().nombre;
 
@@ -168,13 +197,8 @@ public class GestorAcciones : MonoBehaviour
                 log.LanzaLog("Reygon intentó usar a un compañero, pero está más solo que la una.");
                 return;
             }
-            objetivo = aliadoAdyacente;
-            camara.EnfocaCamaraAD(objetivo.transform.position, gestorPartida.GetPersonajeTurno().IsAliado());
-
-            DesactivaGUI();
-            tablero.RestauraTablero();
-
-            lanzaAnimacionAD = true;
+            
+            ConfirmadoObjetivoAD(aliadoAdyacente.nombre, enviaMensaje);
         }
         else if (gestorPartida.GetPersonajeTurno().necesitaObjetivoAD)
         {
@@ -186,16 +210,21 @@ public class GestorAcciones : MonoBehaviour
         }
         else
         {
-            ConfirmadoObjetivoAD(null);
+            ConfirmadoObjetivoAD("", enviaMensaje);
         }
     }
 
-    public void ConfirmadoObjetivoAD(Personaje objetivoAD)
+    public void ConfirmadoObjetivoAD(string objetivoName, bool enviaMensaje)
     {
-        objetivo = objetivoAD;
+        if (enviaMensaje)
+            gestorMultiplayer.SendMensajeAtaqueAD(objetivoName);
+        
+        objetivo = gestorPartida.GetPersonaje(objetivoName);
         string nombre = gestorPartida.GetPersonajeTurno().nombre;
         if (nombre == "Dani" || nombre == "Laura" || nombre == "Sergio")
             camara.EnfocaCamaraAE2(gestorPartida.GetPersonajeTurno().transform.position, gestorPartida.GetPersonajeTurno().IsAliado());
+        else if(nombre == "Reygon")
+            camara.EnfocaCamaraAD(objetivo.transform.position, gestorPartida.GetPersonajeTurno().IsAliado());
         else
             camara.EnfocaCamaraAD(gestorPartida.GetPersonajeTurno().transform.position, gestorPartida.GetPersonajeTurno().IsAliado());
 
@@ -206,8 +235,11 @@ public class GestorAcciones : MonoBehaviour
     }
 
     /////////////////////////////////////////
-    public void AtaqueEspecial()
+    public void AtaqueEspecial(bool enviaMensaje)
     {
+        if (enviaMensaje)
+            gestorMultiplayer.SendMensajeAtaqueAE();
+
         if (gestorPartida.GetPersonajeTurno().HaJugadoUlti())
             return;
 
@@ -229,12 +261,13 @@ public class GestorAcciones : MonoBehaviour
         if (!gestorPartida.Ready())
             return;
 
+        //ataques
         if(lanzaAnimacionAM)
         {
             if(gestorPartida.GetPersonajeTurno().AnimacionAM(objetivo))
             {
                 lanzaAnimacionAM = false;
-                PasarTurno();
+                PasarTurno(false);
             }
         }
         else if (lanzaAnimacionAD)
@@ -242,7 +275,7 @@ public class GestorAcciones : MonoBehaviour
             if (gestorPartida.GetPersonajeTurno().AnimacionAD(objetivo))
             {
                 lanzaAnimacionAD = false;
-                PasarTurno();
+                PasarTurno(false);
             }
         }
         else if (lanzaAnimacionAE)
@@ -250,7 +283,58 @@ public class GestorAcciones : MonoBehaviour
             if (gestorPartida.GetPersonajeTurno().AnimacionAE(objetivo))
             {
                 lanzaAnimacionAE = false;
-                PasarTurno();
+                PasarTurno(false);
+            }
+        }
+        //posible retardo en recibimiento de mensajes
+        else if(tieneQueMoverIzq)
+        {
+            tieneQueMoverIzq = false;
+            MueveIzq(false);
+        }
+        else if (tieneQueMoverDch)
+        {
+            tieneQueMoverDch = false;
+            MueveDch(false);
+        }
+        else if (tieneQueMoverArriba)
+        {
+            tieneQueMoverArriba = false;
+            MueveArriba(false);
+        }
+        else if (tieneQueMoverAbajo)
+        {
+            tieneQueMoverAbajo = false;
+            MueveAbajo(false);
+        }
+        else if (tieneQueAtacarAC)
+        {
+            tieneQueAtacarAC = false;
+            AtaqueCuerpo(false);
+        }
+        else if (tieneQueAtacarAD)
+        {
+            tieneQueAtacarAD = false;
+            ConfirmadoObjetivoAD(objetivoADnombre, false);
+        }
+        else if (tieneQueAtacarAE)
+        {
+            tieneQueAtacarAE = false;
+            AtaqueEspecial(false);
+        }
+        else if(tieneQuePasarTurno)
+        {
+            tieneQuePasarTurno = false;
+            PasarTurno(false);
+        }
+        // pantalla carga
+        else if (loading.activeSelf)
+        {
+            cont += Time.deltaTime;
+            if(cont > 5)
+            {
+                loading.SetActive(false);
+                startTime = tiempoTurnos + 1 + Time.time;
             }
         }
         //cronometro
@@ -272,7 +356,10 @@ public class GestorAcciones : MonoBehaviour
                 cronometro.text = seg;
             }
             else
-                PasarTurno();
+            {
+                if(gm.IsAliado() == gestorPartida.GetPersonajeTurno().IsAliado())
+                    PasarTurno(true);
+            }
         }
     }
     private void DesactivaGUI()
@@ -283,4 +370,23 @@ public class GestorAcciones : MonoBehaviour
         objetivosAD.gameObject.SetActive(false);
         turnos.SetActive(false);
     }
+    public void TieneQueAtacarAC()
+    {
+        tieneQueAtacarAC = true;
+    }
+    public void TieneQueAtacarAD(string n)
+    {
+        tieneQueAtacarAD = true;
+        objetivoADnombre = n;
+    }
+    public void TieneQueAtacarAE()
+    {
+        tieneQueAtacarAE = true;
+    }
+
+    public void TieneQueMoverseIzq()    { tieneQueMoverIzq   = true; }
+    public void TieneQueMoverseDch()    { tieneQueMoverDch   = true; }
+    public void TieneQueMoverseArriba() { tieneQueMoverArriba= true; }
+    public void TieneQueMoverseAbajo()  { tieneQueMoverAbajo = true; }
+    public void TieneQuePasarTurno()    { tieneQuePasarTurno = true; }
 }

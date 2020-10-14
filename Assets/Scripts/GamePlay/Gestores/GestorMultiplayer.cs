@@ -9,6 +9,7 @@ using ExitGames.Client.Photon;
 public class GestorMultiplayer : MonoBehaviourPunCallbacks, IOnEventCallback
 {
     public GestorPartida gestorPartida;
+    public GestorAcciones gestorAcciones;
     bool haRecibidoTurnos = false;
 
     enum Eventos
@@ -17,6 +18,14 @@ public class GestorMultiplayer : MonoBehaviourPunCallbacks, IOnEventCallback
         ACLAMAR_TURNOS,
         CREA_EQUIPO_AZUL,
         CREA_EQUIPO_ROJO,
+        MUEVE_IZQUIERDA,
+        MUEVE_DERECHA,
+        MUEVE_ARRIBA,
+        MUEVE_ABAJO,
+        ATAQUE_CUERPO,
+        ATAQUE_DISTANCIA,
+        ATAQUE_ESPECIAL,
+        PASAR_TURNO,
         NUM_EVENTOS
     }
     private void Awake()
@@ -28,10 +37,8 @@ public class GestorMultiplayer : MonoBehaviourPunCallbacks, IOnEventCallback
     // Start is called before the first frame update
     void Start()
     {
-        if(!EsAnfitrion() && !haRecibidoTurnos)
-            PhotonNetwork.RaiseEvent((byte)Eventos.ACLAMAR_TURNOS, null,
-                           new Photon.Realtime.RaiseEventOptions { Receivers = Photon.Realtime.ReceiverGroup.Others },
-                           new ExitGames.Client.Photon.SendOptions() { });
+        if (!EsAnfitrion() && !haRecibidoTurnos)
+            SendMensajeToOthers(Eventos.ACLAMAR_TURNOS, null);
     }
     
     public void OnEvent(EventData eventData)
@@ -56,6 +63,30 @@ public class GestorMultiplayer : MonoBehaviourPunCallbacks, IOnEventCallback
             case Eventos.CREA_EQUIPO_ROJO:
                 gestorPartida.ColocaEnemigos((int[])eventData.CustomData);
                 break;
+            case Eventos.MUEVE_IZQUIERDA:
+                gestorAcciones.TieneQueMoverseIzq();
+                break;
+            case Eventos.MUEVE_DERECHA:
+                gestorAcciones.TieneQueMoverseDch();
+                break;
+            case Eventos.MUEVE_ARRIBA:
+                gestorAcciones.TieneQueMoverseArriba();
+                break;
+            case Eventos.MUEVE_ABAJO:
+                gestorAcciones.TieneQueMoverseAbajo();
+                break;
+            case Eventos.ATAQUE_CUERPO:
+                gestorAcciones.TieneQueAtacarAC();
+                break;
+            case Eventos.ATAQUE_DISTANCIA:
+                gestorAcciones.TieneQueAtacarAD((string)eventData.CustomData);
+                break;
+            case Eventos.ATAQUE_ESPECIAL:
+                gestorAcciones.TieneQueAtacarAE();
+                break;
+            case Eventos.PASAR_TURNO:
+                gestorAcciones.TieneQuePasarTurno();
+                break;
             default:
                 break;
         }
@@ -69,23 +100,62 @@ public class GestorMultiplayer : MonoBehaviourPunCallbacks, IOnEventCallback
     {
         return PhotonNetwork.IsMasterClient;
     }
-
+    //INIT PARTIDA
     public void SendOrdenTurnos(int turno)
     {
-        PhotonNetwork.RaiseEvent((byte)Eventos.SELECCION_TURNOS, turno,
-                       new Photon.Realtime.RaiseEventOptions { Receivers = Photon.Realtime.ReceiverGroup.Others },
-                       new ExitGames.Client.Photon.SendOptions() { });
+        SendMensajeToOthers(Eventos.SELECCION_TURNOS, turno);
     }
     public void SendPosicionesAliados(int[]posiciones)
     {
-        PhotonNetwork.RaiseEvent((byte)Eventos.CREA_EQUIPO_AZUL, posiciones,
-                       new Photon.Realtime.RaiseEventOptions { Receivers = Photon.Realtime.ReceiverGroup.Others },
-                       new ExitGames.Client.Photon.SendOptions() { });
+        SendMensajeToOthers(Eventos.CREA_EQUIPO_AZUL, posiciones);
     }
     public void SendPosicionesEnemigos(int[] posiciones)
     {
-        PhotonNetwork.RaiseEvent((byte)Eventos.CREA_EQUIPO_ROJO, posiciones,
-                       new Photon.Realtime.RaiseEventOptions { Receivers = Photon.Realtime.ReceiverGroup.Others },
-                       new ExitGames.Client.Photon.SendOptions() { });
+        SendMensajeToOthers(Eventos.CREA_EQUIPO_ROJO, posiciones);
+    }
+    //MOVIMIENTOS
+    public void SendMensajeMoverIzq()
+    {
+        SendMensajeToOthers(Eventos.MUEVE_IZQUIERDA, null);
+    }
+    public void SendMensajeMoverDch()
+    {
+        SendMensajeToOthers(Eventos.MUEVE_DERECHA, null);
+    }
+    public void SendMensajeMoverArriba()
+    {
+        SendMensajeToOthers(Eventos.MUEVE_ARRIBA, null);
+    }
+    public void SendMensajeMoverAbajo()
+    {
+        SendMensajeToOthers(Eventos.MUEVE_ABAJO, null);
+    }
+    public void SendMensajePasarTurno()
+    {
+        SendMensajeToOthers(Eventos.PASAR_TURNO, null);
+    }
+
+    //ATAQUES
+    public void SendMensajeAtaqueAC()
+    {
+        SendMensajeToOthers(Eventos.ATAQUE_CUERPO, null);
+    }
+    public void SendMensajeAtaqueAD(string personajeName)
+    {
+        SendMensajeToOthers(Eventos.ATAQUE_DISTANCIA, personajeName);
+    }
+    public void SendMensajeAtaqueAE()
+    {
+        SendMensajeToOthers(Eventos.ATAQUE_ESPECIAL, null);
+    }
+
+    private void SendMensajeToOthers(Eventos evt, object parametros)
+    {
+        if(PhotonNetwork.IsConnected)
+        {
+            PhotonNetwork.RaiseEvent((byte)evt, parametros,
+                      new Photon.Realtime.RaiseEventOptions { Receivers = Photon.Realtime.ReceiverGroup.Others },
+                      new ExitGames.Client.Photon.SendOptions() { });
+        }
     }
 }

@@ -102,6 +102,24 @@ public class GestorPartida : MonoBehaviour
     public Personaje[] GetAllEnemigos() { return enemigos; }
     public Personaje GetAliado(int n)  { return aliados[n]; }
     public Personaje GetEnemigo(int n) { return enemigos[n]; }
+    public Personaje GetPersonaje(string nombre)
+    {
+        if (nombre == "")
+            return null;
+
+        for (int n = 0; n < nJugadoresPorEquipo * 2; n++)
+        {
+            if (n < nJugadoresPorEquipo && aliados[n].nombre==nombre)
+            {
+                 return aliados[n];
+            }
+            else if(n >= nJugadoresPorEquipo && enemigos[n - nJugadoresPorEquipo].nombre == nombre)
+            {
+                 return enemigos[n - nJugadoresPorEquipo];
+            }
+        }
+        return null;
+    }
     public void SetAliado(Personaje p, int n) { aliados[n] = p;  }
     public void SetEnemigo(Personaje p, int n){ enemigos[n] = p; }
 
@@ -134,7 +152,10 @@ public class GestorPartida : MonoBehaviour
         }
         if(todosMuertos)
         {
-            menuGameOver.SetActive(true);
+            if(gm.IsAliado())
+                menuGameOver.SetActive(true);
+            else
+                menuVictory.SetActive(true);
             return;
         }
 
@@ -154,7 +175,12 @@ public class GestorPartida : MonoBehaviour
                 todosMuertos = false;
         }
         if (todosMuertos)
-            menuVictory.SetActive(true);
+        {
+            if (gm.IsAliado())
+                menuVictory.SetActive(true);
+            else
+                menuGameOver.SetActive(true);
+        }
     }
 
 
