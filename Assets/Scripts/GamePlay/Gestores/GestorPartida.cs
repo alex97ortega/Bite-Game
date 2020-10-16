@@ -232,19 +232,21 @@ public class GestorPartida : MonoBehaviour
         for(int i = 0; i < aliados.Length;i++)        
         {
             tablero.GetCasilla(aliados[i].GetCasillaX(), aliados[i].GetCasillaZ()).Desocupar();
-            tablero.GetCasilla(aliados[i].GetCasillaX(), posicionesZ[i]).Ocupar(aliados[i]);
             aliados[i].SetPos(aliados[i].GetCasillaX(), posicionesZ[i]);
+            tablero.GetCasilla(aliados[i].GetCasillaX(), aliados[i].GetCasillaZ()).Ocupar(aliados[i]);
         }
-        gestorAcciones.PreparaTurno();
+        if (GetPersonajeTurno().IsAliado() && gm.IsAliado())
+            gestorAcciones.PreparaTurno();
     }
     public void ColocaEnemigos(int[] posicionesZ)
     {
         for (int i = 0; i < enemigos.Length; i++)
         {
             tablero.GetCasilla(enemigos[i].GetCasillaX(), enemigos[i].GetCasillaZ()).Desocupar();
-            tablero.GetCasilla(enemigos[i].GetCasillaX(), posicionesZ[i]).Ocupar(enemigos[i]);
             enemigos[i].SetPos(enemigos[i].GetCasillaX(), posicionesZ[i]);
+            tablero.GetCasilla(enemigos[i].GetCasillaX(), enemigos[i].GetCasillaZ()).Ocupar(enemigos[i]);
         }
-        gestorAcciones.PreparaTurno();
+        if(!GetPersonajeTurno().IsAliado() && !gm.IsAliado())
+            gestorAcciones.PreparaTurno();
     }
 }
