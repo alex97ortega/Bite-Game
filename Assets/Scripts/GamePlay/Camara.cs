@@ -88,4 +88,18 @@ public class Camara : MonoBehaviour
             transform.eulerAngles = new Vector3(20, -50, 0);
         }
     }
+    public void EnfocaCamaraAMAsier(Vector3 playerPos, bool isAliado)
+    {
+        transform.position = playerPos;
+        if (isAliado)
+        {
+            transform.position += new Vector3(1, 5, -3f);
+            transform.eulerAngles = new Vector3(10, 300, 0);
+        }
+        else
+        {
+            transform.position += new Vector3(-1, 5, -3f);
+            transform.eulerAngles = new Vector3(10, 60, 0);
+        }
+    }
 }

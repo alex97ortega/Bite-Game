@@ -149,4 +149,39 @@ public class Terreno : MonoBehaviour
 
         return null;
     }
+
+    public void ArrasarFilas(int casX, int casZ, bool aliado, int dmg)
+    {
+        int comienzoZ = casZ - 1;
+        int finalZ = casZ + 1;
+        if (comienzoZ < 0)
+            comienzoZ = 0;
+        if (finalZ > columnas-1)
+            finalZ = columnas-1;
+
+        int comienzoX, finalX;
+        if(aliado)
+        {
+            comienzoX = 0;
+            finalX = casX;
+        }
+        else
+        {
+            comienzoX = casX;
+            finalX = filas-1;
+        }
+
+        for(int z = comienzoZ; z <= finalZ; z++)
+        {
+            for(int x = comienzoX; x<= finalX; x++)
+            {
+                if (tablero[x, z].EstaOcupada())
+                {
+                    if(tablero[x,z].GetPersonajeCasilla().nombre != "Asier")
+                        tablero[x, z].GetPersonajeCasilla().HacerDanyo(dmg);
+                }
+            }
+        }
+
+    }
 }

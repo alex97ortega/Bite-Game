@@ -176,6 +176,8 @@ public class GestorAcciones : MonoBehaviour
 
         if (nombre == "Dani")
             camara.EnfocaCamaraAMDani(gestorPartida.GetPersonajeTurno().transform.position, gestorPartida.GetPersonajeTurno().IsAliado());
+        else if (nombre == "Asier")
+            camara.EnfocaCamaraAMAsier(gestorPartida.GetPersonajeTurno().transform.position, gestorPartida.GetPersonajeTurno().IsAliado());
         else
             camara.EnfocaCamaraAC(gestorPartida.GetPersonajeTurno().transform.position, gestorPartida.GetPersonajeTurno().IsAliado());
 
@@ -229,7 +231,7 @@ public class GestorAcciones : MonoBehaviour
             camara.EnfocaCamaraAE2(gestorPartida.GetPersonajeTurno().transform.position, gestorPartida.GetPersonajeTurno().IsAliado());
         else if(nombre == "Reygon")
             camara.EnfocaCamaraAD(objetivo.transform.position, gestorPartida.GetPersonajeTurno().IsAliado());
-        else
+        else if(nombre != "Asier")
             camara.EnfocaCamaraAD(gestorPartida.GetPersonajeTurno().transform.position, gestorPartida.GetPersonajeTurno().IsAliado());
 
         DesactivaGUI();
@@ -335,7 +337,7 @@ public class GestorAcciones : MonoBehaviour
         else if (loading.activeSelf)
         {
             cont += Time.deltaTime;
-            if(cont > 5)
+            if(!gestorMultiplayer.gameObject.activeSelf || cont > 5)
             {
                 loading.SetActive(false);
                 startTime = tiempoTurnos + 1 + Time.time;

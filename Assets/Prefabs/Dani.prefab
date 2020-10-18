@@ -773,7 +773,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d70bcd9427dcd6a4db224a35b5fce468, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  id: 1
+  id: 2
   nombre: Dani
   foto: {fileID: 21300000, guid: a5306e772d7d7624eb2625fa77bb9953, type: 3}
   chico: 1

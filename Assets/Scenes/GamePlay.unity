@@ -5434,6 +5434,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   personajes:
   - {fileID: 906622769221707674, guid: cde98815c68ebb14798b67eb5491bef1, type: 3}
+  - {fileID: 7158818081238550999, guid: e518d7ad37a3dfc4b8243df6b6403123, type: 3}
   - {fileID: 4301878367283472523, guid: 287fa985200cfe1478191054d6994048, type: 3}
   - {fileID: -4736289084690816005, guid: 5c93fdd3827a4da448521b27040cbd72, type: 3}
   - {fileID: 5793868903343439625, guid: 626ec89ebe1b9764fb81d6fd36e71273, type: 3}
