@@ -20,7 +20,7 @@ public class Personaje : MonoBehaviour
 
     public GameObject panelHp;
     public GameObject barraVerdeHp;
-    public AudioSource sonidoAM, sonidoAD, sonidoAE, cancion;
+    public AudioSource sonidoAM, sonidoAD, sonidoAE, cancion1, cancion2;
 
     protected int casillaX, casillaZ;
     protected int initialHp, initialMovs;
@@ -113,12 +113,22 @@ public class Personaje : MonoBehaviour
     }
     public void PlayCancion()
     {
-        if (cancion != null && !cancion.isPlaying)
-            cancion.Play();
+        if (cancion1 == null || cancion2 == null)
+            return;
+        if (!cancion1.isPlaying && !cancion2.isPlaying)
+        {
+            int rnd = Random.Range(0, 2);
+            if (rnd == 0)
+                cancion1.Play();
+            else
+                cancion2.Play();
+        }
     }
     public bool CancionFinished()
     {
-        return !cancion.isPlaying;
+        if (cancion1 == null || cancion2 == null)
+            return true;
+        return !cancion1.isPlaying && !cancion2.isPlaying;
     }
 
 

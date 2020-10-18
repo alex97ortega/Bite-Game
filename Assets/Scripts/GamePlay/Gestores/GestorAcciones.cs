@@ -34,11 +34,14 @@ public class GestorAcciones : MonoBehaviour
     bool tieneQueMoverArriba = false;
     bool tieneQuePasarTurno  = false;
     string objetivoADnombre = "";
+    AudioSource musicaFondo;
 
     private void Start()
     {
         gm = FindObjectOfType<GameManager>();
+        musicaFondo = camara.GetComponentInChildren<AudioSource>();
     }
+
     public void PreparaTurno()
     {
         tablero.RestauraTablero();
@@ -61,7 +64,8 @@ public class GestorAcciones : MonoBehaviour
         if (gm.IsAliado() != gestorPartida.GetPersonajeTurno().IsAliado())
         {
             menuAcciones.SetActive(false);
-            //PasarTurno(false); // sin ia, quitar
+            if(!gestorMultiplayer.gameObject.activeSelf)
+                PasarTurno(false); // sin ia, para cuando es solo player y pruebas
         }
         //aliado
         else
@@ -337,9 +341,12 @@ public class GestorAcciones : MonoBehaviour
                 startTime = tiempoTurnos + 1 + Time.time;
             }
         }
-        //cronometro
+        //cronometro y musica
         else
         {
+            if (!musicaFondo.isPlaying)
+                musicaFondo.Play();
+
             time = startTime - Time.time;
             if (time >= 0)
             {

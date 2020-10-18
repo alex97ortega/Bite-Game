@@ -32,6 +32,7 @@ namespace Photon.Pun.Demo.PunBasics
         enum Eventos
         {
             JUGADOR_UNIDO,
+            JUGADOR_DESCONECTADO,
             MENU_SELECCION_PERSONAJE,
             SET_EQUIPO_ROJO,
             SELECCIONAR_ALIADO,
@@ -77,6 +78,11 @@ namespace Photon.Pun.Demo.PunBasics
 
             buttonJoinRoom.interactable = true;
             buttonLoadJuego.interactable = false;
+        }
+
+        public override void OnDisconnected(DisconnectCause cause)
+        {
+            base.OnDisconnected(cause);
         }
 
         public void JoinRoom()
@@ -169,9 +175,11 @@ namespace Photon.Pun.Demo.PunBasics
         }
         public void Desconectar()
         {
-            //PhotonNetwork.Disconnect();
+            PhotonNetwork.RaiseEvent((byte)Eventos.JUGADOR_DESCONECTADO, PhotonNetwork.LocalPlayer.NickName,
+                    new Photon.Realtime.RaiseEventOptions { Receivers = Photon.Realtime.ReceiverGroup.All },
+                    new ExitGames.Client.Photon.SendOptions() { });
+            PhotonNetwork.LeaveRoom();
             FindObjectOfType<ScenesManager>().ChangeScene("MainMenu");
-            //Destroy(gameObject);
         }
 
         public void OnEvent(EventData eventData)
@@ -188,6 +196,9 @@ namespace Photon.Pun.Demo.PunBasics
                             new Photon.Realtime.RaiseEventOptions { Receivers = Photon.Realtime.ReceiverGroup.Others },
                             new ExitGames.Client.Photon.SendOptions() { });
                     }
+                    break;
+                case Eventos.JUGADOR_DESCONECTADO:
+                    Log.text += "\n" + eventData.CustomData + " se ha desconectado";
                     break;
                 case Eventos.MENU_SELECCION_PERSONAJE:
                     turnosElegir = new string[PhotonNetwork.CurrentRoom.PlayerCount];
