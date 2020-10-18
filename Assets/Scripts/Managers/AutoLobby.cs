@@ -20,11 +20,10 @@ namespace Photon.Pun.Demo.PunBasics
         public Button buttonLoadJuego;
         public Button buttonComenzarPartida;
         public Button buttonElegir;
-        public Text nombre, turnoElegir;
-        public GameObject menuMultijugador, menuPersonajes;
+        public Text nombrePlayer, nombreServer, turnoElegir;
+        public GameObject menuMultijugador, menuPersonajes, screenNombre, screenJoin, screenServer;
         public SelectManager selectManager;
-
-        private string roomName = "salaBite";
+        
         private bool aliado = true;
         private string[] turnosElegir;
         private int turno = 0;
@@ -77,7 +76,6 @@ namespace Photon.Pun.Demo.PunBasics
             Log.text += "\nConectado!";
 
             buttonJoinRoom.interactable = true;
-            buttonLoadJuego.interactable = false;
         }
 
         public override void OnDisconnected(DisconnectCause cause)
@@ -85,9 +83,9 @@ namespace Photon.Pun.Demo.PunBasics
             base.OnDisconnected(cause);
         }
 
-        public void JoinRoom()
+        public void CheckNombre()
         {
-            if(nombre.GetComponent<Text>().text == "")
+            if (nombrePlayer.GetComponent<Text>().text == "")
             {
                 Log.text += "\nEscribe un nombre...";
                 return;
@@ -95,11 +93,21 @@ namespace Photon.Pun.Demo.PunBasics
 
             if (PhotonNetwork.IsConnected)
             {
-                PhotonNetwork.LocalPlayer.NickName = nombre.GetComponent<Text>().text; //1
-                //Log.text += "\nPhotonNetwork.IsConnected! | Trying to Create/Join Room ";
-                RoomOptions roomOptions = new RoomOptions(); //2
-                TypedLobby typedLobby = new TypedLobby(roomName, LobbyType.Default); //3
-                PhotonNetwork.JoinOrCreateRoom(roomName, roomOptions, typedLobby); //4
+                PhotonNetwork.LocalPlayer.NickName = nombrePlayer.GetComponent<Text>().text;
+                screenNombre.SetActive(false);
+                screenJoin.SetActive(true);
+            }
+        }
+        public void JoinRoom()
+        {
+            if (PhotonNetwork.IsConnected)
+            {
+                screenJoin.SetActive(false);
+                screenServer.SetActive(true);
+                string roomName = nombreServer.GetComponent<Text>().text;
+                RoomOptions roomOptions = new RoomOptions();
+                TypedLobby typedLobby = new TypedLobby(roomName, LobbyType.Default);
+                PhotonNetwork.JoinOrCreateRoom(roomName, roomOptions, typedLobby);
             }
         }
 
@@ -109,7 +117,7 @@ namespace Photon.Pun.Demo.PunBasics
             {
                 buttonJoinRoom.interactable = false;
                 buttonLoadJuego.interactable = true;
-                Log.text += "\nTu eres el anfitrión de sala";
+                Log.text += "\nCreada sala " + PhotonNetwork.CurrentRoom.Name + "\nTu eres el anfitrión de sala";
             }
             else
             {
@@ -157,7 +165,7 @@ namespace Photon.Pun.Demo.PunBasics
             if (PhotonNetwork.InRoom)
             {
                 playersCount = PhotonNetwork.CurrentRoom.PlayerCount;
-                PlayerCount.text = "Jugadores: "+playersCount + "/" + maxPlayersPerRoom;
+                PlayerCount.text = "Sala " + PhotonNetwork.CurrentRoom.Name + "\nJugadores: "+playersCount + "/" + maxPlayersPerRoom;
             }
         }
 
