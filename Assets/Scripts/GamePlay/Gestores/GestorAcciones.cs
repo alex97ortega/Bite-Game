@@ -10,7 +10,7 @@ public class GestorAcciones : MonoBehaviour
     public Camara camara;
     public GameObject menuAcciones, turnos, loading;
     public Material aliadoAzul,enemigoRojo, aliadoAmarillo;
-    public Button botonAD, botonAE;
+    public Button botonAD, botonAE, botonMenu;
     public GestorObjetivosAD objetivosAD;
     public GestorMultiplayer gestorMultiplayer;
     public Log log;
@@ -49,9 +49,11 @@ public class GestorAcciones : MonoBehaviour
         objetivo = null;
         log.gameObject.SetActive(true);
         cronometro.gameObject.SetActive(true);
+        botonMenu.gameObject.SetActive(true);
         startTime = tiempoTurnos + 1 + Time.time;
 
         gestorPartida.GetPersonajeTurno().ComienzoTurno();
+        tablero.CompruebaCasilla(gestorPartida.GetPersonajeTurno());
         tablero.GestionaEnvenenamientosCasillas(gestorPartida.GetPersonajeTurno().nombre);
 
         if (gestorPartida.GetPersonajeTurno().EstaMuerto() || gestorPartida.GetPersonajeTurno().EstaParalizado())
@@ -63,9 +65,9 @@ public class GestorAcciones : MonoBehaviour
         // enemigo
         if (gm.IsAliado() != gestorPartida.GetPersonajeTurno().IsAliado())
         {
-            menuAcciones.SetActive(false);
-            if(!gestorMultiplayer.gameObject.activeSelf)
-                PasarTurno(false); // sin ia, para cuando es solo player y pruebas
+            menuAcciones.SetActive(true);
+            if (!gestorMultiplayer.gameObject.activeSelf)
+                ;// PasarTurno(false); // sin ia, para cuando es solo player y pruebas
         }
         //aliado
         else
@@ -252,7 +254,7 @@ public class GestorAcciones : MonoBehaviour
         string nombre = gestorPartida.GetPersonajeTurno().nombre;
         if (nombre == "Alex")
             camara.EnfocaCamaraAD(gestorPartida.GetPersonajeTurno().transform.position, gestorPartida.GetPersonajeTurno().IsAliado());
-        else if (nombre == "Sergio")
+        else if (nombre == "Sergio" || nombre == "Asier")
             camara.EnfocaCamaraAE2(gestorPartida.GetPersonajeTurno().transform.position, gestorPartida.GetPersonajeTurno().IsAliado());
         else
             camara.EnfocaCamaraAE(gestorPartida.GetPersonajeTurno().transform.position, gestorPartida.GetPersonajeTurno().IsAliado());
@@ -377,6 +379,7 @@ public class GestorAcciones : MonoBehaviour
         log.gameObject.SetActive(false);
         cronometro.gameObject.SetActive(false);
         objetivosAD.gameObject.SetActive(false);
+        botonMenu.gameObject.SetActive(false);
         turnos.SetActive(false);
     }
     public void TieneQueAtacarAC()

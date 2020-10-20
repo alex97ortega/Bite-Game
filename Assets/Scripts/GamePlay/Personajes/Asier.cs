@@ -4,13 +4,14 @@ using UnityEngine;
 
 public class Asier : Personaje
 {
-    public GameObject paredPrefab, cochePrefab;
-    public Transform hombroIzq, hombroDch, manoDch;
+    public GameObject paredPrefab, cochePrefab, barraPrefab;
+    public Transform hombroIzq, hombroDch, manoDch, rodillas;
     public AudioSource golpe;
     
     float avanzado = 0;
-    bool rotandoDch = true;
-    GameObject rocodromo, coche;
+    int dominadas = 0;
+    bool rotandoDch = true, subiendo = true;
+    GameObject rocodromo, coche, barra;
     AudioSource musicaFondo;
 
     private void Start()
@@ -155,21 +156,74 @@ public class Asier : Personaje
 
     public override bool AnimacionAE(Personaje objetivo)
     {
+        if(barra == null)
+        {
+            barra = Instantiate(barraPrefab);
+            barra.transform.position = transform.position;
+            if (!aliado)
+            {
+                barra.transform.Rotate(0, 180, 0);
+                if (FindObjectOfType<GameManager>().IsAliado())
+                    barra.GetComponent<Barras>().SetColorRojo();
+            }
 
-        BonificacionDamage(2);
-        log.LanzaLog("Cuidao que viene Suasenaguer.");
-        jugadaUlti = true;
-        return true;
+            panelHp.SetActive(false);
+            hombroDch.gameObject.SetActive(false);
+            hombroIzq.gameObject.SetActive(false);
+            rodillas.eulerAngles -= new Vector3(90, 0, 0);
+        }
+        else
+        {
+            if(subiendo)
+            {
+                avanzado += Time.deltaTime;
+                transform.position += new Vector3(0, 1.5f*Time.deltaTime, 0);
+                if(avanzado >= 0.4f)
+                {
+                    subiendo = false;
+                    dominadas++;
+                    avanzado = 0;
+                }
+            }
+            else
+            {
+                avanzado += Time.deltaTime;
+                transform.position -= new Vector3(0, 1.5f * Time.deltaTime, 0);
+                if (avanzado >= 0.4f)
+                {
+                    subiendo = true;
+                    avanzado = 0;
+                }
+            }
+
+            if(dominadas >= 4)
+            {
+                BonificacionDamage(2);
+                log.LanzaLog("Cuidao que viene Suasenaguer.");
+                jugadaUlti = true;
+                hombroDch.gameObject.SetActive(true);
+                hombroIzq.gameObject.SetActive(true);
+                rodillas.eulerAngles += new Vector3(90, 0, 0);
+                SetPos(casillaX, casillaZ);
+                Restaura();
+                return true;
+            }
+        }
+        return false;
     }
 
     private void Restaura()
     {
         panelHp.SetActive(true);
         avanzado = 0;
+        dominadas = 0;
         rotandoDch = true;
+        subiendo = true;
         if (coche != null)
             Destroy(coche);
         if (rocodromo != null)
             Destroy(rocodromo);
+        if (barra != null)
+            Destroy(barra);
     }
 }

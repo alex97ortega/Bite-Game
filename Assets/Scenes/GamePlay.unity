@@ -4696,6 +4696,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: dbac197239fe99446a5886fb61d44501, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  camaraLibre: 0
 --- !u!1 &968064268
 GameObject:
   m_ObjectHideFlags: 0
@@ -5384,6 +5385,7 @@ MonoBehaviour:
   aliadoAmarillo: {fileID: 2100000, guid: 7ab5881eabdc9494b84317cab0e58466, type: 2}
   botonAD: {fileID: 71544559}
   botonAE: {fileID: 2026047266}
+  botonMenu: {fileID: 1324611041}
   objetivosAD: {fileID: 1448043125}
   gestorMultiplayer: {fileID: 1541970205}
   log: {fileID: 2144021759}
@@ -5436,10 +5438,12 @@ MonoBehaviour:
   - {fileID: 906622769221707674, guid: cde98815c68ebb14798b67eb5491bef1, type: 3}
   - {fileID: 7158818081238550999, guid: e518d7ad37a3dfc4b8243df6b6403123, type: 3}
   - {fileID: 4301878367283472523, guid: 287fa985200cfe1478191054d6994048, type: 3}
+  - {fileID: 8706143420022259360, guid: 8558c12f9d3565b4e9579d501bf60e85, type: 3}
   - {fileID: -4736289084690816005, guid: 5c93fdd3827a4da448521b27040cbd72, type: 3}
   - {fileID: 5793868903343439625, guid: 626ec89ebe1b9764fb81d6fd36e71273, type: 3}
   - {fileID: -8200787888686609584, guid: 9e3148804ba0a124e8063985c32ec8f0, type: 3}
   - {fileID: 7455275103835504767, guid: a59e6d94624d72a42b46bf0efcbc1914, type: 3}
+  - {fileID: 4653939635027807035, guid: e1b496f1232db7346ac5d753ecf63491, type: 3}
   gestor: {fileID: 1698347243}
   tablero: {fileID: 1129468086}
   rojoEnemigo: {fileID: 2100000, guid: 1b2acc895a3046b469409ba6a5569e8f, type: 2}

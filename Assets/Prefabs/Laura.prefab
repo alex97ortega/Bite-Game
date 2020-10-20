@@ -1979,7 +1979,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d5ace2df6af89764b9a7ebc2c4981b0b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  id: 4
+  id: 5
   nombre: Laura
   foto: {fileID: 21300000, guid: af0dddd5503ae33408ec9b5ddd3b3f54, type: 3}
   chico: 0

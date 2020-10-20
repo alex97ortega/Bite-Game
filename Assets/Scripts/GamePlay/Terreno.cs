@@ -182,6 +182,10 @@ public class Terreno : MonoBehaviour
                 }
             }
         }
-
+    }
+    public void CompruebaCasilla(Personaje personaje)
+    {
+        if (!tablero[personaje.GetCasillaX(), personaje.GetCasillaZ()].EstaOcupada())
+            tablero[personaje.GetCasillaX(), personaje.GetCasillaZ()].Ocupar(personaje);
     }
 }

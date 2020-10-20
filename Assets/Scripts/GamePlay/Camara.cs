@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class Camara : MonoBehaviour
 {
+    public bool camaraLibre;
     Vector3 initialPos;
     Vector3 initialRot;
 
@@ -100,6 +101,34 @@ public class Camara : MonoBehaviour
         {
             transform.position += new Vector3(-1, 5, -3f);
             transform.eulerAngles = new Vector3(10, 60, 0);
+        }
+    }
+
+    private void Update()
+    {
+        if(camaraLibre)
+        {
+            //translation
+            var x = Input.GetAxis("Horizontal") * Time.deltaTime * 5;
+            var y = Input.GetAxis("Vertical") * Time.deltaTime * 5;
+            transform.position += new Vector3(x, 0, y);
+            if (Input.GetKey(KeyCode.M))
+                transform.position += new Vector3(0, 5 * Time.deltaTime, 0);
+            else if (Input.GetKey(KeyCode.N))
+                transform.position -= new Vector3(0, 5 * Time.deltaTime, 0);
+            //rotation
+            else if (Input.GetKey(KeyCode.Alpha1))
+                transform.eulerAngles += new Vector3(10 * Time.deltaTime, 0, 0);
+            else if (Input.GetKey(KeyCode.Alpha2))
+                transform.eulerAngles -= new Vector3(10 * Time.deltaTime, 0, 0);
+            else if (Input.GetKey(KeyCode.Alpha3))
+                transform.eulerAngles += new Vector3(0, 10 * Time.deltaTime, 0);
+            else if (Input.GetKey(KeyCode.Alpha4))
+                transform.eulerAngles -= new Vector3(0, 10 * Time.deltaTime, 0);
+            else if (Input.GetKey(KeyCode.Alpha5))
+                transform.eulerAngles += new Vector3(0, 0, 10 * Time.deltaTime);
+            else if (Input.GetKey(KeyCode.Alpha6))
+                transform.eulerAngles -= new Vector3(0, 0, 10 * Time.deltaTime);
         }
     }
 }
