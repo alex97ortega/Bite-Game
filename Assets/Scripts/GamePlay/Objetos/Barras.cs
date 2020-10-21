@@ -6,7 +6,7 @@ public class Barras : MonoBehaviour
 {
     public MeshRenderer[] objetosAmarillos;
     public Transform codos;
-    public Material rojo;
+    public Material rojo, azul;
 
     float avanzado = 0;
     bool subiendo = true;
@@ -15,6 +15,11 @@ public class Barras : MonoBehaviour
     {
         foreach (var o in objetosAmarillos)
             o.material = rojo;
+    }
+    public void SetColorAzul()
+    {
+        foreach (var o in objetosAmarillos)
+            o.material = azul;
     }
 
     // Update is called once per frame

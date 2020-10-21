@@ -65,9 +65,9 @@ public class GestorAcciones : MonoBehaviour
         // enemigo
         if (gm.IsAliado() != gestorPartida.GetPersonajeTurno().IsAliado())
         {
-            menuAcciones.SetActive(true);
+            menuAcciones.SetActive(false);
             if (!gestorMultiplayer.gameObject.activeSelf)
-                ;// PasarTurno(false); // sin ia, para cuando es solo player y pruebas
+                PasarTurno(false); // sin ia, para cuando es solo player y pruebas
         }
         //aliado
         else

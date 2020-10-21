@@ -166,6 +166,11 @@ public class Asier : Personaje
                 if (FindObjectOfType<GameManager>().IsAliado())
                     barra.GetComponent<Barras>().SetColorRojo();
             }
+            else
+            {
+                if (!FindObjectOfType<GameManager>().IsAliado())
+                    barra.GetComponent<Barras>().SetColorAzul();
+            }
 
             panelHp.SetActive(false);
             hombroDch.gameObject.SetActive(false);

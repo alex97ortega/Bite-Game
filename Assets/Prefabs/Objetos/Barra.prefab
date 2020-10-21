@@ -686,6 +686,7 @@ MonoBehaviour:
   - {fileID: 7121653202879899597}
   codos: {fileID: 3772960181877162536}
   rojo: {fileID: 2100000, guid: 1b2acc895a3046b469409ba6a5569e8f, type: 2}
+  azul: {fileID: 2100000, guid: 6885767f901fffd46a2942d2cda63870, type: 2}
 --- !u!1 &7191365167431185606
 GameObject:
   m_ObjectHideFlags: 0
