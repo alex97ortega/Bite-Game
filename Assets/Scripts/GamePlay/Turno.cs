@@ -30,6 +30,10 @@ public class Turno : MonoBehaviour
     {
         text.gameObject.SetActive(false);
     }
-    public void Deslizar() { transform.position -= new Vector3(120, 0, 0); }
+    public void Deslizar()
+    {
+        float relation = 1920.0f / (float)Screen.width;
+        transform.position -= new Vector3(120/relation, 0, 0);
+    }
     public void PonerCalavera() { calavera.gameObject.SetActive(true); }
 }

@@ -5,7 +5,7 @@ using UnityEngine;
 public class GestorPartida : MonoBehaviour
 {
     public GameObject menuExit, menuVictory, menuGameOver;
-    public Turno turnoPrefab;
+    public Turno[] turnosArray;
     public GameObject parentTurnos;
     public RandomEnemies randomEnemies;
     public GestorAcciones gestorAcciones;
@@ -73,13 +73,13 @@ public class GestorPartida : MonoBehaviour
         int num = 0;
         foreach (int x in ordenTurnos)
         {
-            Turno aux = Instantiate(turnoPrefab);
+            Turno aux = turnosArray[num];
             if (x < nJugadoresPorEquipo)
                 aux.SetProperties(x, aliados[x].GetFoto());
             else
                 aux.SetProperties(x, enemigos[x - nJugadoresPorEquipo].GetFoto());
-            aux.transform.SetParent(parentTurnos.gameObject.transform);
-            aux.transform.position += new Vector3(num * 120, 0, 0);
+            float relation = 1920.0f /(float)Screen.width;
+            aux.transform.position += new Vector3(num * 120 / relation, 0, 0);
             if (num == 0)
                 aux.ActivarTexto();
             num++;
@@ -126,7 +126,8 @@ public class GestorPartida : MonoBehaviour
     public void SiguienteTurno()
     {
         Turno aux = turnosJugadores.Dequeue();
-        aux.transform.position += new Vector3((turnosJugadores.Count+1) * 120, 0, 0);
+        float relation = 1920.0f / (float)Screen.width;
+        aux.transform.position += new Vector3((turnosJugadores.Count+1) * 120/relation, 0, 0);
         aux.DesctivarTexto();
         turnosJugadores.Enqueue(aux);
 

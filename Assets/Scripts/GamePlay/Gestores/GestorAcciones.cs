@@ -61,25 +61,49 @@ public class GestorAcciones : MonoBehaviour
             PasarTurno(false);
             return;
         }
-        
-        // enemigo
-        if (gm.IsAliado() != gestorPartida.GetPersonajeTurno().IsAliado())
+        // MULTIP_3VS3
+        if (gm.GetTipoPartida()==GameManager.TipoPartida.PARTIDA_MULTIP_3VS3)
         {
-            menuAcciones.SetActive(false);
-            if (!gestorMultiplayer.gameObject.activeSelf)
-                PasarTurno(false); // sin ia, para cuando es solo player y pruebas
+            // no es su personaje
+            if(gm.GetPersonajePartida3vs3().nombre != gestorPartida.GetPersonajeTurno().nombre)
+            {
+                menuAcciones.SetActive(false);
+            }
+            // sí es su personaje
+            else
+            {
+                menuAcciones.SetActive(true);
+                gestorPartida.GetPersonajeTurno().SetColor(aliadoAmarillo);
+                tablero.PintaCasillasAmarillas(gestorPartida.GetPersonajeTurno().GetCasillaX(),
+                                               gestorPartida.GetPersonajeTurno().GetCasillaZ(),
+                                               gestorPartida.GetPersonajeTurno().movimientos);
+
+                botonAD.interactable = !gestorPartida.GetPersonajeTurno().UltimaJugoAtaqueDistancia();
+                botonAE.interactable = !gestorPartida.GetPersonajeTurno().HaJugadoUlti();
+            }
         }
-        //aliado
+        // SOLO_PLAYER y MULTIP_1VS1
         else
         {
-            menuAcciones.SetActive(true);
-            gestorPartida.GetPersonajeTurno().SetColor(aliadoAmarillo);
-            tablero.PintaCasillasAmarillas(gestorPartida.GetPersonajeTurno().GetCasillaX(), 
-                                           gestorPartida.GetPersonajeTurno().GetCasillaZ(),
-                                           gestorPartida.GetPersonajeTurno().movimientos);
+            // enemigo
+            if (gm.IsAliado() != gestorPartida.GetPersonajeTurno().IsAliado())
+            {
+                menuAcciones.SetActive(true);
+                //if (gm.GetTipoPartida() == GameManager.TipoPartida.PARTIDA_SOLO_PLAYER)
+                //    PasarTurno(false); // sin ia, para cuando es solo player y pruebas
+            }
+            //aliado
+            else
+            {
+                menuAcciones.SetActive(true);
+                gestorPartida.GetPersonajeTurno().SetColor(aliadoAmarillo);
+                tablero.PintaCasillasAmarillas(gestorPartida.GetPersonajeTurno().GetCasillaX(),
+                                               gestorPartida.GetPersonajeTurno().GetCasillaZ(),
+                                               gestorPartida.GetPersonajeTurno().movimientos);
 
-            botonAD.interactable = !gestorPartida.GetPersonajeTurno().UltimaJugoAtaqueDistancia();
-            botonAE.interactable = !gestorPartida.GetPersonajeTurno().HaJugadoUlti();
+                botonAD.interactable = !gestorPartida.GetPersonajeTurno().UltimaJugoAtaqueDistancia();
+                botonAE.interactable = !gestorPartida.GetPersonajeTurno().HaJugadoUlti();
+            }
         }
     }
 

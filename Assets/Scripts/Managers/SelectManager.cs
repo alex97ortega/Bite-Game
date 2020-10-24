@@ -54,4 +54,26 @@ public class SelectManager : MonoBehaviour
     }
 
     public void SetEnemigo() { gm.SetEnemigo(); }
+
+    // esta mierda no pinta nada aqui, pero como no se puede 
+    // acceder al GM desde el AutoLobby ps es lo k hay
+    public void SetTipoPartidaMultiplayer(int numJugadores)
+    {
+        GameManager gm = FindObjectOfType<GameManager>();
+        if (gm)
+        {
+            switch (numJugadores)
+            {
+                case 2:
+                    gm.SetTipoPartida(GameManager.TipoPartida.PARTIDA_MULTIP_1VS1);
+                    break;
+                case 6:
+                    gm.SetTipoPartida(GameManager.TipoPartida.PARTIDA_MULTIP_3VS3);
+                    break;
+                default:
+                    gm.SetTipoPartida(GameManager.TipoPartida.PARTIDA_SOLO_PLAYER);
+                    break;
+            }
+        }
+    }
 }

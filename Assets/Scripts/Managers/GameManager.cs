@@ -10,7 +10,19 @@ public class GameManager : MonoBehaviour
 
     List<Personaje> jugadoresPartidaAliados;
     List<Personaje> jugadoresPartidaEnemigos;
+    Personaje personajePartida3vs3;
+
     bool aliado = true;
+
+    public enum TipoPartida
+    {
+        PARTIDA_SOLO_PLAYER,
+        PARTIDA_MULTIP_1VS1,
+        PARTIDA_MULTIP_3VS3,
+        NUM_TIPOS_PARTIDA
+    }
+    TipoPartida tipoPartida = TipoPartida.PARTIDA_SOLO_PLAYER;
+
 
     //singletone
     public static GameManager instance;
@@ -65,6 +77,7 @@ public class GameManager : MonoBehaviour
         numJugadoresSeleccionados++;
         if (numJugadoresSeleccionados == numJugadoresCombate)
         {
+            SetTipoPartida(TipoPartida.PARTIDA_SOLO_PLAYER);
             SceneManager.LoadScene("GamePlay");
         }
     }
@@ -80,13 +93,29 @@ public class GameManager : MonoBehaviour
 
     public void SeleccionarJugadorAliado(Personaje personaje)
     {
+        var lobby = FindObjectOfType<Photon.Pun.Demo.PunBasics.AutoLobby>();
+        if (lobby.PuedeSeleccionar() && tipoPartida == TipoPartida.PARTIDA_MULTIP_3VS3)
+        {
+            SetPersonajePartida3vs3(personaje);
+        }
         jugadoresPartidaAliados.Add(personaje);
     }
     public void SeleccionarJugadorEnemigo(Personaje personaje)
     {
+        var lobby = FindObjectOfType<Photon.Pun.Demo.PunBasics.AutoLobby>();
+        if (lobby.PuedeSeleccionar() && tipoPartida == TipoPartida.PARTIDA_MULTIP_3VS3)
+        {
+            SetPersonajePartida3vs3(personaje);
+        }
         jugadoresPartidaEnemigos.Add(personaje);
     }
 
     public bool IsAliado() { return aliado; }
     public void SetEnemigo() { aliado = false; }
+
+    public void SetPersonajePartida3vs3(Personaje p) { personajePartida3vs3 = p; }
+    public Personaje GetPersonajePartida3vs3() { return personajePartida3vs3; }
+
+    public TipoPartida GetTipoPartida() { return tipoPartida; }
+    public void SetTipoPartida(TipoPartida t) { tipoPartida = t; }
 }

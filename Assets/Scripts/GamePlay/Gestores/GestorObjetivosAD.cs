@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class GestorObjetivosAD : MonoBehaviour
 {
-    public ObjetivoAD botonEnemyPrefab;
+    public ObjetivoAD [] botonesObjetivos;
     public GestorPartida gestorPartida;
 
     private bool firstTime = true;
@@ -50,19 +50,19 @@ public class GestorObjetivosAD : MonoBehaviour
         // enemigos
         for(int i = 0; i < numPlayers; i++)
         {
-            ObjetivoAD objAux = Instantiate(botonEnemyPrefab);
+            ObjetivoAD objAux = botonesObjetivos[i];
             objAux.SetProperties(gestorPartida.GetAllEnemigos()[i], gestorPartida.GetAllEnemigos()[i].foto);
-            objAux.transform.SetParent(transform);
-            objAux.transform.position = transform.position + new Vector3(-150 +150 * i, 0, 0);
+            float relation = 1920.0f / (float)Screen.width;
+            objAux.transform.position = transform.position + new Vector3(-150 / relation + 150 * i/relation, 0, 0);
             objetivosEnemigos.Add(objAux);
         }
         //aliados
         for (int i = 0; i < numPlayers; i++)
         {
-            ObjetivoAD objAux = Instantiate(botonEnemyPrefab);
+            ObjetivoAD objAux = botonesObjetivos[i+3];
             objAux.SetProperties(gestorPartida.GetAllAliados()[i], gestorPartida.GetAllAliados()[i].foto);
-            objAux.transform.SetParent(transform);
-            objAux.transform.position = transform.position + new Vector3(-150 + 150 * i, 0, 0);
+            float relation = 1920.0f / (float)Screen.width;
+            objAux.transform.position = transform.position + new Vector3(-150 / relation + 150 * i / relation, 0, 0);
             objetivosAliados.Add(objAux);
         }
 

@@ -12,6 +12,7 @@ public class GestorMultiplayer : MonoBehaviourPunCallbacks, IOnEventCallback
     public GestorAcciones gestorAcciones;
     bool haRecibidoTurnos = false;
 
+
     enum Eventos
     {
         SELECCION_TURNOS,

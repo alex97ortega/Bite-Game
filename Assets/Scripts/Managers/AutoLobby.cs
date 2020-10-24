@@ -102,9 +102,14 @@ namespace Photon.Pun.Demo.PunBasics
         {
             if (PhotonNetwork.IsConnected)
             {
+                string roomName = nombreServer.GetComponent<Text>().text;
+                if(roomName == "")
+                {
+                    Log.text += "\nIntroduce un nombre de sala ";
+                    return;
+                }
                 screenJoin.SetActive(false);
                 screenServer.SetActive(true);
-                string roomName = nombreServer.GetComponent<Text>().text;
                 RoomOptions roomOptions = new RoomOptions();
                 TypedLobby typedLobby = new TypedLobby(roomName, LobbyType.Default);
                 PhotonNetwork.JoinOrCreateRoom(roomName, roomOptions, typedLobby);
@@ -150,6 +155,7 @@ namespace Photon.Pun.Demo.PunBasics
         {
             if (PhotonNetwork.CurrentRoom.PlayerCount == 2 || PhotonNetwork.CurrentRoom.PlayerCount == 6)
             {
+                selectManager.SetTipoPartidaMultiplayer(PhotonNetwork.CurrentRoom.PlayerCount);
                 PhotonNetwork.RaiseEvent((byte)Eventos.MENU_SELECCION_PERSONAJE, PhotonNetwork.LocalPlayer.NickName,
                     new Photon.Realtime.RaiseEventOptions { Receivers = Photon.Realtime.ReceiverGroup.All },
                     new ExitGames.Client.Photon.SendOptions() { });
@@ -209,6 +215,7 @@ namespace Photon.Pun.Demo.PunBasics
                     Log.text += "\n" + eventData.CustomData + " se ha desconectado";
                     break;
                 case Eventos.MENU_SELECCION_PERSONAJE:
+                    selectManager.SetTipoPartidaMultiplayer(PhotonNetwork.CurrentRoom.PlayerCount);
                     turnosElegir = new string[PhotonNetwork.CurrentRoom.PlayerCount];
                     int i = 0;
                     foreach(var p in PhotonNetwork.PlayerList)
@@ -219,6 +226,7 @@ namespace Photon.Pun.Demo.PunBasics
                     menuMultijugador.SetActive(false);
                     menuPersonajes.SetActive(true);
                     buttonComenzarPartida.interactable = false;
+                    buttonElegir.interactable = PuedeSeleccionar();
                     turnoElegir.text = "Le toca elegir personaje a " + turnosElegir[turno % PhotonNetwork.CurrentRoom.PlayerCount];
                     break;
                 case Eventos.SET_EQUIPO_ROJO:
