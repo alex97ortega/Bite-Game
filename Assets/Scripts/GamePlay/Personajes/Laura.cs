@@ -121,7 +121,7 @@ public class Laura : Personaje
                 burger.transform.position = transform.position + new Vector3(0.1f, 2.7f, -0.85f);
             }
         }
-        else if (avanzado >= 1.5f)
+        else if (avanzado >= 1.0f)
         {
             if (velBurgerX == 0 && velBurgerZ == 0)
             {

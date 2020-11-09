@@ -3095,7 +3095,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!224 &434796181
 RectTransform:
   m_ObjectHideFlags: 0
@@ -6713,6 +6713,9 @@ MonoBehaviour:
   gestorPartida: {fileID: 1698347243}
   tablero: {fileID: 1129468086}
   camara: {fileID: 963194229}
+  menuExit: {fileID: 2129466002}
+  menuInfo: {fileID: 2023157243}
+  menuInstrucciones: {fileID: 4235851}
   menuAcciones: {fileID: 268958143}
   turnos: {fileID: 1909028358}
   loading: {fileID: 434796180}
@@ -7222,7 +7225,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 1698347243}
+      - m_Target: {fileID: 1183058518}
         m_MethodName: Menu
         m_Mode: 1
         m_Arguments:
@@ -9449,7 +9452,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 934cd5f81dbfcbe43839e95e40ecf684, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  menuExit: {fileID: 2129466002}
   menuVictory: {fileID: 1227780250}
   menuGameOver: {fileID: 592477419}
   turnosArray:

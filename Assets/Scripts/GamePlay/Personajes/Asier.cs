@@ -158,6 +158,7 @@ public class Asier : Personaje
     {
         if(barra == null)
         {
+            PlaySonidoAE();
             barra = Instantiate(barraPrefab);
             barra.transform.position = transform.position;
             if (!aliado)
@@ -201,7 +202,7 @@ public class Asier : Personaje
                 }
             }
 
-            if(dominadas >= 4)
+            if(!sonidoAE.isPlaying)
             {
                 BonificacionDamage(2);
                 log.LanzaLog("Cuidao que viene Suasenaguer.");

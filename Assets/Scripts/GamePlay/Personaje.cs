@@ -254,7 +254,7 @@ public class Personaje : MonoBehaviour
         }
     }
 
-    protected void BonificacionDamage(int turnos)
+    public void BonificacionDamage(int turnos)
     {
         bonifDmg *= 2;
 

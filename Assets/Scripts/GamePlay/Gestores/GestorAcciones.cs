@@ -8,7 +8,7 @@ public class GestorAcciones : MonoBehaviour
     public GestorPartida gestorPartida;
     public Terreno tablero;
     public Camara camara;
-    public GameObject menuAcciones, turnos, loading;
+    public GameObject menuExit, menuInfo, menuInstrucciones, menuAcciones, turnos, loading;
     public Material aliadoAzul,enemigoRojo, aliadoAmarillo;
     public Button botonAD, botonAE, botonMenu;
     public GestorObjetivosAD objetivosAD;
@@ -53,7 +53,8 @@ public class GestorAcciones : MonoBehaviour
         startTime = tiempoTurnos + 1 + Time.time;
 
         gestorPartida.GetPersonajeTurno().ComienzoTurno();
-        tablero.CompruebaCasilla(gestorPartida.GetPersonajeTurno());
+        if(!gestorPartida.GetPersonajeTurno().EsInmune())
+            tablero.CompruebaCasilla(gestorPartida.GetPersonajeTurno());
         tablero.GestionaEnvenenamientosCasillas(gestorPartida.GetPersonajeTurno().nombre);
 
         if (gestorPartida.GetPersonajeTurno().EstaMuerto() || gestorPartida.GetPersonajeTurno().EstaParalizado())
@@ -88,7 +89,7 @@ public class GestorAcciones : MonoBehaviour
             // enemigo
             if (gm.IsAliado() != gestorPartida.GetPersonajeTurno().IsAliado())
             {
-                menuAcciones.SetActive(true);
+                menuAcciones.SetActive(false);
                 //if (gm.GetTipoPartida() == GameManager.TipoPartida.PARTIDA_SOLO_PLAYER)
                 //    PasarTurno(false); // sin ia, para cuando es solo player y pruebas
             }
@@ -405,6 +406,9 @@ public class GestorAcciones : MonoBehaviour
         objetivosAD.gameObject.SetActive(false);
         botonMenu.gameObject.SetActive(false);
         turnos.SetActive(false);
+        menuExit.SetActive(false);
+        menuInfo.SetActive(false);
+        menuInstrucciones.SetActive(false);
     }
     public void TieneQueAtacarAC()
     {
@@ -425,4 +429,10 @@ public class GestorAcciones : MonoBehaviour
     public void TieneQueMoverseArriba() { tieneQueMoverArriba= true; }
     public void TieneQueMoverseAbajo()  { tieneQueMoverAbajo = true; }
     public void TieneQuePasarTurno()    { tieneQuePasarTurno = true; }
+
+
+    public void Menu()
+    {
+        menuExit.SetActive(!menuExit.activeSelf);
+    }
 }

@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class GestorPartida : MonoBehaviour
 {
-    public GameObject menuExit, menuVictory, menuGameOver;
+    public GameObject menuVictory, menuGameOver;
     public Turno[] turnosArray;
     public GameObject parentTurnos;
     public RandomEnemies randomEnemies;
@@ -198,10 +198,6 @@ public class GestorPartida : MonoBehaviour
         {
             return enemigos[turno - nJugadoresPorEquipo];
         }
-    }
-    public void Menu()
-    {
-        menuExit.SetActive(!menuExit.activeSelf);
     }
     public bool Ready() { return turnosJugadores.Count > 0; } 
     public void AddTurno(int turno)
