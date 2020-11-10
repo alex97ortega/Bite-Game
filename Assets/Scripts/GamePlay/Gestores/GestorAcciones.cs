@@ -275,9 +275,42 @@ public class GestorAcciones : MonoBehaviour
 
         if (gestorPartida.GetPersonajeTurno().HaJugadoUlti())
             return;
-
         string nombre = gestorPartida.GetPersonajeTurno().nombre;
-        if (nombre == "Alex")
+        if(nombre == "Edu")
+        {
+            // para edu ver que hay un objetivo delante
+            int casillObjX;
+            int casillaObjZ = gestorPartida.GetPersonajeTurno().GetCasillaZ();
+
+            if (gestorPartida.GetPersonajeTurno().IsAliado())
+            {
+                casillObjX = gestorPartida.GetPersonajeTurno().GetCasillaX() - 1;
+            }
+            else
+            {
+                casillObjX = gestorPartida.GetPersonajeTurno().GetCasillaX() + 1;
+            }
+            if (!tablero.GetCasilla(casillObjX, casillaObjZ).EstaOcupada())
+                return;
+
+            objetivo = tablero.GetCasilla(casillObjX, casillaObjZ).GetPersonajeCasilla();
+            if (objetivo.IsAliado() == gestorPartida.GetPersonajeTurno().IsAliado())
+                return;
+            if (objetivo.EstaMuerto() || objetivo.EsInmune())
+                return;
+            if (!objetivo.TieneMitadDeVidaOMenos())
+            {
+                log.LanzaLog(objetivo.nombre +" está demasiado potente para que pueda Edu hacer su ulti.");
+                return;
+            }
+            if (gestorPartida.GetPersonajeTurno().IsAliado())
+                camara.EnfocaCamaraAD(gestorPartida.GetPersonajeTurno().transform.position + new Vector3(-2, 0, 0), gestorPartida.GetPersonajeTurno().IsAliado());
+            else
+                camara.EnfocaCamaraAD(gestorPartida.GetPersonajeTurno().transform.position + new Vector3(2, 0, 0), gestorPartida.GetPersonajeTurno().IsAliado());
+        }
+
+        
+        else if (nombre == "Alex")
             camara.EnfocaCamaraAD(gestorPartida.GetPersonajeTurno().transform.position, gestorPartida.GetPersonajeTurno().IsAliado());
         else if (nombre == "Sergio" || nombre == "Asier")
             camara.EnfocaCamaraAE2(gestorPartida.GetPersonajeTurno().transform.position, gestorPartida.GetPersonajeTurno().IsAliado());

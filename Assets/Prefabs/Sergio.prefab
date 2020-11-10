@@ -1044,6 +1044,7 @@ MonoBehaviour:
   sonidoAE: {fileID: 6090679346988450267}
   cancion1: {fileID: -2595374343904879148}
   cancion2: {fileID: -4258318772308240176}
+  cabesa: {fileID: 2219190185790810439}
   ropaPrefab: {fileID: 7689147391856078383, guid: bdc52280456f48447aefd495437f937d,
     type: 3}
   cajaPizzaPrefab: {fileID: 6444998601396617329, guid: 1935dc6abc81e3046826c6f66745014b,

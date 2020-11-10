@@ -142,8 +142,8 @@ public class Asier : Personaje
                     coche.transform.position += new Vector3(50 * Time.deltaTime, 0, 0);
                 if(avanzado>3)
                 {
-                    FindObjectOfType<Terreno>().ArrasarFilas(casillaX, casillaZ, aliado, dmgAD * bonifDmg);
                     log.LanzaLog("Asier ha atropellado a unas cuantas personas, pero no le han puesto multa.");
+                    FindObjectOfType<Terreno>().ArrasarFilas(casillaX, casillaZ, aliado, dmgAD * bonifDmg);
                     transform.position -= new Vector3(0, 1000, 0);
                     Restaura();
                     ultimaJugoAD = true;

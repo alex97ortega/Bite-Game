@@ -1016,6 +1016,7 @@ MonoBehaviour:
   sonidoAE: {fileID: 2886986559527079314}
   cancion1: {fileID: 3127160466680254766}
   cancion2: {fileID: 9077701242202712143}
+  cabesa: {fileID: 1993801123021657467}
   body: {fileID: 1993801122477999079}
   camaPrefab: {fileID: 5434141459449974168, guid: 6f15b364ab7602f46b6e3655382b51ec,
     type: 3}

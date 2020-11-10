@@ -1050,6 +1050,7 @@ MonoBehaviour:
   sonidoAE: {fileID: 4383350219519172342}
   cancion1: {fileID: 0}
   cancion2: {fileID: 0}
+  cabesa: {fileID: 8109745314796041898}
   torso: {fileID: 7708293242467862133}
   escupitajoPrefab: {fileID: 1727224877516525829, guid: acd31e833c7318f46bef3d00d7072a13,
     type: 3}

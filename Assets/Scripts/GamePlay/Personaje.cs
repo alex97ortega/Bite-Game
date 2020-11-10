@@ -21,6 +21,7 @@ public class Personaje : MonoBehaviour
     public GameObject panelHp;
     public GameObject barraVerdeHp;
     public AudioSource sonidoAM, sonidoAD, sonidoAE, cancion1, cancion2;
+    public Transform cabesa;
 
     protected int casillaX, casillaZ;
     protected int initialHp, initialMovs;
@@ -285,5 +286,10 @@ public class Personaje : MonoBehaviour
             return true;
         }
         return false;
+    }
+
+    public bool TieneMitadDeVidaOMenos()
+    {
+        return (hp <= (initialHp / 2));
     }
 }

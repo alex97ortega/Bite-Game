@@ -2004,6 +2004,7 @@ MonoBehaviour:
   sonidoAE: {fileID: 2054339780978686604}
   cancion1: {fileID: -3619869687994221707}
   cancion2: {fileID: 7119576542000920827}
+  cabesa: {fileID: 8734246648198089871}
   torso: {fileID: 2682236206862189693}
   hombroIzq: {fileID: 795806918884181320}
   hombroDch: {fileID: 7745221312379926777}

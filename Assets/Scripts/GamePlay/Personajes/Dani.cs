@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class Dani : Personaje
 {
-    public Transform cabesa, torso, hombroDch;
+    public Transform torso, hombroDch;
     public GameObject aquariusPrefab, culturistaPrefab, movilPrefab;
     public AudioSource golpe;
 

@@ -671,6 +671,7 @@ MonoBehaviour:
   sonidoAE: {fileID: 7144808262844286067}
   cancion1: {fileID: 5507007433735006678}
   cancion2: {fileID: 8577155808095202999}
+  cabesa: {fileID: 2978930093229773392}
   paredPrefab: {fileID: 4704667271454702722, guid: 6efc101a763646c46bcc8176c67d1058,
     type: 3}
   cochePrefab: {fileID: 8051442576680051032, guid: 4c9d08b1e0ffe2a47b4ef90d35199d4b,
