@@ -429,6 +429,9 @@ public class GestorAcciones : MonoBehaviour
                 if(gm.IsAliado() == gestorPartida.GetPersonajeTurno().IsAliado())
                     PasarTurno(true);
             }
+            // lo ultimo de todo, gestionamos si hay algun mensaje
+            if (gestorMultiplayer.gameObject.activeSelf && gestorMultiplayer.HayAlgunMensajeSinProcesar())
+                gestorMultiplayer.GestionaProximoEvento();
         }
     }
     private void DesactivaGUI()

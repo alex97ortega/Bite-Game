@@ -11,7 +11,7 @@ public class GestorMultiplayer : MonoBehaviourPunCallbacks, IOnEventCallback
     public GestorPartida gestorPartida;
     public GestorAcciones gestorAcciones;
     bool haRecibidoTurnos = false;
-
+    string proxObjetivoAD = "";
 
     enum Eventos
     {
@@ -29,10 +29,14 @@ public class GestorMultiplayer : MonoBehaviourPunCallbacks, IOnEventCallback
         PASAR_TURNO,
         NUM_EVENTOS
     }
+    Queue<Eventos> colaEventos;
+
     private void Awake()
     {
+        colaEventos = new Queue<Eventos>();
         if (!PhotonNetwork.IsConnected)
-            gameObject.SetActive(false);
+            gameObject.SetActive(false);      
+            
     }
 
     // Start is called before the first frame update
@@ -64,29 +68,18 @@ public class GestorMultiplayer : MonoBehaviourPunCallbacks, IOnEventCallback
             case Eventos.CREA_EQUIPO_ROJO:
                 gestorPartida.ColocaEnemigos((int[])eventData.CustomData);
                 break;
-            case Eventos.MUEVE_IZQUIERDA:
-                gestorAcciones.TieneQueMoverseIzq();
-                break;
-            case Eventos.MUEVE_DERECHA:
-                gestorAcciones.TieneQueMoverseDch();
-                break;
-            case Eventos.MUEVE_ARRIBA:
-                gestorAcciones.TieneQueMoverseArriba();
-                break;
-            case Eventos.MUEVE_ABAJO:
-                gestorAcciones.TieneQueMoverseAbajo();
-                break;
-            case Eventos.ATAQUE_CUERPO:
-                gestorAcciones.TieneQueAtacarAC();
-                break;
             case Eventos.ATAQUE_DISTANCIA:
-                gestorAcciones.TieneQueAtacarAD((string)eventData.CustomData);
+                proxObjetivoAD = (string)eventData.CustomData;
+                AddEventoToTheQueue(ev);
                 break;
+            case Eventos.MUEVE_IZQUIERDA:
+            case Eventos.MUEVE_DERECHA:
+            case Eventos.MUEVE_ARRIBA:
+            case Eventos.MUEVE_ABAJO:
+            case Eventos.ATAQUE_CUERPO:
             case Eventos.ATAQUE_ESPECIAL:
-                gestorAcciones.TieneQueAtacarAE();
-                break;
             case Eventos.PASAR_TURNO:
-                gestorAcciones.TieneQuePasarTurno();
+                AddEventoToTheQueue(ev);
                 break;
             default:
                 break;
@@ -157,6 +150,48 @@ public class GestorMultiplayer : MonoBehaviourPunCallbacks, IOnEventCallback
             PhotonNetwork.RaiseEvent((byte)evt, parametros,
                       new Photon.Realtime.RaiseEventOptions { Receivers = Photon.Realtime.ReceiverGroup.Others },
                       new ExitGames.Client.Photon.SendOptions() { });
+        }
+    }
+    public bool HayAlgunMensajeSinProcesar()
+    {
+        return (colaEventos.Count != 0);
+    }
+    private void AddEventoToTheQueue(Eventos evt)
+    {
+        colaEventos.Enqueue(evt);
+    }
+    public void GestionaProximoEvento()
+    {
+        Eventos proxEvento = colaEventos.Dequeue();
+
+        switch (proxEvento)
+        {            
+            case Eventos.MUEVE_IZQUIERDA:
+                gestorAcciones.TieneQueMoverseIzq();
+                break;
+            case Eventos.MUEVE_DERECHA:
+                gestorAcciones.TieneQueMoverseDch();
+                break;
+            case Eventos.MUEVE_ARRIBA:
+                gestorAcciones.TieneQueMoverseArriba();
+                break;
+            case Eventos.MUEVE_ABAJO:
+                gestorAcciones.TieneQueMoverseAbajo();
+                break;
+            case Eventos.ATAQUE_CUERPO:
+                gestorAcciones.TieneQueAtacarAC();
+                break;
+            case Eventos.ATAQUE_DISTANCIA:
+                gestorAcciones.TieneQueAtacarAD(proxObjetivoAD);
+                break;
+            case Eventos.ATAQUE_ESPECIAL:
+                gestorAcciones.TieneQueAtacarAE();
+                break;
+            case Eventos.PASAR_TURNO:
+                gestorAcciones.TieneQuePasarTurno();
+                break;
+            default:
+                break;
         }
     }
 }
