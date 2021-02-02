@@ -1030,7 +1030,7 @@ MonoBehaviour:
   fumador: 0
   necesitaObjetivoAD: 0
   movimientos: 3
-  hp: 120
+  hp: 130
   dmgAM: 10
   dmgAD: 20
   dmgAE: 20

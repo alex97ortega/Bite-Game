@@ -141,8 +141,8 @@ public class Gonzalo : Personaje
         else if(!sonidoAE.isPlaying)
         {
             jugadaUlti = true;
-            turnosInmune = 3;
-            turnosParalizado = 3;
+            turnosInmune = 2;
+            turnosParalizado = 2;
             Curar(initialHp);
             log.LanzaLog("La marmota se fue a dormir.");
             return true;

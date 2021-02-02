@@ -6729,7 +6729,7 @@ MonoBehaviour:
   gestorMultiplayer: {fileID: 1541970205}
   log: {fileID: 2144021759}
   cronometro: {fileID: 428790897}
-  tiempoTurnos: 90
+  tiempoTurnos: 60
 --- !u!1 &1205003091
 GameObject:
   m_ObjectHideFlags: 0
